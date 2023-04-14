@@ -16,6 +16,8 @@ what is new:
 - UEXT connector (https://www.olimex.com/Products/Modules/) is add which allows AgonLight to be connected to: temperature sensors, environmental air quality sensors, pressure, humidity, gyroscope, light, RS485, LCDs, LED matrix, relays, Bluettooth, Zigbee, Lora, GSM, RFID reader, GPS, Pulse, EKG, RTC etc;
 - Four 3.3mm mount hole with  GND sleeve are add so the board can be mounted to future metal box;
 
+Please do not forget to check AgonLight topics in GitHub for many utilities and code written by AgonLight community: https://github.com/topics/agon-light
+
 ## Licensee
 * Hardware is released under CERN Open Hardware Licence Version 2 - Strongly Reciprocal, all silkscreen credits to Bernardo Kastrup and Dean Belfield should remain;
 * Software is released under zlib Licensee
