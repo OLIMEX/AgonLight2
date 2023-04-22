@@ -18,6 +18,19 @@ what is new:
 
 Please do not forget to check AgonLight topics in GitHub for many utilities and code written by AgonLight community: https://github.com/topics/agon-light
 
+## Useful Agon Resources
+- Bernardo Katrup https://github.com/TheByteAttic/AgonLight
+- Dean Belfield Agon VDP, MOS, BBC-BASIC, Agon DOCs, projects https://github.com/breakintoprogram
+- Lennart Benschop FORTH, Nano editor and MOS utilities https://github.com/lennart-benschop
+- Jeroen Venema Agon Flash, HexLoad, Z80 assembler, tools, sokoban game https://github.com/envenomator
+- Mario Smit Agon ZDI Load and tools https://github.com/S0urceror
+- Reinhard Schu Agon Assembly https://github.com/schur/Agon-Light-Assembly
+- AgonLight emulator https://github.com/james7780/AgonLightEmuSDL
+- Alexander Sharikhin MOS tools https://github.com/nihirash/Agon-MOS-Tools
+- Nicholas Pratt Agon Game https://github.com/NicholasPratt/Nova-Star
+- Robert Lowe Agon Games collection https://github.com/pngwen
+- LuzrBum Agon Games https://github.com/LuzrBum
+
 ## Licensee
 * Hardware is released under CERN Open Hardware Licence Version 2 - Strongly Reciprocal, all silkscreen credits to Bernardo Kastrup and Dean Belfield should remain;
 * Software is released under zlib Licensee
@@ -25,4 +38,5 @@ Please do not forget to check AgonLight topics in GitHub for many utilities and 
 
 ## Change History
 
+23-04-2023 - Add Resources 
 14-12-2022 - Initial upload  of CAD files for first prototypes
