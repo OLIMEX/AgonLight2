@@ -1,0 +1,983 @@
+Zilog eZ80 Macro Assembler Version 4.3 (19073001) RELISTED08-Jun-23     23:29:35     page:   1
+
+
+PC     Object              I  Line    Source 
+                           A     1    ; Zilog eZ80 ANSI C Compiler Release 3.4
+                           A     2    ; -nomodsect -optspeed -noreduceopt -nopadbranc
+                           A     3    ; -peephole -globalopt -localcse -const=ROM 
+                           A     4    	FILE	"..\agontimer.c"
+                           A     5    	.assume ADL=1
+                           A     6    .DEBUG "C"
+                           A     7    	SEGMENT CODE
+                           A     8    .BEGREC "fmt_type",19
+                           A     9    .DEFINE "status"
+                           A    10    .VALUE 0
+                           A    11    .CLASS 8
+                           A    12    .TYPE 12
+                           A    13    .ENDEF
+                           A    14    .DEFINE "flags"
+                           A    15    .VALUE 1
+                           A    16    .CLASS 8
+                           A    17    .TYPE 12
+                           A    18    .ENDEF
+                           A    19    .DEFINE "size"
+                           A    20    .VALUE 2
+                           A    21    .CLASS 8
+                           A    22    .TYPE 2
+                           A    23    .ENDEF
+                           A    24    .DEFINE "chr"
+                           A    25    .VALUE 3
+                           A    26    .CLASS 8
+                           A    27    .TYPE 2
+                           A    28    .ENDEF
+                           A    29    .DEFINE "type"
+                           A    30    .VALUE 4
+                           A    31    .CLASS 8
+                           A    32    .TYPE 2
+                           A    33    .ENDEF
+                           A    34    .DEFINE "field_width"
+                           A    35    .VALUE 5
+                           A    36    .CLASS 8
+                           A    37    .TYPE 2
+                           A    38    .ENDEF
+                           A    39    .DEFINE "precision"
+                           A    40    .VALUE 6
+                           A    41    .CLASS 8
+                           A    42    .TYPE 2
+                           A    43    .ENDEF
+                           A    44    .DEFINE "set_begin"
+                           A    45    .VALUE 7
+                           A    46    .CLASS 8
+                           A    47    .TYPE 34
+                           A    48    .ENDEF
+                           A    49    .DEFINE "set_end"
+                           A    50    .VALUE 10
+                           A    51    .CLASS 8
+                           A    52    .TYPE 34
+                           A    53    .ENDEF
+                           A    54    .DEFINE "pad_whole"
+                           A    55    .VALUE 13
+                           A    56    .CLASS 8
+                           A    57    .TYPE 12
+                           A    58    .ENDEF
+                           A    59    .DEFINE "pad_pre_fract"
+                           A    60    .VALUE 14
+                           A    61    .CLASS 8
+                           A    62    .TYPE 12
+                           A    63    .ENDEF
+                           A    64    .DEFINE "pad_post_fract"
+                           A    65    .VALUE 15
+                           A    66    .CLASS 8
+                           A    67    .TYPE 12
+                           A    68    .ENDEF
+                           A    69    .DEFINE "pad_at"
+                           A    70    .VALUE 16
+                           A    71    .CLASS 8
+                           A    72    .TYPE 34
+                           A    73    .ENDEF
+                           A    74    .ENDREC "fmt_type"
+                           A    75    .BEGREC "flt_info",12
+                           A    76    .DEFINE "flags"
+                           A    77    .VALUE 0
+                           A    78    .CLASS 8
+                           A    79    .TYPE 12
+                           A    80    .ENDEF
+                           A    81    .DEFINE "exp"
+                           A    82    .VALUE 1
+                           A    83    .CLASS 8
+                           A    84    .TYPE 2
+                           A    85    .ENDEF
+                           A    86    .DEFINE "digits"
+                           A    87    .VALUE 2
+                           A    88    .CLASS 8
+                           A    89    .DIM 10
+                           A    90    .TYPE 108
+                           A    91    .ENDEF
+                           A    92    .ENDREC "flt_info"
+                           A    93    .BEGREC "NONAME0",8
+                           A    94    .DEFINE "baudRate"
+                           A    95    .VALUE 0
+                           A    96    .CLASS 8
+                           A    97    .TYPE 4
+                           A    98    .ENDEF
+                           A    99    .DEFINE "dataBits"
+                           A   100    .VALUE 3
+                           A   101    .CLASS 8
+                           A   102    .TYPE 12
+                           A   103    .ENDEF
+                           A   104    .DEFINE "stopBits"
+                           A   105    .VALUE 4
+                           A   106    .CLASS 8
+                           A   107    .TYPE 12
+                           A   108    .ENDEF
+                           A   109    .DEFINE "parity"
+                           A   110    .VALUE 5
+                           A   111    .CLASS 8
+                           A   112    .TYPE 12
+                           A   113    .ENDEF
+                           A   114    .DEFINE "flowcontrol"
+                           A   115    .VALUE 6
+                           A   116    .CLASS 8
+                           A   117    .TYPE 12
+                           A   118    .ENDEF
+                           A   119    .DEFINE "eir"
+                           A   120    .VALUE 7
+                           A   121    .CLASS 8
+                           A   122    .TYPE 12
+                           A   123    .ENDEF
+                           A   124    .ENDREC "NONAME0"
+                           A   125    .BEGREC "NONAME1",15
+                           A   126    .DEFINE "fs"
+                           A   127    .VALUE 0
+                           A   128    .CLASS 8
+                           A   129    .TYPE 46
+                           A   130    .ENDEF
+                           A   131    .DEFINE "id"
+                           A   132    .VALUE 3
+                           A   133    .CLASS 8
+                           A   134    .TYPE 13
+                           A   135    .ENDEF
+                           A   136    .DEFINE "attr"
+                           A   137    .VALUE 5
+                           A   138    .CLASS 8
+                           A   139    .TYPE 12
+                           A   140    .ENDEF
+                           A   141    .DEFINE "stat"
+                           A   142    .VALUE 6
+                           A   143    .CLASS 8
+                           A   144    .TYPE 12
+                           A   145    .ENDEF
+                           A   146    .DEFINE "sclust"
+                           A   147    .VALUE 7
+                           A   148    .CLASS 8
+                           A   149    .TYPE 15
+                           A   150    .ENDEF
+                           A   151    .DEFINE "objsize"
+                           A   152    .VALUE 11
+                           A   153    .CLASS 8
+                           A   154    .TYPE 15
+                           A   155    .ENDEF
+                           A   156    .ENDREC "NONAME1"
+                           A   157    .BEGREC "NONAME2",36
+                           A   158    .DEFINE "obj"
+                           A   159    .VALUE 0
+                           A   160    .CLASS 8
+                           A   161    .TAG "NONAME1"
+                           A   162    .TYPE 8
+                           A   163    .ENDEF
+                           A   164    .DEFINE "flag"
+                           A   165    .VALUE 15
+                           A   166    .CLASS 8
+                           A   167    .TYPE 12
+                           A   168    .ENDEF
+                           A   169    .DEFINE "err"
+                           A   170    .VALUE 16
+                           A   171    .CLASS 8
+                           A   172    .TYPE 12
+                           A   173    .ENDEF
+                           A   174    .DEFINE "fptr"
+                           A   175    .VALUE 17
+                           A   176    .CLASS 8
+                           A   177    .TYPE 15
+                           A   178    .ENDEF
+                           A   179    .DEFINE "clust"
+                           A   180    .VALUE 21
+                           A   181    .CLASS 8
+                           A   182    .TYPE 15
+                           A   183    .ENDEF
+                           A   184    .DEFINE "sect"
+                           A   185    .VALUE 25
+                           A   186    .CLASS 8
+                           A   187    .TYPE 15
+                           A   188    .ENDEF
+                           A   189    .DEFINE "dir_sect"
+                           A   190    .VALUE 29
+                           A   191    .CLASS 8
+                           A   192    .TYPE 15
+                           A   193    .ENDEF
+                           A   194    .DEFINE "dir_ptr"
+                           A   195    .VALUE 33
+                           A   196    .CLASS 8
+                           A   197    .TYPE 46
+                           A   198    .ENDEF
+                           A   199    .ENDREC "NONAME2"
+                           A   200    	SEGMENT BSS
+046348                     A   201    __timer0_prevhandler:
+046348                     A   202    	DS	3
+                           A   203    .DEFINE "_timer0_prevhandler"
+                           A   204    .ALIAS "__timer0_prevhandler"
+                           A   205    .CLASS 83
+                           A   206    .VALUE __timer0_prevhandler
+                           A   207    .TYPE 33
+                           A   208    .ENDEF
+04634B                     A   209    __timer1_prevhandler:
+04634B                     A   210    	DS	3
+                           A   211    .DEFINE "_timer1_prevhandler"
+                           A   212    .ALIAS "__timer1_prevhandler"
+                           A   213    .CLASS 83
+                           A   214    .VALUE __timer1_prevhandler
+                           A   215    .TYPE 33
+                           A   216    .ENDEF
+                           A   217    ;    1	/*
+                           A   218    ;    2	 * Title:			AGON timer interfac
+                           A   219    ;    3	 * Author:			Jeroen Venema
+                           A   220    ;    4	 * Created:			06/11/2022
+                           A   221    ;    5	 * Last Updated:	22/01/2023
+                           A   222    ;    6	 * 
+                           A   223    ;    7	 * Modinfo:
+                           A   224    ;    8	 * 06/11/2022:		Initial version
+                           A   225    ;    9	 * 22/01/2023:		Interrupt-based fre
+                           A   226    ;   10	 */
+                           A   227    ;   11	
+                           A   228    ;   12	#include <defines.h>
+                           A   229    ;   13	#include <ez80.h>
+                           A   230    ;   14	#include <stdio.h>
+                           A   231    ;   15	//#include "mos-setvector.h"
+                           A   232    ;   16	#include "mos-interface.h"
+                           A   233    ;   17	#include "agontimer.h"
+                           A   234    ;   18	
+                           A   235    ;   19	#define TMR0_COUNTER_1ms	(unsigned s
+                           A   236    ;   20	
+                           A   237    ;   21	void *_timer0_prevhandler;				
+                           A   238    ;   22	void *_timer1_prevhandler;				
+                           A   239    	SEGMENT CODE
+                           A   240    ;   23	
+                           A   241    ;   24	// start timer0 on a millisecond interv
+                           A   242    ;   25	// this function registers an interrupt
+                           A   243    ;   26	
+                           A   244    ;   27	void timer0_begin (int reload_value, in
+044778                     A   245    _timer0_begin:
+                           A   246    .DEFINE "_timer0_begin"
+                           A   247    
+                           A   248    .VALUE _timer0_begin
+                           A   249    
+                           A   250    .CLASS 2
+                           A   251    
+                           A   252    .TYPE 65
+                           A   253    
+                           A   254    .ENDEF
+                           A   255    
+                           A   256    .BEGFUNC "timer0_begin",27,"_timer0_begin"
+                           A   257    
+                           A   258    .LINE 27
+                           A   259    
+                           A   260    .DEFINE "reload_value"
+                           A   261    
+                           A   262    .CLASS 65
+                           A   263    
+                           A   264    .VALUE 6
+                           A   265    
+                           A   266    .TYPE 4
+                           A   267    
+                           A   268    .ENDEF
+                           A   269    
+                           A   270    .DEFINE "clk_divider"
+                           A   271    
+                           A   272    .CLASS 65
+                           A   273    
+                           A   274    .VALUE 9
+                           A   275    
+                           A   276    .TYPE 4
+                           A   277    
+                           A   278    .ENDEF
+                           A   279    
+                           A   280    .DEFINE "clkbits"
+                           A   281    
+                           A   282    .CLASS 65
+                           A   283    
+                           A   284    .VALUE -1
+                           A   285    
+                           A   286    .TYPE 12
+                           A   287    
+                           A   288    .ENDEF
+                           A   289    
+                           A   290    .DEFINE "ctl"
+                           A   291    
+                           A   292    .CLASS 65
+                           A   293    
+                           A   294    .VALUE -2
+                           A   295    
+                           A   296    .TYPE 12
+                           A   297    
+                           A   298    .ENDEF
+                           A   299    
+044778 DDE5                A   300    	PUSH	IX
+04477A DD210000 00         A   301    	LD	IX,0
+04477F DD39                A   302    	ADD	IX,SP
+044781 3B                  A   303    	DEC	SP
+044782 3B                  A   304    	DEC	SP
+                           A   305    ;   28	    
+                           A   306    ;   29	    //timer0_period (in SECONDS) = (rel
+                           A   307    ;   30	    
+                           A   308    ;   31		unsigned char clkbits = 0;
+                           A   309    .LINE 31
+                           A   310    
+044783 DD36FF00            A   311    	LD	(IX+%FFFFFFFF),%0
+                           A   312    ;   32	    unsigned char ctl;
+                           A   313    ;   33		//printf("Timer with RR: %u and CLK
+                           A   314    ;   34	
+                           A   315    ;   35	    _timer0_prevhandler = mos_setintvec
+                           A   316    .LINE 35
+                           A   317    
+044787 01 B9 49 04         A   318    	LD	BC,_timer0_handler
+04478B C5                  A   319    	PUSH	BC
+04478C 010A0000            A   320    	LD	BC,10
+044790 C5                  A   321    	PUSH	BC
+044791 CD AC 46 04         A   322    	CALL	_mos_setintvector
+044795 C1                  A   323    	POP	BC
+044796 C1                  A   324    	POP	BC
+044797 22 48 63 04         A   325    	LD	(__timer0_prevhandler),HL
+                           A   326    ;   36	
+                           A   327    ;   37	    switch (clk_divider) {
+                           A   328    .LINE 37
+                           A   329    
+04479B DD0709              A   330    	LD	BC,(IX+%9)
+04479E                     A   331    L__0:
+04479E 11400000            A   332    	LD	DE,64
+0447A2 C5E1                A   333    	LD	HL,BC
+0447A4 B7                  A   334    	OR	A,A
+0447A5 ED52                A   335    	SBC	HL,DE
+0447A7 28 43               A   336    	JR	Z,L_2
+0447A9 21400000            A   337    	LD	HL,64
+0447AD B7                  A   338    	OR	A,A
+0447AE ED42                A   339    	SBC	HL,BC
+0447B0 38 21               A   340    	JR	C,L__2
+0447B2 11100000            A   341    	LD	DE,16
+0447B6 C5E1                A   342    	LD	HL,BC
+0447B8 B7                  A   343    	OR	A,A
+0447B9 ED52                A   344    	SBC	HL,DE
+0447BB 28 29               A   345    	JR	Z,L_1
+0447BD 21100000            A   346    	LD	HL,16
+0447C1 B7                  A   347    	OR	A,A
+0447C2 ED42                A   348    	SBC	HL,BC
+0447C4 38 30               A   349    	JR	C,L_4
+0447C6 11040000            A   350    	LD	DE,4
+0447CA C5E1                A   351    	LD	HL,BC
+0447CC B7                  A   352    	OR	A,A
+0447CD ED52                A   353    	SBC	HL,DE
+0447CF 28 0F               A   354    	JR	Z,L_0
+0447D1 18 23               A   355    	JR	L_4
+0447D3                     A   356    L__2:
+0447D3 11000100            A   357    	LD	DE,256
+0447D7 C5E1                A   358    	LD	HL,BC
+0447D9 B7                  A   359    	OR	A,A
+0447DA ED52                A   360    	SBC	HL,DE
+0447DC 28 14               A   361    	JR	Z,L_3
+0447DE 18 16               A   362    	JR	L_4
+                           A   363    ;   38	        case 4:   clkbits = 0x00; break
+0447E0                     A   364    L_0:
+                           A   365    .LINE 38
+                           A   366    
+0447E0 DD36FF00            A   367    	LD	(IX+%FFFFFFFF),%0
+0447E4 18 10               A   368    	JR	L_4
+                           A   369    ;   39	        case 16:  clkbits = 0x04; break
+0447E6                     A   370    L_1:
+                           A   371    .LINE 39
+                           A   372    
+0447E6 DD36FF04            A   373    	LD	(IX+%FFFFFFFF),%4
+0447EA 18 0A               A   374    	JR	L_4
+                           A   375    ;   40	        case 64:  clkbits = 0x08; break
+0447EC                     A   376    L_2:
+                           A   377    .LINE 40
+                           A   378    
+0447EC DD36FF08            A   379    	LD	(IX+%FFFFFFFF),%8
+0447F0 18 04               A   380    	JR	L_4
+                           A   381    ;   41	        case 256: clkbits = 0x0C; break
+0447F2                     A   382    L_3:
+                           A   383    .LINE 41
+                           A   384    
+0447F2 DD36FF0C            A   385    	LD	(IX+%FFFFFFFF),%C
+                           A   386    ;   42	    }
+0447F6                     A   387    L_4:
+                           A   388    .LINE 42
+                           A   389    
+                           A   390    ;   43	    ctl = 0x53 | clkbits; // Continuous
+                           A   391    .LINE 43
+                           A   392    
+0447F6 DD7EFF              A   393    	LD	A,(IX+%FFFFFFFF)
+0447F9 F653                A   394    	OR	A,%53
+0447FB DD77FE              A   395    	LD	(IX+%FFFFFFFE),A
+                           A   396    ;   44	
+                           A   397    ;   45	    TMR0_CTL = 0x00; // Disable the tim
+                           A   398    .LINE 45
+                           A   399    
+0447FE AF                  A   400    	XOR	A,A
+0447FF ED3980              A   401    	OUT0	(128),A
+                           A   402    ;   46	    TMR0_RR_L = (unsigned char)(reload_
+                           A   403    .LINE 46
+                           A   404    
+044802 DD7E06              A   405    	LD	A,(IX+%6)
+044805 ED3981              A   406    	OUT0	(129),A
+                           A   407    ;   47	    TMR0_RR_H = (unsigned char)(reload_
+                           A   408    .LINE 47
+                           A   409    
+044808 DD0706              A   410    	LD	BC,(IX+%6)
+04480B 3B                  A   411    	DEC	SP
+04480C C5                  A   412    	PUSH	BC
+04480D 33                  A   413    	INC	SP
+04480E F1                  A   414    	POP	AF
+04480F 17ED62              A   415    	SEXT	HL
+044812 E5                  A   416    	PUSH	HL
+044813 C5                  A   417    	PUSH	BC
+044814 33                  A   418    	INC	SP
+044815 E1                  A   419    	POP	HL
+044816 33                  A   420    	INC	SP
+044817 33                  A   421    	INC	SP
+044818 7D                  A   422    	LD	A,L
+044819 ED3982              A   423    	OUT0	(130),A
+                           A   424    ;   48		timer0 = 0;
+                           A   425    .LINE 48
+                           A   426    
+04481C 01000000            A   427    	LD	BC,0
+044820 ED43 3C 56 04       A   428    	LD	(_timer0),BC
+                           A   429    ;   49	    TMR0_CTL = ctl;
+                           A   430    .LINE 49
+                           A   431    
+044825 DD7EFE              A   432    	LD	A,(IX+%FFFFFFFE)
+044828 ED3980              A   433    	OUT0	(128),A
+                           A   434    ;   50	}
+                           A   435    .LINE 50
+                           A   436    
+04482B DDF9                A   437    	LD	SP,IX
+04482D DDE1                A   438    	POP	IX
+04482F C9                  A   439    	RET	
+                           A   440    
+                           A   441    
+                           A   442    ;**************************** _timer0_begin ***
+                           A   443    ;Name                         Addr/Register   S
+                           A   444    ;_timer0                             IMPORT    
+                           A   445    ;__timer0_prevhandler                STATIC    
+                           A   446    ;_timer0_handler                     IMPORT  --
+                           A   447    ;_mos_setintvector                   IMPORT  --
+                           A   448    ;ctl                                   IX-2    
+                           A   449    ;clkbits                               IX-1    
+                           A   450    ;clk_divider                           IX+9    
+                           A   451    ;reload_value                          IX+6    
+                           A   452    
+                           A   453    
+                           A   454    ; Stack Frame Size: 14 (bytes)
+                           A   455    ;       Spill Code: 0 (instruction)
+                           A   456    
+                           A   457    
+                           A   458    .ENDFUNC "timer0_begin",50,"_timer0_begin"
+                           A   459    ;   51	
+                           A   460    ;   52	void timer0_end(void)
+                           A   461    ;   53	{
+044830                     A   462    _timer0_end:
+                           A   463    .DEFINE "_timer0_end"
+                           A   464    
+                           A   465    .VALUE _timer0_end
+                           A   466    
+                           A   467    .CLASS 2
+                           A   468    
+                           A   469    .TYPE 65
+                           A   470    
+                           A   471    .ENDEF
+                           A   472    
+                           A   473    .BEGFUNC "timer0_end",53,"_timer0_end"
+                           A   474    
+044830 DDE5                A   475    	PUSH	IX
+044832 DD210000 00         A   476    	LD	IX,0
+044837 DD39                A   477    	ADD	IX,SP
+                           A   478    ;   54		TMR0_CTL = 0x00;
+                           A   479    .LINE 54
+                           A   480    
+044839 AF                  A   481    	XOR	A,A
+04483A ED3980              A   482    	OUT0	(128),A
+                           A   483    ;   55		TMR0_RR_L = 0x00;
+                           A   484    .LINE 55
+                           A   485    
+04483D AF                  A   486    	XOR	A,A
+04483E ED3981              A   487    	OUT0	(129),A
+                           A   488    ;   56		TMR0_RR_H = 0x00;
+                           A   489    .LINE 56
+                           A   490    
+044841 AF                  A   491    	XOR	A,A
+044842 ED3982              A   492    	OUT0	(130),A
+                           A   493    ;   57		mos_setintvector(PRT0_IVECT, _timer
+                           A   494    .LINE 57
+                           A   495    
+044845 ED4B 48 63 04       A   496    	LD	BC,(__timer0_prevhandler)
+04484A C5                  A   497    	PUSH	BC
+04484B 010A0000            A   498    	LD	BC,10
+04484F C5                  A   499    	PUSH	BC
+044850 CD AC 46 04         A   500    	CALL	_mos_setintvector
+044854 C1                  A   501    	POP	BC
+044855 C1                  A   502    	POP	BC
+                           A   503    ;   58		timer0 = 0;
+                           A   504    .LINE 58
+                           A   505    
+044856 01000000            A   506    	LD	BC,0
+04485A ED43 3C 56 04       A   507    	LD	(_timer0),BC
+                           A   508    ;   59	}
+                           A   509    .LINE 59
+                           A   510    
+04485F DDF9                A   511    	LD	SP,IX
+044861 DDE1                A   512    	POP	IX
+044863 C9                  A   513    	RET	
+                           A   514    
+                           A   515    
+                           A   516    ;**************************** _timer0_end *****
+                           A   517    ;Name                         Addr/Register   S
+                           A   518    ;_timer0                             IMPORT    
+                           A   519    ;__timer0_prevhandler                STATIC    
+                           A   520    ;_mos_setintvector                   IMPORT  --
+                           A   521    
+                           A   522    
+                           A   523    ; Stack Frame Size: 6 (bytes)
+                           A   524    ;       Spill Code: 0 (instruction)
+                           A   525    
+                           A   526    
+                           A   527    .ENDFUNC "timer0_end",59,"_timer0_end"
+                           A   528    ;   60	
+                           A   529    ;   61	void *_timer1_prevhandler;				
+                           A   530    ;   62	
+                           A   531    ;   63	// start timer1 on a millisecond interv
+                           A   532    ;   64	// this function registers an interrupt
+                           A   533    ;   65	
+                           A   534    ;   66	void timer1_begin (int reload_value, in
+044864                     A   535    _timer1_begin:
+                           A   536    .DEFINE "_timer1_begin"
+                           A   537    
+                           A   538    .VALUE _timer1_begin
+                           A   539    
+                           A   540    .CLASS 2
+                           A   541    
+                           A   542    .TYPE 65
+                           A   543    
+                           A   544    .ENDEF
+                           A   545    
+                           A   546    .BEGFUNC "timer1_begin",66,"_timer1_begin"
+                           A   547    
+                           A   548    .LINE 66
+                           A   549    
+                           A   550    .DEFINE "reload_value"
+                           A   551    
+                           A   552    .CLASS 65
+                           A   553    
+                           A   554    .VALUE 6
+                           A   555    
+                           A   556    .TYPE 4
+                           A   557    
+                           A   558    .ENDEF
+                           A   559    
+                           A   560    .DEFINE "clk_divider"
+                           A   561    
+                           A   562    .CLASS 65
+                           A   563    
+                           A   564    .VALUE 9
+                           A   565    
+                           A   566    .TYPE 4
+                           A   567    
+                           A   568    .ENDEF
+                           A   569    
+                           A   570    .DEFINE "clkbits"
+                           A   571    
+                           A   572    .CLASS 65
+                           A   573    
+                           A   574    .VALUE -1
+                           A   575    
+                           A   576    .TYPE 12
+                           A   577    
+                           A   578    .ENDEF
+                           A   579    
+                           A   580    .DEFINE "ctl"
+                           A   581    
+                           A   582    .CLASS 65
+                           A   583    
+                           A   584    .VALUE -2
+                           A   585    
+                           A   586    .TYPE 12
+                           A   587    
+                           A   588    .ENDEF
+                           A   589    
+044864 DDE5                A   590    	PUSH	IX
+044866 DD210000 00         A   591    	LD	IX,0
+04486B DD39                A   592    	ADD	IX,SP
+04486D 3B                  A   593    	DEC	SP
+04486E 3B                  A   594    	DEC	SP
+                           A   595    ;   67	    
+                           A   596    ;   68		unsigned char clkbits = 0;
+                           A   597    .LINE 68
+                           A   598    
+04486F DD36FF00            A   599    	LD	(IX+%FFFFFFFF),%0
+                           A   600    ;   69	    unsigned char ctl;
+                           A   601    ;   70	
+                           A   602    ;   71	    _timer1_prevhandler = mos_setintvec
+                           A   603    .LINE 71
+                           A   604    
+044873 01 D4 49 04         A   605    	LD	BC,_timer1_handler
+044877 C5                  A   606    	PUSH	BC
+044878 010C0000            A   607    	LD	BC,12
+04487C C5                  A   608    	PUSH	BC
+04487D CD AC 46 04         A   609    	CALL	_mos_setintvector
+044881 C1                  A   610    	POP	BC
+044882 C1                  A   611    	POP	BC
+044883 22 4B 63 04         A   612    	LD	(__timer1_prevhandler),HL
+                           A   613    ;   72	
+                           A   614    ;   73	    switch (clk_divider) {
+                           A   615    .LINE 73
+                           A   616    
+044887 DD0709              A   617    	LD	BC,(IX+%9)
+04488A                     A   618    L__8:
+04488A 11400000            A   619    	LD	DE,64
+04488E C5E1                A   620    	LD	HL,BC
+044890 B7                  A   621    	OR	A,A
+044891 ED52                A   622    	SBC	HL,DE
+044893 28 43               A   623    	JR	Z,L_9
+044895 21400000            A   624    	LD	HL,64
+044899 B7                  A   625    	OR	A,A
+04489A ED42                A   626    	SBC	HL,BC
+04489C 38 21               A   627    	JR	C,L__10
+04489E 11100000            A   628    	LD	DE,16
+0448A2 C5E1                A   629    	LD	HL,BC
+0448A4 B7                  A   630    	OR	A,A
+0448A5 ED52                A   631    	SBC	HL,DE
+0448A7 28 29               A   632    	JR	Z,L_8
+0448A9 21100000            A   633    	LD	HL,16
+0448AD B7                  A   634    	OR	A,A
+0448AE ED42                A   635    	SBC	HL,BC
+0448B0 38 30               A   636    	JR	C,L_11
+0448B2 11040000            A   637    	LD	DE,4
+0448B6 C5E1                A   638    	LD	HL,BC
+0448B8 B7                  A   639    	OR	A,A
+0448B9 ED52                A   640    	SBC	HL,DE
+0448BB 28 0F               A   641    	JR	Z,L_7
+0448BD 18 23               A   642    	JR	L_11
+0448BF                     A   643    L__10:
+0448BF 11000100            A   644    	LD	DE,256
+0448C3 C5E1                A   645    	LD	HL,BC
+0448C5 B7                  A   646    	OR	A,A
+0448C6 ED52                A   647    	SBC	HL,DE
+0448C8 28 14               A   648    	JR	Z,L_10
+0448CA 18 16               A   649    	JR	L_11
+                           A   650    ;   74	        case 4:   clkbits = 0x00; break
+0448CC                     A   651    L_7:
+                           A   652    .LINE 74
+                           A   653    
+0448CC DD36FF00            A   654    	LD	(IX+%FFFFFFFF),%0
+0448D0 18 10               A   655    	JR	L_11
+                           A   656    ;   75	        case 16:  clkbits = 0x04; break
+0448D2                     A   657    L_8:
+                           A   658    .LINE 75
+                           A   659    
+0448D2 DD36FF04            A   660    	LD	(IX+%FFFFFFFF),%4
+0448D6 18 0A               A   661    	JR	L_11
+                           A   662    ;   76	        case 64:  clkbits = 0x08; break
+0448D8                     A   663    L_9:
+                           A   664    .LINE 76
+                           A   665    
+0448D8 DD36FF08            A   666    	LD	(IX+%FFFFFFFF),%8
+0448DC 18 04               A   667    	JR	L_11
+                           A   668    ;   77	        case 256: clkbits = 0x0C; break
+0448DE                     A   669    L_10:
+                           A   670    .LINE 77
+                           A   671    
+0448DE DD36FF0C            A   672    	LD	(IX+%FFFFFFFF),%C
+                           A   673    ;   78	    }
+0448E2                     A   674    L_11:
+                           A   675    .LINE 78
+                           A   676    
+                           A   677    ;   79	    ctl = 0x53 | clkbits; // Continuous
+                           A   678    .LINE 79
+                           A   679    
+0448E2 DD7EFF              A   680    	LD	A,(IX+%FFFFFFFF)
+0448E5 F653                A   681    	OR	A,%53
+0448E7 DD77FE              A   682    	LD	(IX+%FFFFFFFE),A
+                           A   683    ;   80	
+                           A   684    ;   81	    TMR1_CTL = 0x00; // Disable the tim
+                           A   685    .LINE 81
+                           A   686    
+0448EA AF                  A   687    	XOR	A,A
+0448EB ED3983              A   688    	OUT0	(131),A
+                           A   689    ;   82	    TMR1_RR_L = (unsigned char)(reload_
+                           A   690    .LINE 82
+                           A   691    
+0448EE DD7E06              A   692    	LD	A,(IX+%6)
+0448F1 ED3984              A   693    	OUT0	(132),A
+                           A   694    ;   83	    TMR1_RR_H = (unsigned char)(reload_
+                           A   695    .LINE 83
+                           A   696    
+0448F4 DD0706              A   697    	LD	BC,(IX+%6)
+0448F7 3B                  A   698    	DEC	SP
+0448F8 C5                  A   699    	PUSH	BC
+0448F9 33                  A   700    	INC	SP
+0448FA F1                  A   701    	POP	AF
+0448FB 17ED62              A   702    	SEXT	HL
+0448FE E5                  A   703    	PUSH	HL
+0448FF C5                  A   704    	PUSH	BC
+044900 33                  A   705    	INC	SP
+044901 E1                  A   706    	POP	HL
+044902 33                  A   707    	INC	SP
+044903 33                  A   708    	INC	SP
+044904 7D                  A   709    	LD	A,L
+044905 ED3985              A   710    	OUT0	(133),A
+                           A   711    ;   84		timer1 = 0;
+                           A   712    .LINE 84
+                           A   713    
+044908 01000000            A   714    	LD	BC,0
+04490C ED43 3F 56 04       A   715    	LD	(_timer1),BC
+                           A   716    ;   85	    TMR1_CTL = ctl;
+                           A   717    .LINE 85
+                           A   718    
+044911 DD7EFE              A   719    	LD	A,(IX+%FFFFFFFE)
+044914 ED3983              A   720    	OUT0	(131),A
+                           A   721    ;   86	}
+                           A   722    .LINE 86
+                           A   723    
+044917 DDF9                A   724    	LD	SP,IX
+044919 DDE1                A   725    	POP	IX
+04491B C9                  A   726    	RET	
+                           A   727    
+                           A   728    
+                           A   729    ;**************************** _timer1_begin ***
+                           A   730    ;Name                         Addr/Register   S
+                           A   731    ;_timer1                             IMPORT    
+                           A   732    ;__timer1_prevhandler                STATIC    
+                           A   733    ;_timer1_handler                     IMPORT  --
+                           A   734    ;_mos_setintvector                   IMPORT  --
+                           A   735    ;ctl                                   IX-2    
+                           A   736    ;clkbits                               IX-1    
+                           A   737    ;clk_divider                           IX+9    
+                           A   738    ;reload_value                          IX+6    
+                           A   739    
+                           A   740    
+                           A   741    ; Stack Frame Size: 14 (bytes)
+                           A   742    ;       Spill Code: 0 (instruction)
+                           A   743    
+                           A   744    
+                           A   745    .ENDFUNC "timer1_begin",86,"_timer1_begin"
+                           A   746    ;   87	
+                           A   747    ;   88	void timer1_end(void)
+                           A   748    ;   89	{
+04491C                     A   749    _timer1_end:
+                           A   750    .DEFINE "_timer1_end"
+                           A   751    
+                           A   752    .VALUE _timer1_end
+                           A   753    
+                           A   754    .CLASS 2
+                           A   755    
+                           A   756    .TYPE 65
+                           A   757    
+                           A   758    .ENDEF
+                           A   759    
+                           A   760    .BEGFUNC "timer1_end",89,"_timer1_end"
+                           A   761    
+04491C DDE5                A   762    	PUSH	IX
+04491E DD210000 00         A   763    	LD	IX,0
+044923 DD39                A   764    	ADD	IX,SP
+                           A   765    ;   90		TMR1_CTL = 0x00;
+                           A   766    .LINE 90
+                           A   767    
+044925 AF                  A   768    	XOR	A,A
+044926 ED3983              A   769    	OUT0	(131),A
+                           A   770    ;   91		TMR1_RR_L = 0x00;
+                           A   771    .LINE 91
+                           A   772    
+044929 AF                  A   773    	XOR	A,A
+04492A ED3984              A   774    	OUT0	(132),A
+                           A   775    ;   92		TMR1_RR_H = 0x00;
+                           A   776    .LINE 92
+                           A   777    
+04492D AF                  A   778    	XOR	A,A
+04492E ED3985              A   779    	OUT0	(133),A
+                           A   780    ;   93		mos_setintvector(PRT1_IVECT, _timer
+                           A   781    .LINE 93
+                           A   782    
+044931 ED4B 4B 63 04       A   783    	LD	BC,(__timer1_prevhandler)
+044936 C5                  A   784    	PUSH	BC
+044937 010C0000            A   785    	LD	BC,12
+04493B C5                  A   786    	PUSH	BC
+04493C CD AC 46 04         A   787    	CALL	_mos_setintvector
+044940 C1                  A   788    	POP	BC
+044941 C1                  A   789    	POP	BC
+                           A   790    ;   94		timer1 = 0;
+                           A   791    .LINE 94
+                           A   792    
+044942 01000000            A   793    	LD	BC,0
+044946 ED43 3F 56 04       A   794    	LD	(_timer1),BC
+                           A   795    ;   95	}
+                           A   796    .LINE 95
+                           A   797    
+04494B DDF9                A   798    	LD	SP,IX
+04494D DDE1                A   799    	POP	IX
+04494F C9                  A   800    	RET	
+                           A   801    
+                           A   802    
+                           A   803    ;**************************** _timer1_end *****
+                           A   804    ;Name                         Addr/Register   S
+                           A   805    ;_timer1                             IMPORT    
+                           A   806    ;__timer1_prevhandler                STATIC    
+                           A   807    ;_mos_setintvector                   IMPORT  --
+                           A   808    
+                           A   809    
+                           A   810    ; Stack Frame Size: 6 (bytes)
+                           A   811    ;       Spill Code: 0 (instruction)
+                           A   812    
+                           A   813    
+                           A   814    .ENDFUNC "timer1_end",95,"_timer1_end"
+                           A   815    ;   96	
+                           A   816    ;   97	// delay for number of ms using TMR0
+                           A   817    ;   98	// this routine doesn't use the interru
+                           A   818    ;   99	void delayms(int ms)
+                           A   819    ;  100	{
+044950                     A   820    _delayms:
+                           A   821    .DEFINE "_delayms"
+                           A   822    
+                           A   823    .VALUE _delayms
+                           A   824    
+                           A   825    .CLASS 2
+                           A   826    
+                           A   827    .TYPE 65
+                           A   828    
+                           A   829    .ENDEF
+                           A   830    
+                           A   831    .BEGFUNC "delayms",100,"_delayms"
+                           A   832    
+                           A   833    .LINE 100
+                           A   834    
+                           A   835    .DEFINE "ms"
+                           A   836    
+                           A   837    .CLASS 65
+                           A   838    
+                           A   839    .VALUE 6
+                           A   840    
+                           A   841    .TYPE 4
+                           A   842    
+                           A   843    .ENDEF
+                           A   844    
+                           A   845    .DEFINE "timer0"
+                           A   846    
+                           A   847    .CLASS 65
+                           A   848    
+                           A   849    .VALUE -2
+                           A   850    
+                           A   851    .TYPE 13
+                           A   852    
+                           A   853    .ENDEF
+                           A   854    
+044950 DDE5                A   855    	PUSH	IX
+044952 DD210000 00         A   856    	LD	IX,0
+044957 DD39                A   857    	ADD	IX,SP
+044959 3B                  A   858    	DEC	SP
+04495A 3B                  A   859    	DEC	SP
+                           A   860    ;  101		unsigned short rr;
+                           A   861    ;  102		UINT16 timer0;
+                           A   862    ;  103	
+                           A   863    ;  104		rr = TMR0_COUNTER_1ms - 19;	// 1,7%
+                           A   864    ;  105		
+                           A   865    ;  106		TMR0_CTL = 0x00;	// disable time
+                           A   866    .LINE 106
+                           A   867    
+04495B AF                  A   868    	XOR	A,A
+04495C ED3980              A   869    	OUT0	(128),A
+                           A   870    ;  107		
+                           A   871    ;  108		while(ms)
+                           A   872    .LINE 108
+                           A   873    
+04495F 18 47               A   874    	JR	L_18
+044961                     A   875    L_19:
+                           A   876    ;  109		{	
+                           A   877    ;  110			TMR0_RR_H = (unsigned char)(rr 
+                           A   878    .LINE 110
+                           A   879    
+044961 3E04                A   880    	LD	A,%4
+044963 ED3982              A   881    	OUT0	(130),A
+                           A   882    ;  111			TMR0_RR_L = (unsigned char)(rr)
+                           A   883    .LINE 111
+                           A   884    
+044966 3E6D                A   885    	LD	A,%6D
+044968 ED3981              A   886    	OUT0	(129),A
+                           A   887    ;  112					
+                           A   888    ;  113			TMR0_CTL = 0x87; // enable, sin
+                           A   889    .LINE 113
+                           A   890    
+04496B 3E87                A   891    	LD	A,%87
+04496D ED3980              A   892    	OUT0	(128),A
+                           A   893    ;  114			do
+044970                     A   894    L_14:
+                           A   895    .LINE 114
+                           A   896    
+                           A   897    ;  115			{
+                           A   898    ;  116				timer0 = TMR0_DR_L;
+                           A   899    .LINE 116
+                           A   900    
+044970 ED3881              A   901    	IN0	A,(129)
+044973 4F                  A   902    	LD	C,A
+044974 0600                A   903    	LD	B,%0
+044976 C5E1                A   904    	LD	HL,BC
+044978 DD75FE              A   905    	LD	(IX+%FFFFFFFE),L
+04497B DD74FF              A   906    	LD	(IX+%FFFFFFFF),H
+                           A   907    ;  117				timer0 = timer0 | (TMR0_DR_
+                           A   908    .LINE 117
+                           A   909    
+04497E ED3882              A   910    	IN0	A,(130)
+044981 4F                  A   911    	LD	C,A
+044982 C5E1                A   912    	LD	HL,BC
+044984 65                  A   913    	LD	H,L
+044985 2E00                A   914    	LD	L,%0
+044987 DD07FE              A   915    	LD	BC,(IX+%FFFFFFFE)
+04498A CD 45 55 04         A   916    	CALL	__sor
+04498E DD75FE              A   917    	LD	(IX+%FFFFFFFE),L
+044991 DD74FF              A   918    	LD	(IX+%FFFFFFFF),H
+                           A   919    ;  118			}
+                           A   920    ;  119			while(timer0);
+                           A   921    .LINE 119
+                           A   922    
+044994 49010000            A   923    	LD.LIS	BC,0
+044998 DD27FE              A   924    	LD	HL,(IX+%FFFFFFFE)
+04499B B7                  A   925    	OR	A,A
+04499C 40ED42              A   926    	SBC.SIS	HL,BC
+04499F 20 CF               A   927    	JR	NZ,L_14
+                           A   928    ;  120			ms--;
+                           A   929    .LINE 120
+                           A   930    
+0449A1 DD0706              A   931    	LD	BC,(IX+%6)
+0449A4 0B                  A   932    	DEC	BC
+0449A5 DD0F06              A   933    	LD	(IX+%6),BC
+                           A   934    ;  121		}
+0449A8                     A   935    L_18:
+                           A   936    .LINE 121
+                           A   937    
+0449A8 01000000            A   938    	LD	BC,0
+0449AC DD2706              A   939    	LD	HL,(IX+%6)
+0449AF B7                  A   940    	OR	A,A
+0449B0 ED42                A   941    	SBC	HL,BC
+0449B2 20 AD               A   942    	JR	NZ,L_19
+                           A   943    .LINE 122
+                           A   944    
+0449B4 DDF9                A   945    	LD	SP,IX
+0449B6 DDE1                A   946    	POP	IX
+0449B8 C9                  A   947    	RET	
+                           A   948    
+                           A   949    
+                           A   950    ;**************************** _delayms ********
+                           A   951    ;Name                         Addr/Register   S
+                           A   952    ;timer0                                IX-2    
+                           A   953    ;ms                                    IX+6    
+                           A   954    
+                           A   955    
+                           A   956    ; Stack Frame Size: 11 (bytes)
+                           A   957    ;       Spill Code: 0 (instruction)
+                           A   958    
+                           A   959    
+                           A   960    .ENDFUNC "delayms",122,"_delayms"
+                           A   961    	XREF _timer1_handler:ROM
+                           A   962    	XREF _timer1:ROM
+                           A   963    	XREF _timer0_handler:ROM
+                           A   964    	XREF _timer0:ROM
+                           A   965    	XREF _mos_setintvector:ROM
+                           A   966    	XREF __sor:ROM
+                           A   967    	XDEF _delayms
+                           A   968    	XDEF _timer1_end
+                           A   969    	XDEF _timer1_begin
+                           A   970    	XDEF _timer0_end
+                           A   971    	XDEF _timer0_begin
+                           A   972    	XDEF __timer1_prevhandler
+                           A   973    	XDEF __timer0_prevhandler
+                           A   974    	END
+
+
+Errors: 0
+Warnings: 0
+Lines Assembled: 975

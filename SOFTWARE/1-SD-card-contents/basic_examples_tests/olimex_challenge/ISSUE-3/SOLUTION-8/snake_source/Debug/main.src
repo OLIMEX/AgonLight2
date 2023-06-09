@@ -1,0 +1,12025 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -nomodsect -optspeed -noreduceopt -nopadbranch -debug
+; -peephole -globalopt -localcse -const=ROM 
+	FILE	"..\main.c"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",8
+.DEFINE "baudRate"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "dataBits"
+.VALUE 3
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "stopBits"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "parity"
+.VALUE 5
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flowcontrol"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "eir"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",15
+.DEFINE "fs"
+.VALUE 0
+.CLASS 8
+.TYPE 46
+.ENDEF
+.DEFINE "id"
+.VALUE 3
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attr"
+.VALUE 5
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "stat"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "sclust"
+.VALUE 7
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "objsize"
+.VALUE 11
+.CLASS 8
+.TYPE 15
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",36
+.DEFINE "obj"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME4"
+.TYPE 8
+.ENDEF
+.DEFINE "flag"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "err"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "fptr"
+.VALUE 17
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "clust"
+.VALUE 21
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "sect"
+.VALUE 25
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "dir_sect"
+.VALUE 29
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "dir_ptr"
+.VALUE 33
+.CLASS 8
+.TYPE 46
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",8
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "y"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "width"
+.VALUE 4
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "height"
+.VALUE 6
+.CLASS 8
+.TYPE 13
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",1227
+.DEFINE "screen_width"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "screen_height"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "current_food"
+.VALUE 4
+.CLASS 8
+.TAG "NONAME6"
+.TYPE 8
+.ENDEF
+.DEFINE "score"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "state"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "snake_length"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "snake"
+.VALUE 15
+.CLASS 8
+.DIM 150
+.TAG "NONAME6"
+.TYPE 104
+.ENDEF
+.DEFINE "vel_x"
+.VALUE 1215
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "vel_y"
+.VALUE 1216
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "game_over"
+.VALUE 1217
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_hor_width"
+.VALUE 1218
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_hor_height"
+.VALUE 1219
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_ver_width"
+.VALUE 1220
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_ver_height"
+.VALUE 1221
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_cor_width"
+.VALUE 1222
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "seg_cor_height"
+.VALUE 1223
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "bg_tile_width"
+.VALUE 1224
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "bg_tile_height"
+.VALUE 1225
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tick"
+.VALUE 1226
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",5
+.DEFINE "bmp_width"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "bmp_height"
+.VALUE 2
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "bmp_bitdepth"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "NONAME8"
+	SEGMENT BSS
+_game:
+	DS	1227
+.DEFINE "game"
+.ALIAS "_game"
+.CLASS 83
+.VALUE _game
+.TAG "NONAME7"
+.TYPE 8
+.ENDEF
+;    1	//Copyright HeathenUK 2023, others' copyrights (Envenomator, Dean Belfield, etc.) unaffected.
+;    2	
+;    3	#include <stdio.h>
+;    4	#include <stdlib.h>
+;    5	#include <ctype.h>
+;    6	//#include <stdint.h>
+;    7	#include <string.h>
+;    8	#include <eZ80.h>
+;    9	#include <defines.h>
+;   10	#include "./main.h"
+;   11	#include "./mos-interface.h"
+;   12	#include "./vdp.h"
+;   13	#include "./agontimer.h"
+;   14	
+;   15	extern void write16bit(uint16_t w);
+;   16	extern void write32bit(uint32_t w);
+;   17	
+;   18	game_state game;
+	SEGMENT CODE
+;   19	
+;   20	//#define game.screen_width 640
+;   21	//#define game.screen_height 480
+;   22	
+;   23	void delay_secs(UINT16 ticks_end) { //1 sec ticks
+_delay_secs:
+.DEFINE "_delay_secs"
+
+.VALUE _delay_secs
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "delay_secs",23,"_delay_secs"
+
+.LINE 23
+
+.DEFINE "ticks_end"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "ticks"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 15
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;   24		
+;   25		UINT32 ticks = 0;
+.LINE 25
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFFC),BC
+	LD	(IX+%FFFFFFFF),A
+;   26		ticks_end *= 60;
+.LINE 26
+
+	LD.LIS	HL,60
+	LD	BC,(IX+%6)
+	CALL	__smulu
+	LD	(IX+%6),L
+	LD	(IX+%7),H
+;   27		while(true) {
+L_3:
+.LINE 27
+
+;   28			
+;   29			waitvblank();
+.LINE 29
+
+	CALL	_waitvblank
+;   30			ticks++;
+.LINE 30
+
+	LD	HL,(IX+%FFFFFFFC)
+	LD	E,(IX+%FFFFFFFF)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFFC),HL
+	LD	(IX+%FFFFFFFF),E
+;   31			if(ticks >= ticks_end) break;
+.LINE 31
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	BC,HL
+	XOR	A,A
+	LD	HL,(IX+%FFFFFFFC)
+	LD	E,(IX+%FFFFFFFF)
+	CALL	__lcmpu
+	JR	C,L_3
+;   32			
+;   33		}
+;   34		
+;   35	}
+.LINE 35
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _delay_secs ***************************
+;Name                         Addr/Register   Size   Type
+;_waitvblank                         IMPORT  -----   function
+;ticks                                 IX-4      4   variable
+;ticks_end                             IX+6      2   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "delay_secs",35,"_delay_secs"
+;   36	
+;   37	int min(int a, int b) {
+_min:
+.DEFINE "_min"
+
+.VALUE _min
+
+.CLASS 2
+
+.TYPE 68
+
+.ENDEF
+
+.BEGFUNC "min",37,"_min"
+
+.LINE 37
+
+.DEFINE "a"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "b"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   38	    if (a > b)
+.LINE 38
+
+	LD	BC,(IX+%6)
+	LD	HL,(IX+%9)
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__3
+	JP	PE,L_6
+	JR	L__4
+L__3:
+	JP	PO,L_6
+L__4:
+;   39	        return b;
+.LINE 39
+
+	LD	HL,(IX+%9)
+	JR	L_7
+L_6:
+;   40	    return a;
+.LINE 40
+
+	LD	HL,(IX+%6)
+;   41	}
+L_7:
+.LINE 41
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _min ***************************
+;Name                         Addr/Register   Size   Type
+;b                                     IX+9      3   parameter
+;a                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "min",41,"_min"
+;   42	
+;   43	int max(int a, int b) {
+_max:
+.DEFINE "_max"
+
+.VALUE _max
+
+.CLASS 2
+
+.TYPE 68
+
+.ENDEF
+
+.BEGFUNC "max",43,"_max"
+
+.LINE 43
+
+.DEFINE "a"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "b"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   44	    if (a > b)
+.LINE 44
+
+	LD	BC,(IX+%6)
+	LD	HL,(IX+%9)
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__7
+	JP	PE,L_9
+	JR	L__8
+L__7:
+	JP	PO,L_9
+L__8:
+;   45	        return a;
+.LINE 45
+
+	LD	HL,(IX+%6)
+	JR	L_10
+L_9:
+;   46	    return b;
+.LINE 46
+
+	LD	HL,(IX+%9)
+;   47	}
+L_10:
+.LINE 47
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _max ***************************
+;Name                         Addr/Register   Size   Type
+;b                                     IX+9      3   parameter
+;a                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "max",47,"_max"
+;   48	
+;   49	void clear_screen(uint8_t sprites) {
+_clear_screen:
+.DEFINE "_clear_screen"
+
+.VALUE _clear_screen
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "clear_screen",49,"_clear_screen"
+
+.LINE 49
+
+.DEFINE "sprites"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   50	
+;   51	    vdp_cls();
+.LINE 51
+
+	CALL	_vdp_cls
+;   52	    vdp_spriteActivateTotal(sprites);
+.LINE 52
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;   53	
+;   54	}
+.LINE 54
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _clear_screen ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteActivateTotal            IMPORT  -----   function
+;_vdp_cls                            IMPORT  -----   function
+;sprites                               IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "clear_screen",54,"_clear_screen"
+;   55	
+;   56	void refresh_screen(uint8_t sprites) {
+_refresh_screen:
+.DEFINE "_refresh_screen"
+
+.VALUE _refresh_screen
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "refresh_screen",56,"_refresh_screen"
+
+.LINE 56
+
+.DEFINE "sprites"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   57	
+;   58	    vdp_spriteActivateTotal(sprites);
+.LINE 58
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;   59	    vdp_spriteRefresh();
+.LINE 59
+
+	CALL	_vdp_spriteRefresh
+;   60	    vdp_spriteActivateTotal(0);
+.LINE 60
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;   61	
+;   62	}
+.LINE 62
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _refresh_screen ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteRefresh                  IMPORT  -----   function
+;_vdp_spriteActivateTotal            IMPORT  -----   function
+;sprites                               IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "refresh_screen",62,"_refresh_screen"
+;   63	
+;   64	void dump_sprites() {
+_dump_sprites:
+.DEFINE "_dump_sprites"
+
+.VALUE _dump_sprites
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "dump_sprites",64,"_dump_sprites"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   65	
+;   66	    vdp_spriteActivateTotal(0);
+.LINE 66
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;   67	    vdp_spriteRefresh();
+.LINE 67
+
+	CALL	_vdp_spriteRefresh
+;   68	
+;   69	}
+.LINE 69
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _dump_sprites ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteRefresh                  IMPORT  -----   function
+;_vdp_spriteActivateTotal            IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "dump_sprites",69,"_dump_sprites"
+;   70	
+;   71	bool isKthBitSet(uint8_t data, uint8_t k) {
+_isKthBitSet:
+.DEFINE "_isKthBitSet"
+
+.VALUE _isKthBitSet
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isKthBitSet",71,"_isKthBitSet"
+
+.LINE 71
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   72	    return (data & (1U << k)) != 0;
+.LINE 72
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,1
+	CALL	__ishl
+	LD	A,L
+	AND	A,(IX+%6)
+	JR	Z,L__14
+	LD	A,%1
+	JR	L__15
+L__14:
+	XOR	A,A
+L__15:
+;   73	}
+.LINE 73
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isKthBitSet ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isKthBitSet",73,"_isKthBitSet"
+;   74	
+;   75	bool isKthBitSet_16(uint16_t data, uint8_t k) {
+_isKthBitSet_16:
+.DEFINE "_isKthBitSet_16"
+
+.VALUE _isKthBitSet_16
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isKthBitSet_16",75,"_isKthBitSet_16"
+
+.LINE 75
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   76	    return (data & (1U << k)) != 0;
+.LINE 76
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,1
+	CALL	__ishl
+	LD	BC,(IX+%6)
+	CALL	__sand
+	LD.LIS	BC,0
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	Z,L__18
+	LD	A,%1
+	JR	L__19
+L__18:
+	XOR	A,A
+L__19:
+;   77	}
+.LINE 77
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isKthBitSet_16 ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      2   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isKthBitSet_16",77,"_isKthBitSet_16"
+;   78	
+;   79	bool isKthBitSet_24(uint24_t data, uint8_t k) {
+_isKthBitSet_24:
+.DEFINE "_isKthBitSet_24"
+
+.VALUE _isKthBitSet_24
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isKthBitSet_24",79,"_isKthBitSet_24"
+
+.LINE 79
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   80	    return (data & (1UL << k)) != 0;
+.LINE 80
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	CALL	__itol
+	LD	HL,BC
+	LD	BC,1
+	XOR	A,A
+	CALL	__lshl
+	LD	HL,BC
+	LD	E,A
+	LD	BC,(IX+%6)
+	XOR	A,A
+	CALL	__land
+	LD	BC,0
+	XOR	A,A
+	CALL	__lcmpu
+	JR	Z,L__22
+	LD	A,%1
+	JR	L__23
+L__22:
+	XOR	A,A
+L__23:
+;   81	}
+.LINE 81
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isKthBitSet_24 ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isKthBitSet_24",81,"_isKthBitSet_24"
+;   82	
+;   83	uint8_t setKthBit(uint8_t data, uint8_t k) {
+_setKthBit:
+.DEFINE "_setKthBit"
+
+.VALUE _setKthBit
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "setKthBit",83,"_setKthBit"
+
+.LINE 83
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   84	    return data | (1U << k);
+.LINE 84
+
+	LD	A,%1
+	LD	B,(IX+%9)
+	CALL	__bshl
+	OR	A,(IX+%6)
+;   85	}
+.LINE 85
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setKthBit ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "setKthBit",85,"_setKthBit"
+;   86	
+;   87	uint16_t setKthBit_16(uint16_t data, uint8_t k) {
+_setKthBit_16:
+.DEFINE "_setKthBit_16"
+
+.VALUE _setKthBit_16
+
+.CLASS 2
+
+.TYPE 77
+
+.ENDEF
+
+.BEGFUNC "setKthBit_16",87,"_setKthBit_16"
+
+.LINE 87
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   88	    return data | (1U << k);
+.LINE 88
+
+	LD	C,(IX+%9)
+	LD	B,%0
+	LD.LIS	HL,1
+	CALL	__sshl
+	LD	BC,(IX+%6)
+	CALL	__sor
+;   89	}
+.LINE 89
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setKthBit_16 ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      2   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "setKthBit_16",89,"_setKthBit_16"
+;   90	
+;   91	uint24_t setKthBit_24(uint24_t data, uint8_t k) {
+_setKthBit_24:
+.DEFINE "_setKthBit_24"
+
+.VALUE _setKthBit_24
+
+.CLASS 2
+
+.TYPE 78
+
+.ENDEF
+
+.BEGFUNC "setKthBit_24",91,"_setKthBit_24"
+
+.LINE 91
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   92	    return data | (1UL << k);
+.LINE 92
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,1
+	CALL	__ishl
+	LD	BC,(IX+%6)
+	CALL	__ior
+;   93	}
+.LINE 93
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setKthBit_24 ***************************
+;Name                         Addr/Register   Size   Type
+;k                                     IX+9      1   parameter
+;data                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "setKthBit_24",93,"_setKthBit_24"
+;   94	
+;   95	void play_sound(int channel, int vol, int duration, int frequency) {
+_play_sound:
+.DEFINE "_play_sound"
+
+.VALUE _play_sound
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "play_sound",95,"_play_sound"
+
+.LINE 95
+
+.DEFINE "channel"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "vol"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "duration"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "frequency"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   96	
+;   97	    putch(23);
+.LINE 97
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   98	    putch(0);
+.LINE 98
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   99	    putch(133);
+.LINE 99
+
+	LD	BC,133
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  100	
+;  101	    putch(channel);
+.LINE 101
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  102	    putch(0);
+.LINE 102
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  103	    putch(vol);
+.LINE 103
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  104	
+;  105	    write16bit(frequency);
+.LINE 105
+
+	LD	BC,(IX+%F)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  106	    write16bit(duration);
+.LINE 106
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  107	
+;  108	}
+.LINE 108
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _play_sound ***************************
+;Name                         Addr/Register   Size   Type
+;_write16bit                         IMPORT  -----   function
+;_putch                              IMPORT  -----   function
+;frequency                            IX+15      3   parameter
+;duration                             IX+12      3   parameter
+;vol                                   IX+9      3   parameter
+;channel                               IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "play_sound",108,"_play_sound"
+;  109	
+;  110	void twiddle_buffer(char* buffer, int width, int height) {
+_twiddle_buffer:
+.DEFINE "_twiddle_buffer"
+
+.VALUE _twiddle_buffer
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "twiddle_buffer",110,"_twiddle_buffer"
+
+.LINE 110
+
+.DEFINE "buffer"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "col"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rowPtr"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "oppositeRowPtr"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "tempRow"
+
+.CLASS 65
+
+.VALUE -12
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "row"
+
+.CLASS 65
+
+.VALUE -15
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+%FFFFFFE4
+	LD	SP,HL
+;  111	    int row, col;
+;  112	    char* rowPtr;
+;  113		char* oppositeRowPtr;
+;  114		char* tempRow = (char*)malloc(width * 4);
+.LINE 114
+
+	LD	HL,(IX+%9)
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	(IX+%FFFFFFE4),A
+	CALL	_malloc
+	LD	A,(IX+%FFFFFFE4)
+	POP	BC
+	LD	(IX+%FFFFFFF4),HL
+;  115	
+;  116	    //Iterate over each row
+;  117	    for (row = 0; row < height / 2; row++) {
+.LINE 117
+
+	LD	BC,0
+	LD	(IX+%FFFFFFF1),BC
+	JR	L_28
+L_26:
+;  118	        rowPtr = buffer + row * width * 4;
+.LINE 118
+
+	LD	HL,(IX+%FFFFFFF1)
+	LD	BC,(IX+%9)
+	CALL	__imuls
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFA),HL
+;  119	        oppositeRowPtr = buffer + (height - row - 1) * width * 4;
+.LINE 119
+
+	LD	BC,(IX+%FFFFFFF1)
+	LD	HL,(IX+%C)
+	OR	A,A
+	SBC	HL,BC
+	DEC	HL
+	LD	BC,(IX+%9)
+	CALL	__imuls
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFF7),HL
+;  120	
+;  121	        //Swap bytes within each row (BGRA to RGBA)
+;  122	        for (col = 0; col < width; col++) {
+.LINE 122
+
+	LD	BC,0
+	LD	(IX+%FFFFFFFD),BC
+	JR	L_25
+L_23:
+;  123	            tempRow[col * 4] = oppositeRowPtr[col * 4 + 2]; // R
+.LINE 123
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,(IX+%FFFFFFF7)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,DE
+	LD	A,(IY+%2)
+	LD	(HL),A
+;  124	            tempRow[col * 4 + 1] = oppositeRowPtr[col * 4 + 1]; // G
+.LINE 124
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	INC	HL
+	LD	A,(IY+%1)
+	LD	(HL),A
+;  125	            tempRow[col * 4 + 2] = oppositeRowPtr[col * 4]; // B
+.LINE 125
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,DE
+	INC	HL
+	INC	HL
+	LD	A,(IY)
+	LD	(HL),A
+;  126	            tempRow[col * 4 + 3] = oppositeRowPtr[col * 4 + 3]; // A
+.LINE 126
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	(IX+%FFFFFFEE),HL	; spill
+	LEA	HL,IY+%3
+	LD	(IX+%FFFFFFEB),HL	; spill
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	HL,(IX+%FFFFFFEB)	; unspill
+	LD	A,(HL)
+	LD	(IY+%3),A
+;  127	
+;  128	            oppositeRowPtr[col * 4] = rowPtr[col * 4 + 2]; // R
+.LINE 128
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,DE
+	LD	A,(IY+%2)
+	LD	(HL),A
+;  129	            oppositeRowPtr[col * 4 + 1] = rowPtr[col * 4 + 1]; // G
+.LINE 129
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,BC
+	INC	HL
+	LD	A,(IY+%1)
+	LD	(HL),A
+;  130	            oppositeRowPtr[col * 4 + 2] = rowPtr[col * 4]; // B
+.LINE 130
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,DE
+	INC	HL
+	INC	HL
+	LD	A,(IY)
+	LD	(HL),A
+;  131	            oppositeRowPtr[col * 4 + 3] = rowPtr[col * 4 + 3]; // A
+.LINE 131
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	(IX+%FFFFFFEE),HL	; spill
+	LEA	HL,IY+%3
+	LD	(IX+%FFFFFFE8),HL	; spill
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	HL,(IX+%FFFFFFE8)	; unspill
+	LD	A,(HL)
+	LD	(IY+%3),A
+;  132	
+;  133	            rowPtr[col * 4] = tempRow[col * 4]; // R
+.LINE 133
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,DE
+	LD	A,(IY)
+	LD	(HL),A
+;  134	            rowPtr[col * 4 + 1] = tempRow[col * 4 + 1]; // G
+.LINE 134
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,BC
+	INC	HL
+	LD	A,(IY+%1)
+	LD	(HL),A
+;  135	            rowPtr[col * 4 + 2] = tempRow[col * 4 + 2]; // B
+.LINE 135
+
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,DE
+	LD	IY,HL
+	LD	DE,BC
+	LD	HL,(IX+%FFFFFFFA)
+	ADD	HL,DE
+	INC	HL
+	INC	HL
+	LD	A,(IY+%2)
+	LD	(HL),A
+;  136	            rowPtr[col * 4 + 3] = tempRow[col * 4 + 3]; // A
+.LINE 136
+
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	(IX+%FFFFFFEE),HL	; spill
+	LEA	HL,IY+%3
+	LD	(IX+%FFFFFFE5),HL	; spill
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFA)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	HL,(IX+%FFFFFFE5)	; unspill
+	LD	A,(HL)
+	LD	(IY+%3),A
+	LD	BC,(IX+%FFFFFFFD)
+	INC	BC
+	LD	(IX+%FFFFFFFD),BC
+;  137	        }
+L_25:
+.LINE 137
+
+	LD	BC,(IX+%9)
+	LD	HL,(IX+%FFFFFFFD)
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L_23
+	LD	BC,(IX+%FFFFFFF1)
+	INC	BC
+	LD	(IX+%FFFFFFF1),BC
+;  138	    }
+L_28:
+.LINE 138
+
+	LD	BC,2
+	LD	HL,(IX+%C)
+	CALL	__idivs
+	LD	BC,HL
+	LD	HL,(IX+%FFFFFFF1)
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__31
+	JP	PE,L_26
+	JR	L__32
+L__31:
+	JP	PO,L_26
+L__32:
+;  139	}
+.LINE 139
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _twiddle_buffer ***************************
+;Name                         Addr/Register   Size   Type
+;_malloc                             IMPORT  -----   function
+;row                                  IX-15      3   variable
+;tempRow                              IX-12      3   variable
+;oppositeRowPtr                        IX-9      3   variable
+;rowPtr                                IX-6      3   variable
+;col                                   IX-3      3   variable
+;height                               IX+12      3   parameter
+;width                                 IX+9      3   parameter
+;buffer                                IX+6      3   parameter
+
+
+; Stack Frame Size: 43 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "twiddle_buffer",139,"_twiddle_buffer"
+;  140	
+;  141	
+;  142	bmp_info load_bmp_direct(const char * filename, UINT8 slot) { //Sends whole file
+_load_bmp_direct:
+.DEFINE "_load_bmp_direct"
+
+.VALUE _load_bmp_direct
+
+.CLASS 2
+
+.TAG "NONAME8"
+
+.TYPE 72
+
+.ENDEF
+
+.BEGFUNC "load_bmp_direct",142,"_load_bmp_direct"
+
+.LINE 142
+
+.DEFINE "filename"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "slot"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "file"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "image_buffer"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "buffer_index"
+
+.CLASS 65
+
+.VALUE -7
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "buffer_index"
+
+.CLASS 65
+
+.VALUE -11
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE -15
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE -19
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -23
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE -27
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "bit_depth"
+
+.CLASS 65
+
+.VALUE -31
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -35
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "return_info"
+
+.CLASS 65
+
+.VALUE -40
+
+.TAG "NONAME8"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "g"
+
+.CLASS 65
+
+.VALUE -41
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "b"
+
+.CLASS 65
+
+.VALUE -42
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "r"
+
+.CLASS 65
+
+.VALUE -43
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "color_table_size"
+
+.CLASS 65
+
+.VALUE -51
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "row_padding"
+
+.CLASS 65
+
+.VALUE -55
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "index"
+
+.CLASS 65
+
+.VALUE -56
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "buffer_index"
+
+.CLASS 65
+
+.VALUE -60
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "src"
+
+.CLASS 65
+
+.VALUE -63
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "fo"
+
+.CLASS 65
+
+.VALUE -66
+
+.TAG "NONAME5"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "non_pad_row"
+
+.CLASS 65
+
+.VALUE -68
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "biSize"
+
+.CLASS 65
+
+.VALUE -72
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "header"
+
+.CLASS 65
+
+.VALUE -126
+
+.DIM 54
+
+.TYPE 98
+
+.ENDEF
+
+.DEFINE "color_table"
+
+.CLASS 65
+
+.VALUE -1150
+
+.DIM 1024
+
+.TYPE 98
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-1170
+	ADD	HL,SP
+	LD	SP,HL
+;  143	
+;  144	    int32_t width, height, bit_depth, row_padding = 0, y, x, i;
+;  145	    uint8_t pixel[4], file, r, g, b, index;
+;  146	    char header[54], color_table[1024];
+;  147	    uint32_t pixel_value, color_table_size, bytes_per_row;
+;  148	    uint32_t biSize;
+;  149	    FIL * fo;
+;  150		bmp_info return_info;
+;  151	
+;  152	    char * src;
+;  153	    char * image_buffer;
+;  154		
+;  155		//if (game.vgm_file != NULL) parse_vgm_file(game.vgm_file);
+;  156		
+;  157		return_info.bmp_width = 0;
+.LINE 157
+
+	LD	(IX+%FFFFFFD8),%0
+	LD	(IX+%FFFFFFD9),%0
+;  158		return_info.bmp_height = 0;
+.LINE 158
+
+	LD	(IX+%FFFFFFDA),%0
+	LD	(IX+%FFFFFFDB),%0
+;  159		return_info.bmp_bitdepth = 0;	
+.LINE 159
+
+	LD	(IX+%FFFFFFDC),%0
+;  160	
+;  161	    file = mos_fopen(filename, fa_read);
+.LINE 161
+
+	LD	BC,1
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_mos_fopen
+	POP	BC
+	POP	BC
+	LD	(IX+%FFFFFFFF),A
+;  162	    if (!file) {
+.LINE 162
+
+	OR	A,A
+	JR	NZ,L_31
+;  163	        printf("Error: could not open %s.\r\n", filename);
+.LINE 163
+
+	LD	BC,___print_uputch
+	LD	(___print_xputch),BC
+	LD	BC,L__35
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+	LD	BC,L__36
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+;  164	        return return_info;
+.LINE 164
+
+	LEA	HL,IX+%6
+	LD	DE,(HL)
+	LEA	HL,IX+%FFFFFFD8
+	LD	BC,5
+	LDIR	
+	LD	HL,(IX+%6)
+	JR	L_93
+;  165	    }
+L_31:
+.LINE 165
+
+;  166	    fo = (FIL * ) mos_getfil(file);
+.LINE 166
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_getfil
+	POP	BC
+	LD	(IX+%FFFFFFBE),HL
+;  167	
+;  168	    mos_fread(file, header, 54);
+.LINE 168
+
+	LD	BC,54
+	PUSH	BC
+	PEA	IX+%FFFFFF82
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fread
+	POP	BC
+	POP	BC
+	POP	BC
+;  169	
+;  170	    biSize = * (uint32_t * ) & header[14];
+.LINE 170
+
+	LEA	IY,IX+%FFFFFF82
+	LEA	HL,IY+%E
+	LD	BC,(HL)
+	INC	HL
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	LD	(IX+%FFFFFFB8),BC
+	LD	(IX+%FFFFFFBB),A
+;  171	    width = * (INT32 * ) & header[18];
+.LINE 171
+
+	LEA	HL,IY+%12
+	LD	BC,(HL)
+	INC	HL
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	LD	(IX+%FFFFFFED),BC
+	LD	(IX+%FFFFFFF0),A
+;  172	    height = * (INT32 * ) & header[22];
+.LINE 172
+
+	LEA	HL,IY+%16
+	LD	BC,(HL)
+	INC	HL
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	LD	(IX+%FFFFFFE5),BC
+	LD	(IX+%FFFFFFE8),A
+;  173	    bit_depth = * (uint16_t * ) & header[28];
+.LINE 173
+
+	LEA	HL,IY+%1C
+	LD	BC,(HL)
+	CALL	__stoiu
+	XOR	A,A
+	LD	(IX+%FFFFFFE1),HL
+	LD	(IX+%FFFFFFE4),A
+;  174	    color_table_size = * (uint32_t * ) & header[46];
+.LINE 174
+
+	LEA	HL,IY+%2E
+	LD	BC,(HL)
+	INC	HL
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	LD	(IX+%FFFFFFCD),BC
+	LD	(IX+%FFFFFFD0),A
+;  175	
+;  176	    image_buffer = (char * ) malloc(width * height * (bit_depth / 8));
+.LINE 176
+
+	LD	HL,(IX+%FFFFFFED)
+	LD	BC,(IX+%FFFFFFE5)
+	CALL	__imulu
+	LD	BC,-1167	; spill
+	CALL	__istix
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,8
+	XOR	A,A
+	CALL	__ldivs
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-1164	; spill
+	CALL	__istix
+	LD	BC,-1167	; unspill
+	CALL	__ildix
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-1164	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	CALL	__imulu
+	PUSH	HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,IY
+	LD	BC,-1170
+	CALL	__istix
+	POP	HL
+	POP	BC
+	CALL	_malloc
+	PUSH	BC
+	LD	BC,-1170
+	PUSH	HL
+	CALL	__ildix
+	LD	IY,HL
+	POP	HL
+	POP	BC
+	POP	BC
+	LD	(IX+%FFFFFFFC),HL
+;  177	
+;  178	    if (color_table_size == 0 && bit_depth == 8) {
+.LINE 178
+
+	LD	HL,(IX+%FFFFFFCD)
+	LD	E,(IX+%FFFFFFD0)
+	LD	BC,0
+	XOR	A,A
+	CALL	__lcmpu
+	JR	NZ,L_40
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,8
+	XOR	A,A
+	CALL	__lcmps
+	JR	NZ,L_40
+;  179	        color_table_size = 256;
+.LINE 179
+
+	LD	BC,256
+	XOR	A,A
+	LD	(IX+%FFFFFFCD),BC
+	LD	(IX+%FFFFFFD0),A
+;  180	    }
+L_40:
+.LINE 180
+
+;  181	
+;  182	    if (color_table_size > 0) mos_fread(file, color_table, color_table_size * 4);
+.LINE 182
+
+	OR	A,A
+	SBC	HL,HL
+	LD	E,%0
+	LD	BC,(IX+%FFFFFFCD)
+	LD	A,(IX+%FFFFFFD0)
+	CALL	__lcmpu
+	JR	NC,L_39
+	LD	HL,(IX+%FFFFFFCD)
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	HL,IX
+	LD	BC,-1150
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fread
+	POP	BC
+	POP	BC
+	POP	BC
+;  183	
+;  184	    else if (biSize > 40) { //If for any reason there's yet more data in the header
+.LINE 184
+
+	JR	L_44
+L_39:
+	LD	HL,40
+	LD	BC,(IX+%FFFFFFB8)
+	LD	A,(IX+%FFFFFFBB)
+	CALL	__lcmpu
+	JR	NC,L_44
+;  185	
+;  186	        i = biSize - 40;
+.LINE 186
+
+	LD	HL,(IX+%FFFFFFB8)
+	LD	E,(IX+%FFFFFFBB)
+	LD	BC,16777176
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFE9),HL
+	LD	(IX+%FFFFFFEC),E
+;  187	        while (i--> 0) {
+.LINE 187
+
+	JR	L_35
+L_36:
+;  188	            mos_fgetc(file);
+.LINE 188
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	PUSH	BC
+	PUSH	HL
+	LD	HL,IY
+	LD	BC,-1170
+	CALL	__istix
+	POP	HL
+	POP	BC
+	CALL	_mos_fgetc
+	PUSH	BC
+	LD	BC,-1170
+	PUSH	HL
+	CALL	__ildix
+	LD	IY,HL
+	POP	HL
+	POP	BC
+	POP	BC
+;  189	        }
+L_35:
+.LINE 189
+
+	LD	HL,(IX+%FFFFFFE9)
+	LD	BC,-1159	; spill
+	CALL	__istix
+	LD	H,(IX+%FFFFFFEC)
+	PUSH	IY
+	LD	IY,-1161	; spill
+	LD	BC,IX	; spill
+	ADD	IY,BC
+	LD	(IY),H
+	POP	IY
+	LD	HL,(IX+%FFFFFFE9)
+	LD	E,(IX+%FFFFFFEC)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFE9),HL
+	LD	(IX+%FFFFFFEC),E
+	OR	A,A
+	SBC	HL,HL
+	LD	E,%0
+	PUSH	IY
+	LD	IY,-1160	; spill
+	LD	BC,IX	; spill
+	ADD	IY,BC
+	LD	(IY),H
+	LD	IY,-1161	; unspill
+	LD	BC,IX	; unspill
+	ADD	IY,BC
+	LD	H,(IY)
+	POP	IY
+	LD	A,H
+	PUSH	IY
+	LD	IY,-1160	; unspill
+	LD	BC,IX	; unspill
+	ADD	IY,BC
+	LD	H,(IY)
+	POP	IY
+	LD	BC,-1156	; spill
+	CALL	__istix
+	LD	BC,-1159	; unspill
+	CALL	__ildix
+	LD	BC,HL
+	PUSH	BC
+	LD	BC,-1156	; unspill
+	CALL	__ildix
+	POP	BC
+	CALL	__lcmps
+	JP	M,L_36
+;  190	
+;  191	    }
+L_44:
+.LINE 191
+
+;  192	
+;  193	    if ((bit_depth != 32) && (bit_depth != 24) && (bit_depth != 8)) {
+.LINE 193
+
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,32
+	XOR	A,A
+	CALL	__lcmps
+	JR	Z,L_45
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,24
+	XOR	A,A
+	CALL	__lcmps
+	JR	Z,L_45
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,8
+	XOR	A,A
+	CALL	__lcmps
+	JR	Z,L_45
+;  194	        printf("Error: unsupported bit depth (not 8, 24 or 32-bit).\n");
+.LINE 194
+
+	LD	BC,___print_uputch
+	LD	(___print_xputch),BC
+	LD	BC,L__45
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+;  195	        mos_fclose(file);
+.LINE 195
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fclose
+	POP	BC
+;  196	        return return_info;
+.LINE 196
+
+	LEA	HL,IX+%6
+	LD	DE,(HL)
+	LEA	HL,IX+%FFFFFFD8
+	LD	BC,5
+	LDIR	
+	LD	HL,(IX+%6)
+	JR	L_93
+;  197	    }
+L_45:
+.LINE 197
+
+;  198	
+;  199	    row_padding = (4 - (width * (bit_depth / 8)) % 4) % 4;
+.LINE 199
+
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,8
+	XOR	A,A
+	CALL	__ldivs
+	LD	BC,(IX+%FFFFFFED)
+	LD	A,(IX+%FFFFFFF0)
+	CALL	__lmuls
+	LD	BC,4
+	XOR	A,A
+	CALL	__lrems
+	LD	A,E
+	LD	BC,HL
+	LD	HL,4
+	LD	E,%0
+	CALL	__lsub
+	LD	BC,4
+	XOR	A,A
+	CALL	__lrems
+	LD	(IX+%FFFFFFC9),HL
+	LD	(IX+%FFFFFFCC),E
+;  200	
+;  201	    vdp_bitmapSelect(slot);
+.LINE 201
+
+	LD	C,(IX+%C)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapSelect
+	POP	BC
+;  202	    putch(23); // vdu_sys
+.LINE 202
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  203	    putch(27); // sprite command
+.LINE 203
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  204	    putch(1); // send data to selected bitmap
+.LINE 204
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  205	
+;  206	    write16bit(width);
+.LINE 206
+
+	LD	BC,(IX+%FFFFFFED)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  207	    write16bit(height);
+.LINE 207
+
+	LD	BC,(IX+%FFFFFFE5)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  208	
+;  209		if (bit_depth == 8) {
+.LINE 209
+
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,8
+	XOR	A,A
+	CALL	__lcmps
+	JR	NZ,L_91
+;  210			// Process 8-bit BMP image
+;  211			int buffer_index = 0; // Index for image_data_buffer
+.LINE 211
+
+	LD	BC,0
+	LD	(IX+%FFFFFFF9),BC
+;  212	
+;  213			for (y = height - 1; y >= 0; y--) {
+.LINE 213
+
+	LD	HL,(IX+%FFFFFFE5)
+	LD	E,(IX+%FFFFFFE8)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+	JR	L_62
+L_60:
+;  214				for (x = 0; x < width; x++) {
+.LINE 214
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFDD),BC
+	LD	(IX+%FFFFFFE0),A
+	JR	L_54
+L_52:
+;  215					index = (UINT8)mos_fgetc(file);
+.LINE 215
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	(IX+%FFFFFFC8),A
+;  216					b = color_table[index * 4];
+.LINE 216
+
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	HL,IX
+	LD	BC,-1150
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,-1153
+	LD	BC,IX
+	ADD	IY,BC
+	LD	(IY),HL
+	LD	HL,-1153
+	LD	BC,IX
+	ADD	HL,BC
+	LD	HL,(HL)
+	LD	A,(HL)
+	LD	(IX+%FFFFFFD6),A
+;  217					g = color_table[index * 4 + 1];
+.LINE 217
+
+	LD	HL,-1153
+	LD	BC,IX
+	ADD	HL,BC
+	LD	HL,(HL)
+	INC	HL
+	LD	A,(HL)
+	LD	(IX+%FFFFFFD7),A
+;  218					r = color_table[index * 4 + 2];
+.LINE 218
+
+	LD	HL,-1153
+	LD	BC,IX
+	ADD	HL,BC
+	LD	IY,(HL)
+	LEA	HL,IY+%2
+	LD	A,(HL)
+	LD	(IX+%FFFFFFD5),A
+;  219	
+;  220					// Store pixel data in the buffer
+;  221					image_buffer[buffer_index++] = b;
+.LINE 221
+
+	LD	BC,(IX+%FFFFFFF9)
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD6)
+	LD	(HL),A
+	LD	BC,(IX+%FFFFFFF9)
+	INC	BC
+	LD	(IX+%FFFFFFF9),BC
+;  222					image_buffer[buffer_index++] = g;
+.LINE 222
+
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD7)
+	LD	(HL),A
+	LD	BC,(IX+%FFFFFFF9)
+	INC	BC
+	LD	(IX+%FFFFFFF9),BC
+;  223					image_buffer[buffer_index++] = r;
+.LINE 223
+
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD5)
+	LD	(HL),A
+	LD	BC,(IX+%FFFFFFF9)
+	INC	BC
+	LD	(IX+%FFFFFFF9),BC
+;  224					image_buffer[buffer_index++] = 0xFF; //a
+.LINE 224
+
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	(HL),%FF
+	LD	BC,(IX+%FFFFFFF9)
+	INC	BC
+	LD	(IX+%FFFFFFF9),BC
+	LD	HL,(IX+%FFFFFFDD)
+	LD	E,(IX+%FFFFFFE0)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFDD),HL
+	LD	(IX+%FFFFFFE0),E
+;  225				}
+L_54:
+.LINE 225
+
+	LD	HL,(IX+%FFFFFFDD)
+	LD	E,(IX+%FFFFFFE0)
+	LD	BC,(IX+%FFFFFFED)
+	LD	A,(IX+%FFFFFFF0)
+	CALL	__lcmps
+	JP	M,L__56
+	JP	PE,L_52
+	JR	L__57
+L__56:
+	JP	PO,L_52
+L__57:
+;  226	
+;  227				for (i = 0; i < row_padding; i++) {
+.LINE 227
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFE9),BC
+	LD	(IX+%FFFFFFEC),A
+	JR	L_58
+L_56:
+;  228					mos_fgetc(file);
+.LINE 228
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	HL,(IX+%FFFFFFE9)
+	LD	E,(IX+%FFFFFFEC)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFE9),HL
+	LD	(IX+%FFFFFFEC),E
+;  229				}
+L_58:
+.LINE 229
+
+	LD	HL,(IX+%FFFFFFE9)
+	LD	E,(IX+%FFFFFFEC)
+	LD	BC,(IX+%FFFFFFC9)
+	LD	A,(IX+%FFFFFFCC)
+	CALL	__lcmps
+	JP	M,L__58
+	JP	PE,L_56
+	JR	L__59
+L__58:
+	JP	PO,L_56
+L__59:
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+;  230			}
+L_62:
+.LINE 230
+
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,0
+	XOR	A,A
+	CALL	__lcmps
+	JP	P,L__60
+	JP	PE,L_60
+	JR	L__61
+L__60:
+	JP	PO,L_60
+L__61:
+;  231			twiddle_buffer(image_buffer, width, height);
+.LINE 231
+
+	LD	BC,(IX+%FFFFFFE5)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFED)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_twiddle_buffer
+	POP	BC
+	POP	BC
+	POP	BC
+;  232			mos_puts(image_buffer, width * height * 4, 0);
+.LINE 232
+
+	LD	BC,0
+	PUSH	BC
+	LD	HL,(IX+%FFFFFFED)
+	LD	BC,(IX+%FFFFFFE5)
+	CALL	__imulu
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_mos_puts
+	POP	BC
+	POP	BC
+	POP	BC
+;  233		
+;  234		} else if (bit_depth == 24) {
+.LINE 234
+
+	JR	L_92
+L_91:
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,24
+	XOR	A,A
+	CALL	__lcmps
+	JR	NZ,L_89
+;  235	        // Process 24-bit BMP image
+;  236	        uint32_t buffer_index = 0; // Index for image_data_buffer
+.LINE 236
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFF5),BC
+	LD	(IX+%FFFFFFF8),A
+;  237	
+;  238	        for (y = height - 1; y >= 0; y--) {
+.LINE 238
+
+	LD	HL,(IX+%FFFFFFE5)
+	LD	E,(IX+%FFFFFFE8)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+	JR	L_80
+L_78:
+;  239	            for (x = 0; x < width; x++) {
+.LINE 239
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFDD),BC
+	LD	(IX+%FFFFFFE0),A
+	JR	L_72
+L_70:
+;  240	                b = (UINT8)mos_fgetc(file);
+.LINE 240
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	(IX+%FFFFFFD6),A
+;  241	                g = (UINT8)mos_fgetc(file);
+.LINE 241
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	(IX+%FFFFFFD7),A
+;  242	                r = (UINT8)mos_fgetc(file);
+.LINE 242
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	(IX+%FFFFFFD5),A
+;  243	
+;  244	                // Store pixel data in the buffer
+;  245	                image_buffer[buffer_index++] = b;
+.LINE 245
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD6)
+	LD	(HL),A
+	LD	HL,(IX+%FFFFFFF5)
+	LD	E,(IX+%FFFFFFF8)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFF5),HL
+	LD	(IX+%FFFFFFF8),E
+;  246	                image_buffer[buffer_index++] = g;
+.LINE 246
+
+	LD	BC,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD7)
+	LD	(HL),A
+	LD	HL,(IX+%FFFFFFF5)
+	LD	E,(IX+%FFFFFFF8)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFF5),HL
+	LD	(IX+%FFFFFFF8),E
+;  247	                image_buffer[buffer_index++] = r;
+.LINE 247
+
+	LD	BC,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	A,(IX+%FFFFFFD5)
+	LD	(HL),A
+	LD	HL,(IX+%FFFFFFF5)
+	LD	E,(IX+%FFFFFFF8)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFF5),HL
+	LD	(IX+%FFFFFFF8),E
+;  248	                image_buffer[buffer_index++] = 0xFF; // Fixed alpha value
+.LINE 248
+
+	LD	BC,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	LD	(HL),%FF
+	LD	HL,(IX+%FFFFFFF5)
+	LD	E,(IX+%FFFFFFF8)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFF5),HL
+	LD	(IX+%FFFFFFF8),E
+	LD	HL,(IX+%FFFFFFDD)
+	LD	E,(IX+%FFFFFFE0)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFDD),HL
+	LD	(IX+%FFFFFFE0),E
+;  249	            }
+L_72:
+.LINE 249
+
+	LD	HL,(IX+%FFFFFFDD)
+	LD	E,(IX+%FFFFFFE0)
+	LD	BC,(IX+%FFFFFFED)
+	LD	A,(IX+%FFFFFFF0)
+	CALL	__lcmps
+	JP	M,L__62
+	JP	PE,L_70
+	JR	L__63
+L__62:
+	JP	PO,L_70
+L__63:
+;  250	
+;  251	            for (i = 0; i < row_padding; i++) {
+.LINE 251
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFE9),BC
+	LD	(IX+%FFFFFFEC),A
+	JR	L_76
+L_74:
+;  252	                mos_fgetc(file);
+.LINE 252
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fgetc
+	POP	BC
+	LD	HL,(IX+%FFFFFFE9)
+	LD	E,(IX+%FFFFFFEC)
+	LD	A,%1
+	CALL	__ladd_b
+	LD	(IX+%FFFFFFE9),HL
+	LD	(IX+%FFFFFFEC),E
+;  253	            }
+L_76:
+.LINE 253
+
+	LD	HL,(IX+%FFFFFFE9)
+	LD	E,(IX+%FFFFFFEC)
+	LD	BC,(IX+%FFFFFFC9)
+	LD	A,(IX+%FFFFFFCC)
+	CALL	__lcmps
+	JP	M,L__64
+	JP	PE,L_74
+	JR	L__65
+L__64:
+	JP	PO,L_74
+L__65:
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+;  254	        }
+L_80:
+.LINE 254
+
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,0
+	XOR	A,A
+	CALL	__lcmps
+	JP	P,L__66
+	JP	PE,L_78
+	JR	L__67
+L__66:
+	JP	PO,L_78
+L__67:
+;  255	        twiddle_buffer(image_buffer, width, height);
+.LINE 255
+
+	LD	BC,(IX+%FFFFFFE5)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFED)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_twiddle_buffer
+	POP	BC
+	POP	BC
+	POP	BC
+;  256			mos_puts(image_buffer, width * height * 4, 0);
+.LINE 256
+
+	LD	BC,0
+	PUSH	BC
+	LD	HL,(IX+%FFFFFFED)
+	LD	BC,(IX+%FFFFFFE5)
+	CALL	__imulu
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_mos_puts
+	POP	BC
+	POP	BC
+	POP	BC
+;  257	
+;  258	    } else if (bit_depth == 32) {
+.LINE 258
+
+	JR	L_92
+L_89:
+	LD	HL,(IX+%FFFFFFE1)
+	LD	E,(IX+%FFFFFFE4)
+	LD	BC,32
+	XOR	A,A
+	CALL	__lcmps
+	JR	NZ,L_92
+;  259			uint32_t buffer_index = 0; // Index for image_data_buffer
+.LINE 259
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+%FFFFFFC4),BC
+	LD	(IX+%FFFFFFC7),A
+;  260			uint16_t non_pad_row = width * bit_depth / 8;
+.LINE 260
+
+	LD	HL,(IX+%FFFFFFED)
+	LD	E,(IX+%FFFFFFF0)
+	LD	BC,(IX+%FFFFFFE1)
+	LD	A,(IX+%FFFFFFE4)
+	CALL	__lmuls
+	LD	BC,8
+	XOR	A,A
+	CALL	__ldivs
+	LD	BC,HL
+	LD	(IX+%FFFFFFD1),BC
+	LD	(IX+%FFFFFFD4),E
+	LD	HL,BC
+	LD	(IX+%FFFFFFBC),L
+	LD	(IX+%FFFFFFBD),H
+;  261			bytes_per_row = (width * bit_depth / 8) + row_padding;
+;  262	
+;  263			src = (char*)malloc(non_pad_row);
+.LINE 263
+
+	CALL	__stoiu
+	PUSH	HL
+	CALL	_malloc
+	POP	BC
+	LD	(IX+%FFFFFFC1),HL
+;  264	
+;  265			for (y = height - 1; y >= 0; y--) {
+.LINE 265
+
+	LD	HL,(IX+%FFFFFFE5)
+	LD	E,(IX+%FFFFFFE8)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+	JR	L_85
+L_83:
+;  266				mos_fread(file, src, non_pad_row);
+.LINE 266
+
+	LD	BC,(IX+%FFFFFFD1)
+	CALL	__stoiu
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFC1)
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fread
+	POP	BC
+	POP	BC
+	POP	BC
+;  267				memcpy(image_buffer + buffer_index, src, non_pad_row);
+.LINE 267
+
+	LD	BC,(IX+%FFFFFFD1)
+	CALL	__stoiu
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFC1)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFC4)
+	LD	HL,(IX+%FFFFFFFC)
+	ADD	HL,BC
+	PUSH	HL
+	CALL	_memcpy
+	POP	BC
+	POP	BC
+	POP	BC
+;  268				buffer_index += non_pad_row;
+.LINE 268
+
+	LD	BC,(IX+%FFFFFFD1)
+	CALL	__stoiu
+	LD	BC,HL
+	XOR	A,A
+	LD	HL,(IX+%FFFFFFC4)
+	LD	E,(IX+%FFFFFFC7)
+	CALL	__ladd
+	LD	(IX+%FFFFFFC4),HL
+	LD	(IX+%FFFFFFC7),E
+;  269				mos_flseek(file, fo->fptr + row_padding);
+.LINE 269
+
+	LD	IY,(IX+%FFFFFFBE)
+	LD	HL,(IY+%11)
+	LD	E,(IY+%14)
+	LD	BC,(IX+%FFFFFFC9)
+	LD	A,(IX+%FFFFFFCC)
+	CALL	__ladd
+	LD	C,E
+	LD	B,%0
+	PUSH	BC
+	PUSH	HL
+	LD	C,(IX+%FFFFFFFF)
+	PUSH	BC
+	CALL	_mos_flseek
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,16777215
+	LD	A,%FF
+	CALL	__ladd
+	LD	(IX+%FFFFFFF1),HL
+	LD	(IX+%FFFFFFF4),E
+;  270				
+;  271			}
+L_85:
+.LINE 271
+
+	LD	HL,(IX+%FFFFFFF1)
+	LD	E,(IX+%FFFFFFF4)
+	LD	BC,0
+	XOR	A,A
+	CALL	__lcmps
+	JP	P,L__68
+	JP	PE,L_83
+	JR	L__69
+L__68:
+	JP	PO,L_83
+L__69:
+;  272			twiddle_buffer(image_buffer, width, height);
+.LINE 272
+
+	LD	BC,(IX+%FFFFFFE5)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFED)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_twiddle_buffer
+	POP	BC
+	POP	BC
+	POP	BC
+;  273			mos_puts(image_buffer, width * height * 4, 0);
+.LINE 273
+
+	LD	BC,0
+	PUSH	BC
+	LD	HL,(IX+%FFFFFFED)
+	LD	BC,(IX+%FFFFFFE5)
+	CALL	__imulu
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_mos_puts
+	POP	BC
+	POP	BC
+	POP	BC
+;  274		}
+L_92:
+.LINE 274
+
+;  275	
+;  276	    mos_fclose(file);
+.LINE 276
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	PUSH	BC
+	CALL	_mos_fclose
+	POP	BC
+;  277	    free(image_buffer);
+.LINE 277
+
+	LD	BC,(IX+%FFFFFFFC)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;  278	    //return width * height;
+;  279		return_info.bmp_width = width;
+.LINE 279
+
+	LD	HL,(IX+%FFFFFFED)
+	LD	(IX+%FFFFFFD8),L
+	LD	(IX+%FFFFFFD9),H
+;  280		return_info.bmp_height = height;
+.LINE 280
+
+	LD	HL,(IX+%FFFFFFE5)
+	LD	(IX+%FFFFFFDA),L
+	LD	(IX+%FFFFFFDB),H
+;  281		return_info.bmp_bitdepth = bit_depth;
+.LINE 281
+
+	LD	A,(IX+%FFFFFFE1)
+	LD	(IX+%FFFFFFDC),A
+;  282		return return_info;
+.LINE 282
+
+	LEA	HL,IX+%6
+	LD	DE,(HL)
+	LEA	HL,IX+%FFFFFFD8
+	LD	BC,5
+	LDIR	
+	LD	HL,(IX+%6)
+;  283	
+;  284	}
+L_93:
+.LINE 284
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _load_bmp_direct ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;_mos_flseek                         IMPORT  -----   function
+;_memcpy                             IMPORT  -----   function
+;_mos_puts                           IMPORT  -----   function
+;_write16bit                         IMPORT  -----   function
+;_putch                              IMPORT  -----   function
+;_vdp_bitmapSelect                   IMPORT  -----   function
+;_mos_fclose                         IMPORT  -----   function
+;_mos_fgetc                          IMPORT  -----   function
+;_malloc                             IMPORT  -----   function
+;_mos_fread                          IMPORT  -----   function
+;_mos_getfil                         IMPORT  -----   function
+;___print_sendstring                 IMPORT  -----   function
+;___print_xputch                     IMPORT      3   variable
+;___print_uputch                     IMPORT  -----   function
+;_mos_fopen                          IMPORT  -----   function
+;color_table                        IX-1150   1024   variable
+;header                              IX-126     54   variable
+;biSize                               IX-72      4   variable
+;non_pad_row                          IX-68      2   variable
+;fo                                   IX-66      3   variable
+;src                                  IX-63      3   variable
+;buffer_index                         IX-60      4   variable
+;index                                IX-56      1   variable
+;row_padding                          IX-55      4   variable
+;color_table_size                     IX-51      4   variable
+;O_14                                 IX-47      4   variable
+;r                                    IX-43      1   variable
+;b                                    IX-42      1   variable
+;g                                    IX-41      1   variable
+;return_info                          IX-40      5   variable
+;x                                    IX-35      4   variable
+;bit_depth                            IX-31      4   variable
+;height                               IX-27      4   variable
+;i                                    IX-23      4   variable
+;width                                IX-19      4   variable
+;y                                    IX-15      4   variable
+;buffer_index                         IX-11      4   variable
+;buffer_index                          IX-7      3   variable
+;image_buffer                          IX-4      3   variable
+;file                                  IX-1      1   variable
+;slot                                 IX+12      1   parameter
+;filename                              IX+9      3   parameter
+
+
+; Stack Frame Size: 1185 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "load_bmp_direct",284,"_load_bmp_direct"
+	SEGMENT STRSECT
+L__35:
+	DB	"Error: could not open "
+	DB	0
+L__36:
+	DB	"."
+	DB	13,10,0
+L__45:
+	DB	"Error: unsupported bit depth (not 8, 24 or 32-bit)."
+	DB	10,0
+	SEGMENT CODE
+;  285	
+;  286	
+;  287	void load_font_frame() {
+_load_font_frame:
+.DEFINE "_load_font_frame"
+
+.VALUE _load_font_frame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "load_font_frame",287,"_load_font_frame"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-265
+	ADD	HL,SP
+	LD	SP,HL
+;  288	
+;  289	    printf("Loading font & frame...\r\n");
+.LINE 289
+
+	LD	BC,___print_uputch
+	LD	(___print_xputch),BC
+	LD	BC,L__71
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+;  290	    load_bmp_direct("snake_assets/f_blue/nw.bmp", FRAME_NW); //NW
+.LINE 290
+
+	LD	BC,120
+	PUSH	BC
+	LD	BC,L__72
+	PUSH	BC
+	PEA	IX+%FFFFFFFB
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  291	    load_bmp_direct("snake_assets/f_blue/n.bmp", FRAME_N); //N
+.LINE 291
+
+	LD	BC,121
+	PUSH	BC
+	LD	BC,L__73
+	PUSH	BC
+	PEA	IX+%FFFFFFF6
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  292	    load_bmp_direct("snake_assets/f_blue/ne.bmp", FRAME_NE); //NE
+.LINE 292
+
+	LD	BC,122
+	PUSH	BC
+	LD	BC,L__74
+	PUSH	BC
+	PEA	IX+%FFFFFFF1
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  293	    load_bmp_direct("snake_assets/f_blue/e.bmp", FRAME_E); //E
+.LINE 293
+
+	LD	BC,123
+	PUSH	BC
+	LD	BC,L__75
+	PUSH	BC
+	PEA	IX+%FFFFFFEC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  294	    load_bmp_direct("snake_assets/f_blue/se.bmp", FRAME_SE); //SE
+.LINE 294
+
+	LD	BC,124
+	PUSH	BC
+	LD	BC,L__76
+	PUSH	BC
+	PEA	IX+%FFFFFFE7
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  295	    load_bmp_direct("snake_assets/f_blue/s.bmp", FRAME_S); //S
+.LINE 295
+
+	LD	BC,125
+	PUSH	BC
+	LD	BC,L__77
+	PUSH	BC
+	PEA	IX+%FFFFFFE2
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  296	    load_bmp_direct("snake_assets/f_blue/sw.bmp", FRAME_SW); //SW
+.LINE 296
+
+	LD	BC,126
+	PUSH	BC
+	LD	BC,L__78
+	PUSH	BC
+	PEA	IX+%FFFFFFDD
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  297	    load_bmp_direct("snake_assets/f_blue/w.bmp", FRAME_W); //W
+.LINE 297
+
+	LD	BC,127
+	PUSH	BC
+	LD	BC,L__79
+	PUSH	BC
+	PEA	IX+%FFFFFFD8
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  298	    load_bmp_direct("snake_assets/f_blue/mid.bmp", FRAME_MID); //W
+.LINE 298
+
+	LD	BC,128
+	PUSH	BC
+	LD	BC,L__80
+	PUSH	BC
+	PEA	IX+%FFFFFFD3
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  299	
+;  300	    //load_bmp_direct("snake_assets/font/32.bmp", 132); //Space
+;  301	
+;  302	    load_bmp_direct("snake_assets/font/33.bmp", 133); //!
+.LINE 302
+
+	LD	BC,133
+	PUSH	BC
+	LD	BC,L__81
+	PUSH	BC
+	PEA	IX+%FFFFFFCE
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  303	    load_bmp_direct("snake_assets/font/36.bmp", 136); //$
+.LINE 303
+
+	LD	BC,136
+	PUSH	BC
+	LD	BC,L__82
+	PUSH	BC
+	PEA	IX+%FFFFFFC9
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  304	    load_bmp_direct("snake_assets/font/38.bmp", 138); //&
+.LINE 304
+
+	LD	BC,138
+	PUSH	BC
+	LD	BC,L__83
+	PUSH	BC
+	PEA	IX+%FFFFFFC4
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  305	    load_bmp_direct("snake_assets/font/39.bmp", 139); //'
+.LINE 305
+
+	LD	BC,139
+	PUSH	BC
+	LD	BC,L__84
+	PUSH	BC
+	PEA	IX+%FFFFFFBF
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  306	    load_bmp_direct("snake_assets/font/44.bmp", 144); //,
+.LINE 306
+
+	LD	BC,144
+	PUSH	BC
+	LD	BC,L__85
+	PUSH	BC
+	PEA	IX+%FFFFFFBA
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  307	    load_bmp_direct("snake_assets/font/46.bmp", 146); //.
+.LINE 307
+
+	LD	BC,146
+	PUSH	BC
+	LD	BC,L__86
+	PUSH	BC
+	PEA	IX+%FFFFFFB5
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  308	
+;  309	    load_bmp_direct("snake_assets/font/48.bmp", 148); //0
+.LINE 309
+
+	LD	BC,148
+	PUSH	BC
+	LD	BC,L__87
+	PUSH	BC
+	PEA	IX+%FFFFFFB0
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  310	    load_bmp_direct("snake_assets/font/49.bmp", 149); //1
+.LINE 310
+
+	LD	BC,149
+	PUSH	BC
+	LD	BC,L__88
+	PUSH	BC
+	PEA	IX+%FFFFFFAB
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  311	    load_bmp_direct("snake_assets/font/50.bmp", 150); //2
+.LINE 311
+
+	LD	BC,150
+	PUSH	BC
+	LD	BC,L__89
+	PUSH	BC
+	PEA	IX+%FFFFFFA6
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  312	    load_bmp_direct("snake_assets/font/51.bmp", 151); //3
+.LINE 312
+
+	LD	BC,151
+	PUSH	BC
+	LD	BC,L__90
+	PUSH	BC
+	PEA	IX+%FFFFFFA1
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  313	    load_bmp_direct("snake_assets/font/52.bmp", 152); //4
+.LINE 313
+
+	LD	BC,152
+	PUSH	BC
+	LD	BC,L__91
+	PUSH	BC
+	PEA	IX+%FFFFFF9C
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  314	    load_bmp_direct("snake_assets/font/53.bmp", 153); //5
+.LINE 314
+
+	LD	BC,153
+	PUSH	BC
+	LD	BC,L__92
+	PUSH	BC
+	PEA	IX+%FFFFFF97
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  315	    load_bmp_direct("snake_assets/font/54.bmp", 154); //6
+.LINE 315
+
+	LD	BC,154
+	PUSH	BC
+	LD	BC,L__93
+	PUSH	BC
+	PEA	IX+%FFFFFF92
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  316	    load_bmp_direct("snake_assets/font/55.bmp", 155); //7
+.LINE 316
+
+	LD	BC,155
+	PUSH	BC
+	LD	BC,L__94
+	PUSH	BC
+	PEA	IX+%FFFFFF8D
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  317	    load_bmp_direct("snake_assets/font/56.bmp", 156); //8
+.LINE 317
+
+	LD	BC,156
+	PUSH	BC
+	LD	BC,L__95
+	PUSH	BC
+	PEA	IX+%FFFFFF88
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  318	    load_bmp_direct("snake_assets/font/57.bmp", 157); //9
+.LINE 318
+
+	LD	BC,157
+	PUSH	BC
+	LD	BC,L__96
+	PUSH	BC
+	PEA	IX+%FFFFFF83
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  319	
+;  320	    load_bmp_direct("snake_assets/font/62.bmp", 162); //>
+.LINE 320
+
+	LD	BC,162
+	PUSH	BC
+	LD	BC,L__97
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-130
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  321		load_bmp_direct("snake_assets/font/63.bmp", 163); //?
+.LINE 321
+
+	LD	BC,163
+	PUSH	BC
+	LD	BC,L__98
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-135
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  322	
+;  323	    load_bmp_direct("snake_assets/font/65.bmp", 165); //A
+.LINE 323
+
+	LD	BC,165
+	PUSH	BC
+	LD	BC,L__99
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-140
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  324	    load_bmp_direct("snake_assets/font/66.bmp", 166); //B
+.LINE 324
+
+	LD	BC,166
+	PUSH	BC
+	LD	BC,L__100
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-145
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  325	    load_bmp_direct("snake_assets/font/67.bmp", 167); //C
+.LINE 325
+
+	LD	BC,167
+	PUSH	BC
+	LD	BC,L__101
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-150
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  326	    load_bmp_direct("snake_assets/font/68.bmp", 168); //D
+.LINE 326
+
+	LD	BC,168
+	PUSH	BC
+	LD	BC,L__102
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-155
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  327	    load_bmp_direct("snake_assets/font/69.bmp", 169); //E
+.LINE 327
+
+	LD	BC,169
+	PUSH	BC
+	LD	BC,L__103
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-160
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  328	    load_bmp_direct("snake_assets/font/70.bmp", 170); //F
+.LINE 328
+
+	LD	BC,170
+	PUSH	BC
+	LD	BC,L__104
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-165
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  329	    load_bmp_direct("snake_assets/font/71.bmp", 171); //G
+.LINE 329
+
+	LD	BC,171
+	PUSH	BC
+	LD	BC,L__105
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-170
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  330	    load_bmp_direct("snake_assets/font/72.bmp", 172); //H
+.LINE 330
+
+	LD	BC,172
+	PUSH	BC
+	LD	BC,L__106
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-175
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  331	    load_bmp_direct("snake_assets/font/73.bmp", 173); //I
+.LINE 331
+
+	LD	BC,173
+	PUSH	BC
+	LD	BC,L__107
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-180
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  332	    load_bmp_direct("snake_assets/font/74.bmp", 174); //J
+.LINE 332
+
+	LD	BC,174
+	PUSH	BC
+	LD	BC,L__108
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-185
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  333	    load_bmp_direct("snake_assets/font/75.bmp", 175); //K
+.LINE 333
+
+	LD	BC,175
+	PUSH	BC
+	LD	BC,L__109
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-190
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  334	    load_bmp_direct("snake_assets/font/76.bmp", 176); //L
+.LINE 334
+
+	LD	BC,176
+	PUSH	BC
+	LD	BC,L__110
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-195
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  335	    load_bmp_direct("snake_assets/font/77.bmp", 177); //M
+.LINE 335
+
+	LD	BC,177
+	PUSH	BC
+	LD	BC,L__111
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-200
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  336	    load_bmp_direct("snake_assets/font/78.bmp", 178); //N
+.LINE 336
+
+	LD	BC,178
+	PUSH	BC
+	LD	BC,L__112
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-205
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  337	    load_bmp_direct("snake_assets/font/79.bmp", 179); //O
+.LINE 337
+
+	LD	BC,179
+	PUSH	BC
+	LD	BC,L__113
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-210
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  338	    load_bmp_direct("snake_assets/font/80.bmp", 180); //P
+.LINE 338
+
+	LD	BC,180
+	PUSH	BC
+	LD	BC,L__114
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-215
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  339	    load_bmp_direct("snake_assets/font/81.bmp", 181); //Q
+.LINE 339
+
+	LD	BC,181
+	PUSH	BC
+	LD	BC,L__115
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-220
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  340	    load_bmp_direct("snake_assets/font/82.bmp", 182); //R
+.LINE 340
+
+	LD	BC,182
+	PUSH	BC
+	LD	BC,L__116
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-225
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  341	    load_bmp_direct("snake_assets/font/83.bmp", 183); //S
+.LINE 341
+
+	LD	BC,183
+	PUSH	BC
+	LD	BC,L__117
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-230
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  342	    load_bmp_direct("snake_assets/font/84.bmp", 184); //T
+.LINE 342
+
+	LD	BC,184
+	PUSH	BC
+	LD	BC,L__118
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-235
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  343	    load_bmp_direct("snake_assets/font/85.bmp", 185); //U
+.LINE 343
+
+	LD	BC,185
+	PUSH	BC
+	LD	BC,L__119
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-240
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  344	    load_bmp_direct("snake_assets/font/86.bmp", 186); //V
+.LINE 344
+
+	LD	BC,186
+	PUSH	BC
+	LD	BC,L__120
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-245
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  345	    load_bmp_direct("snake_assets/font/87.bmp", 187); //W
+.LINE 345
+
+	LD	BC,187
+	PUSH	BC
+	LD	BC,L__121
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-250
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  346	    load_bmp_direct("snake_assets/font/88.bmp", 188); //X
+.LINE 346
+
+	LD	BC,188
+	PUSH	BC
+	LD	BC,L__122
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-255
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  347	    load_bmp_direct("snake_assets/font/89.bmp", 189); //Y
+.LINE 347
+
+	LD	BC,189
+	PUSH	BC
+	LD	BC,L__123
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-260
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  348	    load_bmp_direct("snake_assets/font/90.bmp", 190); //Z
+.LINE 348
+
+	LD	BC,190
+	PUSH	BC
+	LD	BC,L__124
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-265
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  349	
+;  350	}
+.LINE 350
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _load_font_frame ***************************
+;Name                         Addr/Register   Size   Type
+;___print_sendstring                 IMPORT  -----   function
+;___print_xputch                     IMPORT      3   variable
+;___print_uputch                     IMPORT  -----   function
+
+
+; Stack Frame Size: 271 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "load_font_frame",350,"_load_font_frame"
+	SEGMENT STRSECT
+L__71:
+	DB	"Loading font & frame..."
+	DB	13,10,0
+L__72:
+	DB	"snake_assets/f_blue/nw.bmp"
+	DB	0
+L__73:
+	DB	"snake_assets/f_blue/n.bmp"
+	DB	0
+L__74:
+	DB	"snake_assets/f_blue/ne.bmp"
+	DB	0
+L__75:
+	DB	"snake_assets/f_blue/e.bmp"
+	DB	0
+L__76:
+	DB	"snake_assets/f_blue/se.bmp"
+	DB	0
+L__77:
+	DB	"snake_assets/f_blue/s.bmp"
+	DB	0
+L__78:
+	DB	"snake_assets/f_blue/sw.bmp"
+	DB	0
+L__79:
+	DB	"snake_assets/f_blue/w.bmp"
+	DB	0
+L__80:
+	DB	"snake_assets/f_blue/mid.bmp"
+	DB	0
+L__81:
+	DB	"snake_assets/font/33.bmp"
+	DB	0
+L__82:
+	DB	"snake_assets/font/36.bmp"
+	DB	0
+L__83:
+	DB	"snake_assets/font/38.bmp"
+	DB	0
+L__84:
+	DB	"snake_assets/font/39.bmp"
+	DB	0
+L__85:
+	DB	"snake_assets/font/44.bmp"
+	DB	0
+L__86:
+	DB	"snake_assets/font/46.bmp"
+	DB	0
+L__87:
+	DB	"snake_assets/font/48.bmp"
+	DB	0
+L__88:
+	DB	"snake_assets/font/49.bmp"
+	DB	0
+L__89:
+	DB	"snake_assets/font/50.bmp"
+	DB	0
+L__90:
+	DB	"snake_assets/font/51.bmp"
+	DB	0
+L__91:
+	DB	"snake_assets/font/52.bmp"
+	DB	0
+L__92:
+	DB	"snake_assets/font/53.bmp"
+	DB	0
+L__93:
+	DB	"snake_assets/font/54.bmp"
+	DB	0
+L__94:
+	DB	"snake_assets/font/55.bmp"
+	DB	0
+L__95:
+	DB	"snake_assets/font/56.bmp"
+	DB	0
+L__96:
+	DB	"snake_assets/font/57.bmp"
+	DB	0
+L__97:
+	DB	"snake_assets/font/62.bmp"
+	DB	0
+L__98:
+	DB	"snake_assets/font/63.bmp"
+	DB	0
+L__99:
+	DB	"snake_assets/font/65.bmp"
+	DB	0
+L__100:
+	DB	"snake_assets/font/66.bmp"
+	DB	0
+L__101:
+	DB	"snake_assets/font/67.bmp"
+	DB	0
+L__102:
+	DB	"snake_assets/font/68.bmp"
+	DB	0
+L__103:
+	DB	"snake_assets/font/69.bmp"
+	DB	0
+L__104:
+	DB	"snake_assets/font/70.bmp"
+	DB	0
+L__105:
+	DB	"snake_assets/font/71.bmp"
+	DB	0
+L__106:
+	DB	"snake_assets/font/72.bmp"
+	DB	0
+L__107:
+	DB	"snake_assets/font/73.bmp"
+	DB	0
+L__108:
+	DB	"snake_assets/font/74.bmp"
+	DB	0
+L__109:
+	DB	"snake_assets/font/75.bmp"
+	DB	0
+L__110:
+	DB	"snake_assets/font/76.bmp"
+	DB	0
+L__111:
+	DB	"snake_assets/font/77.bmp"
+	DB	0
+L__112:
+	DB	"snake_assets/font/78.bmp"
+	DB	0
+L__113:
+	DB	"snake_assets/font/79.bmp"
+	DB	0
+L__114:
+	DB	"snake_assets/font/80.bmp"
+	DB	0
+L__115:
+	DB	"snake_assets/font/81.bmp"
+	DB	0
+L__116:
+	DB	"snake_assets/font/82.bmp"
+	DB	0
+L__117:
+	DB	"snake_assets/font/83.bmp"
+	DB	0
+L__118:
+	DB	"snake_assets/font/84.bmp"
+	DB	0
+L__119:
+	DB	"snake_assets/font/85.bmp"
+	DB	0
+L__120:
+	DB	"snake_assets/font/86.bmp"
+	DB	0
+L__121:
+	DB	"snake_assets/font/87.bmp"
+	DB	0
+L__122:
+	DB	"snake_assets/font/88.bmp"
+	DB	0
+L__123:
+	DB	"snake_assets/font/89.bmp"
+	DB	0
+L__124:
+	DB	"snake_assets/font/90.bmp"
+	DB	0
+	SEGMENT CODE
+;  351	
+;  352	uint8_t count(const char * text, char test) {
+_count:
+.DEFINE "_count"
+
+.VALUE _count
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "count",352,"_count"
+
+.LINE 352
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "test"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 2
+
+.ENDEF
+
+.DEFINE "count"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "k"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+	DEC	SP
+;  353	    uint8_t count = 0, k = 0;
+.LINE 353
+
+	LD	(IX+%FFFFFFFF),%0
+	LD	(IX+%FFFFFFFE),%0
+;  354	    while (text[k] != '\0') {
+.LINE 354
+
+	JR	L_99
+L_100:
+;  355	        if (text[k] == test)
+.LINE 355
+
+	LD	HL,(IX+%FFFFFFFB)
+	LD	A,(HL)
+	CP	A,(IX+%9)
+	JR	NZ,L_98
+;  356	            count++;
+.LINE 356
+
+	INC	(IX+%FFFFFFFF)
+L_98:
+;  357	        k++;
+.LINE 357
+
+	INC	(IX+%FFFFFFFE)
+;  358	    }
+L_99:
+.LINE 358
+
+	LD	A,(IX+%FFFFFFFE)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFB),HL
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_100
+;  359	    return count;
+.LINE 359
+
+	LD	A,(IX+%FFFFFFFF)
+;  360	}
+.LINE 360
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _count ***************************
+;Name                         Addr/Register   Size   Type
+;G_0                                   IX-5      3   variable
+;k                                     IX-2      1   variable
+;count                                 IX-1      1   variable
+;test                                  IX+9      1   parameter
+;text                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 17 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "count",360,"_count"
+;  361	
+;  362	uint8_t longest_stretch(char * str) {
+_longest_stretch:
+.DEFINE "_longest_stretch"
+
+.VALUE _longest_stretch
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "longest_stretch",362,"_longest_stretch"
+
+.LINE 362
+
+.DEFINE "str"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "len"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "max_len"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "p"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 34
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+	DEC	SP
+;  363	    uint8_t len = 0, max_len = 0;
+.LINE 363
+
+	LD	(IX+%FFFFFFFF),%0
+	LD	(IX+%FFFFFFFE),%0
+;  364	    char * p = str;
+.LINE 364
+
+	LD	BC,(IX+%6)
+	LD	(IX+%FFFFFFFB),BC
+;  365	
+;  366	    while ( * p != '\0') {
+.LINE 366
+
+	JR	L_110
+L_111:
+;  367	        if ( * p == '\n') {
+.LINE 367
+
+	LD	HL,(IX+%FFFFFFFB)
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	BC,10
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_107
+;  368	            if (len > max_len) {
+.LINE 368
+
+	LD	A,(IX+%FFFFFFFE)
+	CP	A,(IX+%FFFFFFFF)
+	JR	NC,L_104
+;  369	                max_len = len;
+.LINE 369
+
+	LD	A,(IX+%FFFFFFFF)
+	LD	(IX+%FFFFFFFE),A
+;  370	            }
+L_104:
+.LINE 370
+
+;  371	            len = 0;
+.LINE 371
+
+	LD	(IX+%FFFFFFFF),%0
+;  372	        } else {
+.LINE 372
+
+	JR	L_109
+L_107:
+;  373	            len++;
+.LINE 373
+
+	INC	(IX+%FFFFFFFF)
+;  374	        }
+L_109:
+.LINE 374
+
+;  375	        p++;
+.LINE 375
+
+	LD	BC,(IX+%FFFFFFFB)
+	INC	BC
+	LD	(IX+%FFFFFFFB),BC
+;  376	    }
+L_110:
+.LINE 376
+
+	LD	HL,(IX+%FFFFFFFB)
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_111
+;  377	
+;  378	    if (len > max_len) {
+.LINE 378
+
+	LD	A,(IX+%FFFFFFFE)
+	CP	A,(IX+%FFFFFFFF)
+	JR	NC,L_114
+;  379	        max_len = len;
+.LINE 379
+
+	LD	A,(IX+%FFFFFFFF)
+	LD	(IX+%FFFFFFFE),A
+;  380	    }
+L_114:
+.LINE 380
+
+;  381	
+;  382	    return max_len;
+.LINE 382
+
+	LD	A,(IX+%FFFFFFFE)
+;  383	}
+.LINE 383
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _longest_stretch ***************************
+;Name                         Addr/Register   Size   Type
+;p                                     IX-5      3   variable
+;max_len                               IX-2      1   variable
+;len                                   IX-1      1   variable
+;str                                   IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "longest_stretch",383,"_longest_stretch"
+;  384	
+;  385	void raw_text(const char * text, uint16_t x, uint16_t y) {
+_raw_text:
+.DEFINE "_raw_text"
+
+.VALUE _raw_text
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "raw_text",385,"_raw_text"
+
+.LINE 385
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "l"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "w"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;  386	    uint8_t i, l;
+;  387	    uint16_t w;
+;  388	    l = strlen(text);
+.LINE 388
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_strlen
+	POP	BC
+	LD	(IX+%FFFFFFFE),L
+;  389	
+;  390	    if (l > 30) return;
+.LINE 390
+
+	LD	A,%1E
+	CP	A,(IX+%FFFFFFFE)
+	JR	C,L_127
+;  391	
+;  392	    w = (l * 8);
+.LINE 392
+
+	LD	C,(IX+%FFFFFFFE)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+%FFFFFFFC),L
+	LD	(IX+%FFFFFFFD),H
+;  393	
+;  394	    vdp_bitmapDraw(FRAME_NW, x, y);
+.LINE 394
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  395	    vdp_bitmapDraw(FRAME_NE, x + w, y);
+.LINE 395
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFC)
+	LD	HL,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,122
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  396	
+;  397	    for (i = 1; i < (w / 8); i++) {
+.LINE 397
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_121
+L_119:
+;  398	        vdp_bitmapDraw(FRAME_N, x + (i * 8), y);
+.LINE 398
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,121
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  399	        vdp_bitmapDraw(FRAME_S, x + (i * 8), y + 8);
+.LINE 399
+
+	LD	IY,(IX+%C)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,125
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  400	    }
+L_121:
+.LINE 400
+
+	LD	BC,(IX+%FFFFFFFC)
+	CALL	__stoiu
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L_119
+;  401	
+;  402	    vdp_bitmapDraw(FRAME_SW, x, y + 8);
+.LINE 402
+
+	LD	IY,(IX+%C)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,126
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  403	    vdp_bitmapDraw(FRAME_SE, x + w, y + 8);
+.LINE 403
+
+	LD	IY,(IX+%C)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFC)
+	LD	HL,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,124
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  404	
+;  405	    for (i = 0; i < l; i++) vdp_bitmapDraw(toupper(text[i]) + 100, x + 4 + (8 * i), y + 4);
+.LINE 405
+
+	LD	(IX+%FFFFFFFF),%0
+	JR	L_126
+L_124:
+	LD	IY,(IX+%C)
+	LEA	BC,IY+%4
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	LD	IY,HL
+	LEA	BC,IY+%4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	PUSH	HL
+	CALL	_toupper
+	POP	BC
+	LD	IY,HL
+	LEA	HL,IY+%64
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+L_126:
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,(IX+%FFFFFFFE)
+	JR	C,L_124
+;  406	}
+L_127:
+.LINE 406
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _raw_text ***************************
+;Name                         Addr/Register   Size   Type
+;_toupper                            IMPORT  -----   function
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;_strlen                             IMPORT  -----   function
+;w                                     IX-4      2   variable
+;l                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;y                                    IX+12      2   parameter
+;x                                     IX+9      2   parameter
+;text                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "raw_text",406,"_raw_text"
+;  407	
+;  408	uint16_t raw_text_multi_centre(const char * text, uint16_t y) {
+_raw_text_multi_centre:
+.DEFINE "_raw_text_multi_centre"
+
+.VALUE _raw_text_multi_centre
+
+.CLASS 2
+
+.TYPE 77
+
+.ENDEF
+
+.BEGFUNC "raw_text_multi_centre",408,"_raw_text_multi_centre"
+
+.LINE 408
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "h"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "col"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "w"
+
+.CLASS 65
+
+.VALUE -8
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "line"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "l"
+
+.CLASS 65
+
+.VALUE -10
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+%FFFFFFF3
+	LD	SP,HL
+;  409	    uint8_t i, l, j, h, col = 0, line = 0;
+.LINE 409
+
+	LD	(IX+%FFFFFFF7),%0
+;  410	    uint16_t w, x;
+;  411	    l = strlen(text);
+.LINE 411
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_strlen
+	POP	BC
+	LD	(IX+%FFFFFFF6),L
+;  412	
+;  413	    if (longest_stretch(text) > 30) return 0;
+.LINE 413
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_longest_stretch
+	POP	BC
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,30
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__144
+	JP	PE,L_129
+	JR	L__145
+L__144:
+	JP	PO,L_129
+L__145:
+	OR	A,A
+	SBC	HL,HL
+	JR	L_154
+L_129:
+;  414	
+;  415	    h = (count(text, '\n') * 8) + 8;
+.LINE 415
+
+	LD	BC,10
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_count
+	POP	BC
+	POP	BC
+	ADD	A,A
+	ADD	A,A
+	ADD	A,A
+	ADD	A,%8
+	LD	(IX+%FFFFFFFC),A
+;  416	
+;  417	    w = (longest_stretch(text) * 8);
+.LINE 417
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_longest_stretch
+	POP	BC
+	LD	C,A
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+%FFFFFFF8),L
+	LD	(IX+%FFFFFFF9),H
+;  418	    x = (game.screen_width - w) / 2;
+.LINE 418
+
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%FFFFFFF8)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,2
+	CALL	__idivs
+	LD	(IX+%FFFFFFFD),L
+	LD	(IX+%FFFFFFFE),H
+;  419	
+;  420	    vdp_bitmapDraw(FRAME_NW, x, y);
+.LINE 420
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFD)
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  421	    vdp_bitmapDraw(FRAME_NE, x + w, y);
+.LINE 421
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFF8)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,122
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  422	
+;  423	    for (i = 1; i < (w / 8); i++) {
+.LINE 423
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_138
+L_136:
+;  424	
+;  425	        vdp_bitmapDraw(FRAME_N, x + (i * 8), y);
+.LINE 425
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,121
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  426	        for (j = 1; j < (h / 8); j++) vdp_bitmapDraw(FRAME_MID, x + (i * 8), y + (j * 8));
+.LINE 426
+
+	LD	(IX+%FFFFFFFA),%1
+	JR	L_134
+L_132:
+	LD	C,(IX+%FFFFFFFA)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,128
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFA)
+L_134:
+	LD	A,(IX+%FFFFFFFC)
+	UEXT	HL
+	LD	L,A
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	LD	A,(IX+%FFFFFFFA)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__146
+	JP	PE,L_132
+	JR	L__147
+L__146:
+	JP	PO,L_132
+L__147:
+;  427	        vdp_bitmapDraw(FRAME_S, x + (i * 8), y + h);
+.LINE 427
+
+	LD	C,(IX+%FFFFFFFC)
+	LD	B,%0
+	LD	HL,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	C,(IX+%FFFFFFFF)
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,125
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  428	
+;  429	    }
+L_138:
+.LINE 429
+
+	LD	BC,(IX+%FFFFFFF8)
+	CALL	__stoiu
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__148
+	JP	PE,L_136
+	JR	L__149
+L__148:
+	JP	PO,L_136
+L__149:
+;  430	
+;  431	    for (i = 1; i < (h / 8); i++) {
+.LINE 431
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_142
+L_140:
+;  432	
+;  433	        vdp_bitmapDraw(FRAME_W, x, y + (i * 8));
+.LINE 433
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFFD)
+	PUSH	BC
+	LD	BC,127
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  434	        vdp_bitmapDraw(FRAME_E, x + w, y + (i * 8));
+.LINE 434
+
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFF8)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,123
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  435	
+;  436	    }
+L_142:
+.LINE 436
+
+	LD	A,(IX+%FFFFFFFC)
+	UEXT	HL
+	LD	L,A
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__150
+	JP	PE,L_140
+	JR	L__151
+L__150:
+	JP	PO,L_140
+L__151:
+;  437	
+;  438	    vdp_bitmapDraw(FRAME_SW, x, y + h);
+.LINE 438
+
+	LD	C,(IX+%FFFFFFFC)
+	LD	B,%0
+	LD	HL,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFFD)
+	PUSH	BC
+	LD	BC,126
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  439	    vdp_bitmapDraw(FRAME_SE, x + w, y + h);
+.LINE 439
+
+	LD	C,(IX+%FFFFFFFC)
+	LD	B,%0
+	LD	HL,(IX+%9)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,(IX+%FFFFFFF8)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,124
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  440	
+;  441	    col = 0;
+.LINE 441
+
+	LD	(IX+%FFFFFFFB),%0
+;  442	    for (i = 0; i < l; i++) {
+.LINE 442
+
+	LD	(IX+%FFFFFFFF),%0
+	JR	L_152
+L_150:
+;  443	
+;  444	        if (text[i] == '\n') {
+.LINE 444
+
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFF3),HL
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	BC,10
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_149
+;  445	            line++;
+.LINE 445
+
+	INC	(IX+%FFFFFFF7)
+;  446	            col = 0;
+.LINE 446
+
+	LD	(IX+%FFFFFFFB),%0
+;  447	        } else {
+.LINE 447
+
+	JR	L_151
+L_149:
+;  448	            vdp_bitmapDraw(toupper(text[i]) + 100, x + 2 + (col * 8), y + (line * 10) + 2);
+.LINE 448
+
+	LD	C,(IX+%FFFFFFF7)
+	LD	B,%0
+	LD.LIS	HL,10
+	CALL	__smulu
+	LD	BC,(IX+%9)
+	ADD.SIS	HL,BC
+	INC	HL
+	INC	HL
+	PUSH	HL
+	LD	C,(IX+%FFFFFFFB)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	INC	HL
+	INC	HL
+	PUSH	HL
+	LD	HL,(IX+%FFFFFFF3)
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	PUSH	HL
+	CALL	_toupper
+	POP	BC
+	LD	IY,HL
+	LEA	HL,IY+%64
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  449	            col++;
+.LINE 449
+
+	INC	(IX+%FFFFFFFB)
+;  450	        }
+;  451	
+;  452	    }
+L_151:
+.LINE 452
+
+	INC	(IX+%FFFFFFFF)
+L_152:
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,(IX+%FFFFFFF6)
+	JR	C,L_150
+;  453	
+;  454	    return x + 4;
+.LINE 454
+
+	LD	IY,(IX+%FFFFFFFD)
+	LEA	HL,IY+%4
+;  455	}
+L_154:
+.LINE 455
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _raw_text_multi_centre ***************************
+;Name                         Addr/Register   Size   Type
+;_toupper                            IMPORT  -----   function
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;_game                               STATIC   1227   variable
+;_strlen                             IMPORT  -----   function
+;G_1                                  IX-13      3   variable
+;l                                    IX-10      1   variable
+;line                                  IX-9      1   variable
+;w                                     IX-8      2   variable
+;j                                     IX-6      1   variable
+;col                                   IX-5      1   variable
+;h                                     IX-4      1   variable
+;x                                     IX-3      2   variable
+;i                                     IX-1      1   variable
+;y                                     IX+9      2   parameter
+;text                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 25 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "raw_text_multi_centre",455,"_raw_text_multi_centre"
+;  456	
+;  457	void raw_text_centre(const char * text, uint16_t y) {
+_raw_text_centre:
+.DEFINE "_raw_text_centre"
+
+.VALUE _raw_text_centre
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "raw_text_centre",457,"_raw_text_centre"
+
+.LINE 457
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "w"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "l"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+;  458	    uint8_t i, l;
+;  459	    uint16_t w, x;
+;  460	    l = strlen(text);
+.LINE 460
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_strlen
+	POP	BC
+	LD	(IX+%FFFFFFFA),L
+;  461	    if (l > 30) return;
+.LINE 461
+
+	LD	A,%1E
+	CP	A,(IX+%FFFFFFFA)
+	JR	C,L_166
+;  462	
+;  463	    w = (l * 8);
+.LINE 463
+
+	LD	C,(IX+%FFFFFFFA)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+%FFFFFFFB),L
+	LD	(IX+%FFFFFFFC),H
+;  464	    x = (320 - w) / 2;
+.LINE 464
+
+	LD	BC,(IX+%FFFFFFFB)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,320
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,2
+	CALL	__idivs
+	LD	(IX+%FFFFFFFD),L
+	LD	(IX+%FFFFFFFE),H
+;  465	
+;  466	    vdp_bitmapDraw(FRAME_NW, x, y);
+.LINE 466
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFD)
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  467	    vdp_bitmapDraw(FRAME_NE, x + w, y);
+.LINE 467
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFB)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,122
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  468	
+;  469	    for (i = 1; i < (w / 8); i++) {
+.LINE 469
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_160
+L_158:
+;  470	        vdp_bitmapDraw(FRAME_N, x + (i * 8), y);
+.LINE 470
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,121
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  471	        vdp_bitmapDraw(FRAME_S, x + (i * 8), y + 8);
+.LINE 471
+
+	LD	IY,(IX+%9)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,125
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  472	    }
+L_160:
+.LINE 472
+
+	LD	BC,(IX+%FFFFFFFB)
+	CALL	__stoiu
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__156
+	JP	PE,L_158
+	JR	L__157
+L__156:
+	JP	PO,L_158
+L__157:
+;  473	
+;  474	    vdp_bitmapDraw(FRAME_SW, x, y + 8);
+.LINE 474
+
+	LD	IY,(IX+%9)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFD)
+	PUSH	BC
+	LD	BC,126
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  475	    vdp_bitmapDraw(FRAME_SE, x + w, y + 8);
+.LINE 475
+
+	LD	IY,(IX+%9)
+	LEA	BC,IY+%8
+	PUSH	BC
+	LD	BC,(IX+%FFFFFFFB)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	PUSH	HL
+	LD	BC,124
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  476	
+;  477	    for (i = 0; i < l; i++) {
+.LINE 477
+
+	LD	(IX+%FFFFFFFF),%0
+	JR	L_165
+L_163:
+;  478	
+;  479	        vdp_bitmapDraw(toupper(text[i]) + 100, x + 4 + (8 * i), y + 4);
+.LINE 479
+
+	LD	IY,(IX+%9)
+	LEA	BC,IY+%4
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD.SIS	HL,BC
+	LD	IY,HL
+	LEA	BC,IY+%4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+%6)
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	PUSH	HL
+	CALL	_toupper
+	POP	BC
+	LD	IY,HL
+	LEA	HL,IY+%64
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  480	
+;  481	    }
+L_165:
+.LINE 481
+
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,(IX+%FFFFFFFA)
+	JR	C,L_163
+;  482	}
+L_166:
+.LINE 482
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _raw_text_centre ***************************
+;Name                         Addr/Register   Size   Type
+;_toupper                            IMPORT  -----   function
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;_strlen                             IMPORT  -----   function
+;l                                     IX-6      1   variable
+;w                                     IX-5      2   variable
+;x                                     IX-3      2   variable
+;i                                     IX-1      1   variable
+;y                                     IX+9      2   parameter
+;text                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "raw_text_centre",482,"_raw_text_centre"
+;  483	
+;  484	uint24_t alt_atoi(const char * str) {
+_alt_atoi:
+.DEFINE "_alt_atoi"
+
+.VALUE _alt_atoi
+
+.CLASS 2
+
+.TYPE 78
+
+.ENDEF
+
+.BEGFUNC "alt_atoi",484,"_alt_atoi"
+
+.LINE 484
+
+.DEFINE "str"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "result"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  485	    uint24_t result = 0;
+.LINE 485
+
+	LD	BC,0
+	LD	(IX+%FFFFFFFD),BC
+;  486	
+;  487	    while (isdigit( * str)) {
+.LINE 487
+
+	JR	L_168
+L_169:
+;  488	        result = result * 10 + ( * str - '0');
+.LINE 488
+
+	LD	HL,(IX+%FFFFFFFD)
+	LD	A,%A
+	CALL	__imul_b
+	LD	DE,HL
+	LD	HL,(IX+%6)
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	IY,HL
+	LEA	BC,IY+%FFFFFFD0
+	LD	HL,DE
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFD),HL
+;  489	        str++;
+.LINE 489
+
+	LD	BC,(IX+%6)
+	INC	BC
+	LD	(IX+%6),BC
+;  490	    }
+L_168:
+.LINE 490
+
+	LD	HL,(IX+%6)
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	PUSH	HL
+	CALL	_isdigit
+	POP	BC
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_169
+;  491	
+;  492	    return result;
+.LINE 492
+
+	LD	HL,(IX+%FFFFFFFD)
+;  493	}
+.LINE 493
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _alt_atoi ***************************
+;Name                         Addr/Register   Size   Type
+;_isdigit                            IMPORT  -----   function
+;result                                IX-3      3   variable
+;str                                   IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "alt_atoi",493,"_alt_atoi"
+;  494	
+;  495	
+;  496	size_t safe_strcpy(char* dest, const char* src, size_t size) {
+_safe_strcpy:
+.DEFINE "_safe_strcpy"
+
+.VALUE _safe_strcpy
+
+.CLASS 2
+
+.TYPE 78
+
+.ENDEF
+
+.BEGFUNC "safe_strcpy",496,"_safe_strcpy"
+
+.LINE 496
+
+.DEFINE "dest"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "src"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "size"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "src_len"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "copy_len"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+;  497	    size_t src_len = strlen(src);
+.LINE 497
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_strlen
+	POP	BC
+	LD	(IX+%FFFFFFFD),HL
+;  498	    size_t copy_len = (src_len < size) ? src_len : (size - 1);
+.LINE 498
+
+	LD	BC,(IX+%C)
+	LD	HL,(IX+%FFFFFFFD)
+	OR	A,A
+	SBC	HL,BC
+	JR	NC,L_174
+	LD	BC,(IX+%FFFFFFFD)
+	LD	(IX+%FFFFFFF7),BC
+	JR	L_175
+L_174:
+	LD	IY,(IX+%C)
+	LEA	IY,IY+%FFFFFFFF
+	LD	(IX+%FFFFFFF7),IY
+L_175:
+	LD	BC,(IX+%FFFFFFF7)
+	LD	(IX+%FFFFFFFA),BC
+;  499	    
+;  500	    memcpy(dest, src, copy_len);
+.LINE 500
+
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_memcpy
+	POP	BC
+	POP	BC
+	POP	BC
+;  501	    dest[copy_len] = '\0';
+.LINE 501
+
+	LD	BC,(IX+%FFFFFFFA)
+	LD	HL,(IX+%6)
+	ADD	HL,BC
+	LD	(HL),%0
+;  502	    
+;  503	    return src_len;
+.LINE 503
+
+	LD	HL,(IX+%FFFFFFFD)
+;  504	}
+.LINE 504
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _safe_strcpy ***************************
+;Name                         Addr/Register   Size   Type
+;_memcpy                             IMPORT  -----   function
+;_strlen                             IMPORT  -----   function
+;temp172                               IX-9      3   variable
+;copy_len                              IX-6      3   variable
+;src_len                               IX-3      3   variable
+;size                                 IX+12      3   parameter
+;src                                   IX+9      3   parameter
+;dest                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 24 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "safe_strcpy",504,"_safe_strcpy"
+;  505	
+;  506	void setup_text_sprites() {
+_setup_text_sprites:
+.DEFINE "_setup_text_sprites"
+
+.VALUE _setup_text_sprites
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "setup_text_sprites",506,"_setup_text_sprites"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  507	
+;  508	    vdp_spriteClearFrames(SPRITE_SCORE0);
+.LINE 508
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  509	    vdp_spriteAddFrameSelected(100 + '0'); //0
+.LINE 509
+
+	LD	BC,148
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  510	    vdp_spriteAddFrameSelected(149); //1
+.LINE 510
+
+	LD	BC,149
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  511	    vdp_spriteAddFrameSelected(150); //2
+.LINE 511
+
+	LD	BC,150
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  512	    vdp_spriteAddFrameSelected(151); //3
+.LINE 512
+
+	LD	BC,151
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  513	    vdp_spriteAddFrameSelected(152); //4
+.LINE 513
+
+	LD	BC,152
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  514	    vdp_spriteAddFrameSelected(153); //5
+.LINE 514
+
+	LD	BC,153
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  515	    vdp_spriteAddFrameSelected(154); //6
+.LINE 515
+
+	LD	BC,154
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  516	    vdp_spriteAddFrameSelected(155); //7
+.LINE 516
+
+	LD	BC,155
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  517	    vdp_spriteAddFrameSelected(156); //8
+.LINE 517
+
+	LD	BC,156
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  518	    vdp_spriteAddFrameSelected(157); //9
+.LINE 518
+
+	LD	BC,157
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  519	    vdp_spriteHideSelected();
+.LINE 519
+
+	CALL	_vdp_spriteHideSelected
+;  520	
+;  521	    vdp_spriteClearFrames(SPRITE_SCORE1);
+.LINE 521
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  522	    vdp_spriteAddFrameSelected(148); //0
+.LINE 522
+
+	LD	BC,148
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  523	    vdp_spriteAddFrameSelected(149); //1
+.LINE 523
+
+	LD	BC,149
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  524	    vdp_spriteAddFrameSelected(150); //2
+.LINE 524
+
+	LD	BC,150
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  525	    vdp_spriteAddFrameSelected(151); //3
+.LINE 525
+
+	LD	BC,151
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  526	    vdp_spriteAddFrameSelected(152); //4
+.LINE 526
+
+	LD	BC,152
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  527	    vdp_spriteAddFrameSelected(153); //5
+.LINE 527
+
+	LD	BC,153
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  528	    vdp_spriteAddFrameSelected(154); //6
+.LINE 528
+
+	LD	BC,154
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  529	    vdp_spriteAddFrameSelected(155); //7
+.LINE 529
+
+	LD	BC,155
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  530	    vdp_spriteAddFrameSelected(156); //8
+.LINE 530
+
+	LD	BC,156
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  531	    vdp_spriteAddFrameSelected(157); //9
+.LINE 531
+
+	LD	BC,157
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  532	    vdp_spriteHideSelected();
+.LINE 532
+
+	CALL	_vdp_spriteHideSelected
+;  533		
+;  534	    vdp_spriteClearFrames(SPRITE_SCORE2);
+.LINE 534
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  535	    vdp_spriteAddFrameSelected(148); //0
+.LINE 535
+
+	LD	BC,148
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  536	    vdp_spriteAddFrameSelected(149); //1
+.LINE 536
+
+	LD	BC,149
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  537	    vdp_spriteAddFrameSelected(150); //2
+.LINE 537
+
+	LD	BC,150
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  538	    vdp_spriteAddFrameSelected(151); //3
+.LINE 538
+
+	LD	BC,151
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  539	    vdp_spriteAddFrameSelected(152); //4
+.LINE 539
+
+	LD	BC,152
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  540	    vdp_spriteAddFrameSelected(153); //5
+.LINE 540
+
+	LD	BC,153
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  541	    vdp_spriteAddFrameSelected(154); //6
+.LINE 541
+
+	LD	BC,154
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  542	    vdp_spriteAddFrameSelected(155); //7
+.LINE 542
+
+	LD	BC,155
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  543	    vdp_spriteAddFrameSelected(156); //8
+.LINE 543
+
+	LD	BC,156
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  544	    vdp_spriteAddFrameSelected(157); //9
+.LINE 544
+
+	LD	BC,157
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  545	    vdp_spriteHideSelected();	
+.LINE 545
+
+	CALL	_vdp_spriteHideSelected
+;  546	
+;  547	}
+.LINE 547
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setup_text_sprites ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteHideSelected             IMPORT  -----   function
+;_vdp_spriteAddFrameSelected         IMPORT  -----   function
+;_vdp_spriteClearFrames              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "setup_text_sprites",547,"_setup_text_sprites"
+;  548	
+;  549	void draw_bottom_frame() {
+_draw_bottom_frame:
+.DEFINE "_draw_bottom_frame"
+
+.VALUE _draw_bottom_frame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "draw_bottom_frame",549,"_draw_bottom_frame"
+
+.LINE 549
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  550	
+;  551	    uint8_t i;
+;  552	    vdp_bitmapDraw(FRAME_NW, 0, game.screen_height - 16);
+.LINE 552
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF0
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  553	    vdp_bitmapDraw(FRAME_NE, game.screen_width - 8, game.screen_height - 16);
+.LINE 553
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF0
+	PUSH	BC
+	LD	IY,(_game)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	BC,122
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  554	    vdp_bitmapDraw(FRAME_SW, 0, game.screen_height - 8);
+.LINE 554
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	BC,126
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  555	    vdp_bitmapDraw(FRAME_SE, game.screen_width - 8, game.screen_height - 8);
+.LINE 555
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	IY,(_game)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	BC,124
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  556	
+;  557	    for (i = 1; i < ((game.screen_width - 16) / 8) + 1; i++) {
+.LINE 557
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_181
+L_179:
+;  558	
+;  559	        vdp_bitmapDraw(FRAME_N, 8 * i, game.screen_height - 16);
+.LINE 559
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF0
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,121
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  560	        vdp_bitmapDraw(FRAME_S, 8 * i, game.screen_height - 8);
+.LINE 560
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,125
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  561	
+;  562	    }
+L_181:
+.LINE 562
+
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	HL,IY+%FFFFFFF0
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__165
+	JP	PE,L_179
+	JR	L__166
+L__165:
+	JP	PO,L_179
+L__166:
+;  563	
+;  564	}
+.LINE 564
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _draw_bottom_frame ***************************
+;Name                         Addr/Register   Size   Type
+;_game                               STATIC   1227   variable
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;i                                     IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "draw_bottom_frame",564,"_draw_bottom_frame"
+;  565	
+;  566	void draw_top_frame() {
+_draw_top_frame:
+.DEFINE "_draw_top_frame"
+
+.VALUE _draw_top_frame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "draw_top_frame",566,"_draw_top_frame"
+
+.LINE 566
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  567	
+;  568	    uint8_t i;
+;  569	    vdp_bitmapDraw(FRAME_NW, 0, 0);
+.LINE 569
+
+	LD	BC,0
+	PUSH	BC
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  570	    vdp_bitmapDraw(FRAME_NE, game.screen_width - 8, 0);
+.LINE 570
+
+	LD	BC,0
+	PUSH	BC
+	LD	IY,(_game)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	BC,122
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  571	    vdp_bitmapDraw(FRAME_SW, 0, 8);
+.LINE 571
+
+	LD	BC,8
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	BC,126
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  572	    vdp_bitmapDraw(FRAME_SE, game.screen_width - 8, 8);
+.LINE 572
+
+	LD	BC,8
+	PUSH	BC
+	LD	IY,(_game)
+	LEA	BC,IY+%FFFFFFF8
+	PUSH	BC
+	LD	BC,124
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  573	
+;  574	    for (i = 1; i < ((game.screen_width - 16) / 8) + 1; i++) {
+.LINE 574
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_186
+L_184:
+;  575	
+;  576	        vdp_bitmapDraw(FRAME_N, 8 * i, 0);
+.LINE 576
+
+	LD	BC,0
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,121
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+;  577	        vdp_bitmapDraw(FRAME_S, 8 * i, 8);
+.LINE 577
+
+	LD	BC,8
+	PUSH	BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,125
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  578	
+;  579	    }
+L_186:
+.LINE 579
+
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	HL,IY+%FFFFFFF0
+	LD	BC,8
+	CALL	__idivs
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__169
+	JP	PE,L_184
+	JR	L__170
+L__169:
+	JP	PO,L_184
+L__170:
+;  580	
+;  581	}
+.LINE 581
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _draw_top_frame ***************************
+;Name                         Addr/Register   Size   Type
+;_game                               STATIC   1227   variable
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;i                                     IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "draw_top_frame",581,"_draw_top_frame"
+;  582	
+;  583	void show_score() {
+_show_score:
+.DEFINE "_show_score"
+
+.VALUE _show_score
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "show_score",583,"_show_score"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  584	
+;  585	    vdp_spriteSetFrame(SPRITE_SCORE0, game.score / 100);		//Hundreds
+.LINE 585
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  586	    vdp_spriteSetFrame(SPRITE_SCORE1, (game.score % 100) / 10);	//Tens
+.LINE 586
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__irems
+	LD	BC,10
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  587		vdp_spriteSetFrame(SPRITE_SCORE2, game.score % 10);			//Units
+.LINE 587
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,10
+	CALL	__irems
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  588	
+;  589	}
+.LINE 589
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _show_score ***************************
+;Name                         Addr/Register   Size   Type
+;_game                               STATIC   1227   variable
+;_vdp_spriteSetFrame                 IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "show_score",589,"_show_score"
+;  590	
+;  591	void change_score() {
+_change_score:
+.DEFINE "_change_score"
+
+.VALUE _change_score
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "change_score",591,"_change_score"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  592	
+;  593	    if (game.score + 1 > 100) game.score = 100;
+.LINE 593
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LD	HL,100
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__174
+	JP	PE,L_191
+	JR	L__175
+L__174:
+	JP	PO,L_191
+L__175:
+	LD	A,%64
+	LD	(_game+12),A
+;  594	    else game.score++;
+.LINE 594
+
+	JR	L_192
+L_191:
+	LD	A,(_game+12)
+	INC	A
+	LD	(_game+12),A
+L_192:
+;  595	    vdp_spriteSetFrame(SPRITE_SCORE0, game.score / 100);		//Hundreds
+.LINE 595
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  596	    vdp_spriteSetFrame(SPRITE_SCORE1, (game.score % 100) / 10);	//Tens
+.LINE 596
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__irems
+	LD	BC,10
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  597		vdp_spriteSetFrame(SPRITE_SCORE2, game.score % 10);			//Units
+.LINE 597
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,10
+	CALL	__irems
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  598	
+;  599	}
+.LINE 599
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _change_score ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteSetFrame                 IMPORT  -----   function
+;_game                               STATIC   1227   variable
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "change_score",599,"_change_score"
+;  600	
+;  601	bool check_collision(Rect rect1, Rect rect2) {
+_check_collision:
+.DEFINE "_check_collision"
+
+.VALUE _check_collision
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "check_collision",601,"_check_collision"
+
+.LINE 601
+
+.DEFINE "rect1"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "NONAME6"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "rect2"
+
+.CLASS 65
+
+.VALUE 15
+
+.TAG "NONAME6"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "rect1Left"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect1Right"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect1Top"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect1Bottom"
+
+.CLASS 65
+
+.VALUE -12
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect2Left"
+
+.CLASS 65
+
+.VALUE -15
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect2Right"
+
+.CLASS 65
+
+.VALUE -18
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect2Top"
+
+.CLASS 65
+
+.VALUE -21
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "rect2Bottom"
+
+.CLASS 65
+
+.VALUE -24
+
+.TYPE 4
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+%FFFFFFE8
+	LD	SP,HL
+;  602	    // Calculate the coordinates of the edges of the rectangles
+;  603	    int rect1Left = rect1.x;
+.LINE 603
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	(IX+%FFFFFFFD),HL
+;  604	    int rect1Right = rect1.x + rect1.width;
+.LINE 604
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%A)
+	CALL	__stoiu
+	ADD	HL,DE
+	LD	(IX+%FFFFFFFA),HL
+;  605	    int rect1Top = rect1.y;
+.LINE 605
+
+	LD	BC,(IX+%8)
+	CALL	__stoiu
+	LD	(IX+%FFFFFFF7),HL
+;  606	    int rect1Bottom = rect1.y + rect1.height;
+.LINE 606
+
+	LD	BC,(IX+%8)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%C)
+	CALL	__stoiu
+	ADD	HL,DE
+	LD	(IX+%FFFFFFF4),HL
+;  607	    
+;  608	    int rect2Left = rect2.x;
+.LINE 608
+
+	LD	BC,(IX+%F)
+	CALL	__stoiu
+	LD	(IX+%FFFFFFF1),HL
+;  609	    int rect2Right = rect2.x + rect2.width;
+.LINE 609
+
+	LD	BC,(IX+%F)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%13)
+	CALL	__stoiu
+	ADD	HL,DE
+	LD	(IX+%FFFFFFEE),HL
+;  610	    int rect2Top = rect2.y;
+.LINE 610
+
+	LD	BC,(IX+%11)
+	CALL	__stoiu
+	LD	(IX+%FFFFFFEB),HL
+;  611	    int rect2Bottom = rect2.y + rect2.height;
+.LINE 611
+
+	LD	BC,(IX+%11)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%15)
+	CALL	__stoiu
+	ADD	HL,DE
+	LD	(IX+%FFFFFFE8),HL
+;  612	    
+;  613	    // Check for collision by comparing the edges
+;  614	    if (rect1Right <= rect2Left || rect1Left >= rect2Right ||
+.LINE 614
+
+	LD	BC,(IX+%FFFFFFFA)
+	LD	HL,(IX+%FFFFFFF1)
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__181
+	JP	PE,L_197
+	JR	L__182
+L__181:
+	JP	PO,L_197
+L__182:
+	LD	BC,(IX+%FFFFFFEE)
+	LD	HL,(IX+%FFFFFFFD)
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__183
+	JP	PE,L_197
+	JR	L__184
+L__183:
+	JP	PO,L_197
+L__184:
+;  615	        rect1Bottom <= rect2Top || rect1Top >= rect2Bottom) {
+.LINE 615
+
+	LD	BC,(IX+%FFFFFFF4)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L__185
+	JP	PE,L_197
+	JR	L__186
+L__185:
+	JP	PO,L_197
+L__186:
+	LD	BC,(IX+%FFFFFFE8)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__187
+	JP	PE,L_198
+	JR	L__188
+L__187:
+	JP	PO,L_198
+L__188:
+L_197:
+;  616	        return false;  // No collision
+.LINE 616
+
+	XOR	A,A
+	JR	L_199
+;  617	    }
+L_198:
+.LINE 617
+
+;  618	    
+;  619	    return true;  // Collision detected
+.LINE 619
+
+	LD	A,%1
+;  620	}
+L_199:
+.LINE 620
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _check_collision ***************************
+;Name                         Addr/Register   Size   Type
+;rect2Bottom                          IX-24      3   variable
+;rect2Top                             IX-21      3   variable
+;rect2Right                           IX-18      3   variable
+;rect2Left                            IX-15      3   variable
+;rect1Bottom                          IX-12      3   variable
+;rect1Top                              IX-9      3   variable
+;rect1Right                            IX-6      3   variable
+;rect1Left                             IX-3      3   variable
+;rect2                                IX+15      8   parameter
+;rect1                                 IX+6      8   parameter
+
+
+; Stack Frame Size: 48 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "check_collision",620,"_check_collision"
+;  621	
+;  622	uint24_t xorshift24(uint24_t *state) {
+_xorshift24:
+.DEFINE "_xorshift24"
+
+.VALUE _xorshift24
+
+.CLASS 2
+
+.TYPE 78
+
+.ENDEF
+
+.BEGFUNC "xorshift24",622,"_xorshift24"
+
+.LINE 622
+
+.DEFINE "state"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 46
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  623	    uint24_t x = *state;
+.LINE 623
+
+	LD	HL,(IX+%6)
+	LD	BC,(HL)
+	LD	(IX+%FFFFFFFD),BC
+;  624	    x ^= x << 13;
+.LINE 624
+
+	LD	HL,BC
+	LD	A,%D
+	CALL	__ishl_b
+	CALL	__ixor
+	LD	BC,HL
+	LD	(IX+%FFFFFFFD),BC
+;  625	    x ^= x >> 17;
+.LINE 625
+
+	LD	HL,BC
+	LD	A,%11
+	CALL	__ishru_b
+	CALL	__ixor
+	LD	BC,HL
+	LD	(IX+%FFFFFFFD),BC
+;  626	    x ^= x << 5;
+.LINE 626
+
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	CALL	__ixor
+	LD	(IX+%FFFFFFFD),HL
+;  627	    *state = x;
+.LINE 627
+
+	LD	HL,(IX+%6)
+	LD	BC,(IX+%FFFFFFFD)
+	LD	(HL),BC
+;  628	    return x;
+.LINE 628
+
+	LD	HL,(IX+%FFFFFFFD)
+;  629	}
+.LINE 629
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _xorshift24 ***************************
+;Name                         Addr/Register   Size   Type
+;x                                     IX-3      3   variable
+;state                                 IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "xorshift24",629,"_xorshift24"
+;  630	
+;  631	int prand(int min, int max) {
+_prand:
+.DEFINE "_prand"
+
+.VALUE _prand
+
+.CLASS 2
+
+.TYPE 68
+
+.ENDEF
+
+.BEGFUNC "prand",631,"_prand"
+
+.LINE 631
+
+.DEFINE "min"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "max"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "state"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "range"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "randomValue"
+
+.CLASS 65
+
+.VALUE -9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+;  632	    uint24_t state = timer1;
+.LINE 632
+
+	LD	BC,(_timer1)
+	LD	(IX+%FFFFFFFD),BC
+;  633	    uint24_t range = max - min + 1;
+.LINE 633
+
+	LD	BC,(IX+%6)
+	LD	HL,(IX+%9)
+	OR	A,A
+	SBC	HL,BC
+	INC	HL
+	LD	(IX+%FFFFFFFA),HL
+;  634	    uint24_t randomValue = xorshift24(&state) % range;
+.LINE 634
+
+	PEA	IX+%FFFFFFFD
+	CALL	_xorshift24
+	POP	BC
+	LD	BC,(IX+%FFFFFFFA)
+	CALL	__iremu
+	LD	(IX+%FFFFFFF7),HL
+;  635	    return randomValue + min;
+.LINE 635
+
+	LD	BC,(IX+%6)
+	LD	HL,(IX+%FFFFFFF7)
+	ADD	HL,BC
+;  636	}
+.LINE 636
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _prand ***************************
+;Name                         Addr/Register   Size   Type
+;_timer1                             IMPORT      3   variable
+;randomValue                           IX-9      3   variable
+;range                                 IX-6      3   variable
+;state                                 IX-3      3   variable
+;max                                   IX+9      3   parameter
+;min                                   IX+6      3   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "prand",636,"_prand"
+;  637	
+;  638	void move_snake() {
+_move_snake:
+.DEFINE "_move_snake"
+
+.VALUE _move_snake
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "move_snake",638,"_move_snake"
+
+.LINE 638
+
+.DEFINE "currentRect"
+
+.CLASS 65
+
+.VALUE -11
+
+.TAG "NONAME6"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -15
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "nextRect"
+
+.CLASS 65
+
+.VALUE -23
+
+.TAG "NONAME6"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "prevRect"
+
+.CLASS 65
+
+.VALUE -31
+
+.TAG "NONAME6"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -44
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-161
+	ADD	HL,SP
+	LD	SP,HL
+;  639	    uint8_t i = 0, j = 0;
+;  640	
+;  641		//Reconstruct the snake in its next position
+;  642		
+;  643		//Body
+;  644		
+;  645	    for (i = game.snake_length; i > 0; i--) {
+.LINE 645
+
+	LD	A,(_game+14)
+	LD	(IX+%FFFFFFF1),A
+	JR	L_205
+L_203:
+;  646	        game.snake[i].x = game.snake[i - 1].x;
+.LINE 646
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFB0),BC
+	LD	A,(IX+%FFFFFFF1)
+	UEXT	HL
+	LD	L,A
+	DEC	HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFB0)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFB3),HL
+	LD	A,(IX+%FFFFFFF1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	IY,(IX+%FFFFFFB3)
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFB0)
+	ADD	HL,BC
+	LD	BC,(IY+%0)
+	LD	IY,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  647	        game.snake[i].y = game.snake[i - 1].y;
+.LINE 647
+
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFB0)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFB6),HL
+	LD	(IX+%FFFFFFB9),HL
+	LD	IY,(IX+%FFFFFFB3)
+	LD	BC,(IY+%2)
+	LD	IY,(IX+%FFFFFFB6)
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  648	        vdp_spriteMoveTo(SPRITE_START + i, game.snake[i].x, game.snake[i].y);
+.LINE 648
+
+	LD	IY,(IX+%FFFFFFB9)
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+	DEC	(IX+%FFFFFFF1)
+;  649			
+;  650	    }
+L_205:
+.LINE 650
+
+	XOR	A,A
+	CP	A,(IX+%FFFFFFF1)
+	JR	C,L_203
+;  651		
+;  652		//Head
+;  653	
+;  654	    if (game.vel_x < 0) {
+.LINE 654
+
+	LD	A,(_game+1215)
+	OR	A,A
+	JP	P,L_220
+;  655	        if (game.snake[0].x - game.snake[0].width >= 0) {
+.LINE 655
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFC8),BC
+	LD	(IX+%FFFFFFAD),BC
+	LD	IY,(IX+%FFFFFFAD)
+	LD	BC,(IY+%0)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IY+%4)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__250
+	JP	PE,L_207
+	JR	L__251
+L__250:
+	JP	PO,L_207
+L__251:
+;  656	            game.snake[0].x -= game.snake[0].width;
+.LINE 656
+
+	LD	BC,(IX+%FFFFFFC8)
+	LD	(IX+%FFFFFFAA),BC
+	LD	IY,(IX+%FFFFFFAA)
+	LD	BC,(IY+%4)
+	LD	HL,(IY+%0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	LD	BC,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  657	            vdp_spriteMoveTo(SPRITE_START + 0, game.snake[0].x, game.snake[0].y);
+.LINE 657
+
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  658				vdp_spriteSetFrameSelected(SNAKE_HEAD_W);
+.LINE 658
+
+	LD	BC,3
+	PUSH	BC
+	CALL	_vdp_spriteSetFrameSelected
+	POP	BC
+;  659	        } else {
+.LINE 659
+
+	JR	L_271
+L_207:
+;  660	            play_sound(0, 120, 200, 440);
+.LINE 660
+
+	LD	BC,440
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_play_sound
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  661				game.game_over = true;
+.LINE 661
+
+	LD	A,%1
+	LD	(_game+1217),A
+;  662	            return;
+.LINE 662
+
+	JR	L_295
+;  663	        }
+;  664	    } else if (game.vel_x > 0) {
+L_220:
+.LINE 664
+
+	XOR	A,A
+	LD	HL,_game+1215
+	CP	A,(HL)
+	JP	P,L__252
+	JP	PE,L_218
+	JR	L__253
+L__252:
+	JP	PO,L_218
+L__253:
+;  665	        if (game.snake[0].x + game.snake[0].width + game.snake[0].width <= game.screen_width) {
+.LINE 665
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFD1),BC
+	LD	IY,(IX+%FFFFFFD1)
+	LD	DE,(IY+%4)
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-152	; spill
+	CALL	__istix
+	LD	BC,(IY+%0)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-155	; spill
+	CALL	__istix
+	LD	BC,DE
+	CALL	__stoiu
+	LD	BC,-155	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-158	; spill
+	CALL	__istix
+	LD	BC,DE
+	CALL	__stoiu
+	LD	BC,-158	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,-152	; unspill
+	CALL	__ildix
+	LD	BC,HL
+	LD	HL,BC
+	OR	A,A
+	SBC	HL,DE
+	JP	M,L__254
+	JP	PE,L_209
+	JR	L__255
+L__254:
+	JP	PO,L_209
+L__255:
+;  666	            game.snake[0].x += game.snake[0].width;
+.LINE 666
+
+	LD	BC,(IX+%FFFFFFD1)
+	LD	(IX+%FFFFFFA7),BC
+	LD	IY,(IX+%FFFFFFA7)
+	LD	BC,(IY+%4)
+	LD	HL,(IY+%0)
+	ADD.SIS	HL,BC
+	LD	BC,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  667	            vdp_spriteMoveTo(SPRITE_START + 0, game.snake[0].x, game.snake[0].y);
+.LINE 667
+
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  668				vdp_spriteSetFrameSelected(SNAKE_HEAD_E);
+.LINE 668
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteSetFrameSelected
+	POP	BC
+;  669	        } else {
+.LINE 669
+
+	JR	L_271
+L_209:
+;  670	            play_sound(0, 120, 200, 440);
+.LINE 670
+
+	LD	BC,440
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_play_sound
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  671				game.game_over = true;
+.LINE 671
+
+	LD	A,%1
+	LD	(_game+1217),A
+;  672	            return;
+.LINE 672
+
+	JR	L_295
+;  673	        }
+;  674	    } else if (game.vel_y < 0) {
+L_218:
+.LINE 674
+
+	LD	A,(_game+1216)
+	OR	A,A
+	JP	P,L_216
+;  675	        if (game.snake[0].y - game.snake[0].height >= 0) {
+.LINE 675
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFC5),BC
+	LD	(IX+%FFFFFFA4),BC
+	LD	IY,(IX+%FFFFFFA4)
+	LD	BC,(IY+%2)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IY+%6)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__256
+	JP	PE,L_211
+	JR	L__257
+L__256:
+	JP	PO,L_211
+L__257:
+;  676	            game.snake[0].y -= game.snake[0].height;
+.LINE 676
+
+	LD	BC,(IX+%FFFFFFC5)
+	LD	(IX+%FFFFFFA1),BC
+	LD	IY,(IX+%FFFFFFA1)
+	LD	BC,(IY+%6)
+	LD	HL,(IY+%2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	LD	BC,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  677	            vdp_spriteMoveTo(SPRITE_START + 0, game.snake[0].x, game.snake[0].y);
+.LINE 677
+
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  678				vdp_spriteSetFrameSelected(SNAKE_HEAD_N);
+.LINE 678
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrameSelected
+	POP	BC
+;  679	        } else {
+.LINE 679
+
+	JR	L_271
+L_211:
+;  680	            play_sound(0, 120, 200, 440);
+.LINE 680
+
+	LD	BC,440
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_play_sound
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  681				game.game_over = true;
+.LINE 681
+
+	LD	A,%1
+	LD	(_game+1217),A
+;  682	            return;
+.LINE 682
+
+	JR	L_295
+;  683	        }
+;  684	    } else if (game.vel_y > 0) {
+L_216:
+.LINE 684
+
+	XOR	A,A
+	LD	HL,_game+1216
+	CP	A,(HL)
+	JP	P,L__258
+	JP	PE,L_271
+	JR	L__259
+L__258:
+	JP	PO,L_271
+L__259:
+;  685	        if (game.snake[0].y + game.snake[0].height + game.snake[0].height <= game.screen_height) {
+.LINE 685
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFCE),BC
+	LD	IY,(IX+%FFFFFFCE)
+	LD	DE,(IY+%6)
+	LD	BC,(_game+2)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-143	; spill
+	CALL	__istix
+	LD	BC,(IY+%2)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-146	; spill
+	CALL	__istix
+	LD	BC,DE
+	CALL	__stoiu
+	LD	BC,-146	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-149	; spill
+	CALL	__istix
+	LD	BC,DE
+	CALL	__stoiu
+	LD	BC,-149	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,-143	; unspill
+	CALL	__ildix
+	LD	BC,HL
+	LD	HL,BC
+	OR	A,A
+	SBC	HL,DE
+	JP	M,L__260
+	JP	PE,L_213
+	JR	L__261
+L__260:
+	JP	PO,L_213
+L__261:
+;  686	            game.snake[0].y += game.snake[0].height;
+.LINE 686
+
+	LD	BC,(IX+%FFFFFFCE)
+	LD	(IX+%FFFFFF9E),BC
+	LD	IY,(IX+%FFFFFF9E)
+	LD	BC,(IY+%6)
+	LD	HL,(IY+%2)
+	ADD.SIS	HL,BC
+	LD	BC,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  687	            vdp_spriteMoveTo(SPRITE_START + 0, game.snake[0].x, game.snake[0].y);
+.LINE 687
+
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  688				vdp_spriteSetFrameSelected(SNAKE_HEAD_S);
+.LINE 688
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteSetFrameSelected
+	POP	BC
+;  689	        } else {
+.LINE 689
+
+	JR	L_271
+L_213:
+;  690	            play_sound(0, 120, 200, 440);
+.LINE 690
+
+	LD	BC,440
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_play_sound
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  691				game.game_over = true;
+.LINE 691
+
+	LD	A,%1
+	LD	(_game+1217),A
+;  692	            return;
+.LINE 692
+
+	JR	L_295
+;  693	        }
+;  694	    }
+L_271:
+.LINE 694
+
+;  695		
+;  696		//Iterate over the body to determine orientation, excluding the head and the end
+;  697		
+;  698		for (i = 1; i < game.snake_length; i++) {
+.LINE 698
+
+	LD	(IX+%FFFFFFF1),%1
+	JR	L_270
+L_268:
+;  699			Rect currentRect = game.snake[i];
+.LINE 699
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFFD),BC
+	LD	A,(IX+%FFFFFFF1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+%FFFFFFF2),HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LEA	DE,IX+%FFFFFFF5
+	LD	BC,8
+	LDIR	
+;  700			Rect nextRect = game.snake[i - 1];
+.LINE 700
+
+	LD	A,(IX+%FFFFFFF1)
+	UEXT	HL
+	LD	L,A
+	DEC	HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LEA	DE,IX+%FFFFFFE9
+	LD	BC,8
+	LDIR	
+;  701			Rect prevRect = game.snake[i + 1];
+.LINE 701
+
+	LD	A,(IX+%FFFFFFF1)
+	UEXT	HL
+	LD	L,A
+	INC	HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LEA	DE,IX+%FFFFFFE1
+	LD	BC,8
+	LDIR	
+;  702	
+;  703			if (currentRect.y == prevRect.y && currentRect.y == nextRect.y) {
+.LINE 703
+
+	LD	BC,(IX+%FFFFFFE3)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_267
+	LD	BC,(IX+%FFFFFFEB)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_267
+;  704				vdp_spriteSetFrame(SPRITE_START + i, 0); // Horizontal segment
+.LINE 704
+
+	LD	BC,0
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  705				game.snake[i].width = game.seg_hor_width;
+.LINE 705
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF9B),HL
+	LD	A,(_game+1218)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF9B)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  706				game.snake[i].height = game.seg_hor_height;
+.LINE 706
+
+	LD	A,(_game+1219)
+	LD	(IY+%6),A
+	LD	(IY+%7),B
+;  707				continue;
+.LINE 707
+
+	JR	L_269
+;  708				
+;  709			} else if (currentRect.x == prevRect.x && currentRect.x == nextRect.x) {
+L_267:
+.LINE 709
+
+	LD	BC,(IX+%FFFFFFE1)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_265
+	LD	BC,(IX+%FFFFFFE9)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_265
+;  710				vdp_spriteSetFrame(SPRITE_START + i, 1); // Vertical segment
+.LINE 710
+
+	LD	BC,1
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  711				game.snake[i].width = game.seg_ver_width;
+.LINE 711
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF98),HL
+	LD	A,(_game+1220)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF98)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  712				game.snake[i].height = game.seg_ver_height;
+.LINE 712
+
+	LD	A,(_game+1221)
+	LD	(IY+%6),A
+	LD	(IY+%7),B
+;  713				continue;
+.LINE 713
+
+	JR	L_269
+;  714			}
+;  715			
+;  716			else if (nextRect.x > currentRect.x && nextRect.y == currentRect.y && prevRect.y > currentRect.y && prevRect.x == currentRect.x) {
+L_265:
+.LINE 716
+
+	LD	BC,(IX+%FFFFFFE9)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_263
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_263
+	LD	BC,(IX+%FFFFFFE3)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_263
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_263
+;  717				vdp_spriteSetFrame(SPRITE_START + i, 5); // Northwest corner
+.LINE 717
+
+	LD	BC,5
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  718				game.snake[i].width = game.seg_cor_width;
+.LINE 718
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF95),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF95)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  719				game.snake[i].width = game.seg_cor_height;
+.LINE 719
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  720				continue;
+.LINE 720
+
+	JR	L_269
+;  721			}
+;  722			else if (nextRect.x == currentRect.x && nextRect.y > currentRect.y && prevRect.y == currentRect.y && prevRect.x > currentRect.x) {
+L_263:
+.LINE 722
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_261
+	LD	BC,(IX+%FFFFFFEB)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_261
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_261
+	LD	BC,(IX+%FFFFFFE1)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_261
+;  723				vdp_spriteSetFrame(SPRITE_START + i, 5); // Northwest corner
+.LINE 723
+
+	LD	BC,5
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  724				game.snake[i].width = game.seg_cor_width;
+.LINE 724
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF92),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF92)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  725				game.snake[i].width = game.seg_cor_height;			
+.LINE 725
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  726				continue;
+.LINE 726
+
+	JR	L_269
+;  727			}
+;  728			
+;  729			else if (nextRect.x == currentRect.x && nextRect.y > currentRect.y && prevRect.x < currentRect.x && prevRect.y == currentRect.y) {
+L_261:
+.LINE 729
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_259
+	LD	BC,(IX+%FFFFFFEB)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_259
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_259
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_259
+;  730				vdp_spriteSetFrame(SPRITE_START + i, 2); // Northeast corner
+.LINE 730
+
+	LD	BC,2
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  731				game.snake[i].width = game.seg_cor_width;
+.LINE 731
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF8F),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF8F)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  732				game.snake[i].width = game.seg_cor_height;			
+.LINE 732
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  733				continue;
+.LINE 733
+
+	JR	L_269
+;  734			}
+;  735			else if (nextRect.x < currentRect.x && nextRect.y == currentRect.y && prevRect.x == currentRect.x && prevRect.y > currentRect.y) {
+L_259:
+.LINE 735
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_257
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_257
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_257
+	LD	BC,(IX+%FFFFFFE3)
+	LD	HL,(IX+%FFFFFFF7)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_257
+;  736				vdp_spriteSetFrame(SPRITE_START + i, 2); // Northeast corner
+.LINE 736
+
+	LD	BC,2
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  737				game.snake[i].width = game.seg_cor_width;
+.LINE 737
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF8C),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF8C)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  738				game.snake[i].width = game.seg_cor_height;			
+.LINE 738
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  739				continue;
+.LINE 739
+
+	JR	L_269
+;  740			}
+;  741	
+;  742			else if (nextRect.x < currentRect.x && nextRect.y == currentRect.y && prevRect.x == currentRect.x && prevRect.y < currentRect.y) {
+L_257:
+.LINE 742
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_255
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_255
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_255
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_255
+;  743				vdp_spriteSetFrame(SPRITE_START + i, 3); // Southeast corner
+.LINE 743
+
+	LD	BC,3
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  744				game.snake[i].width = game.seg_cor_width;
+.LINE 744
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF89),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF89)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  745				game.snake[i].width = game.seg_cor_height;			
+.LINE 745
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  746				continue;
+.LINE 746
+
+	JR	L_269
+;  747			}
+;  748			else if (nextRect.x == currentRect.x && nextRect.y < currentRect.y && prevRect.x < currentRect.x && prevRect.y == currentRect.y) {
+L_255:
+.LINE 748
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_253
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_253
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_253
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_253
+;  749				vdp_spriteSetFrame(SPRITE_START + i, 3); // Southeast corner
+.LINE 749
+
+	LD	BC,3
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  750				game.snake[i].width = game.seg_cor_width;
+.LINE 750
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF86),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF86)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  751				game.snake[i].width = game.seg_cor_height;			
+.LINE 751
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  752				continue;
+.LINE 752
+
+	JR	L_269
+;  753			}				
+;  754			
+;  755			else if (nextRect.x == currentRect.x && nextRect.y < currentRect.y && prevRect.x > currentRect.x && prevRect.y == currentRect.y) {
+L_253:
+.LINE 755
+
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE9)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_251
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_251
+	LD	BC,(IX+%FFFFFFE1)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_251
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_251
+;  756				vdp_spriteSetFrame(SPRITE_START + i, 4); // Southwest corner
+.LINE 756
+
+	LD	BC,4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  757				game.snake[i].width = game.seg_cor_width;
+.LINE 757
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF83),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF83)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  758				game.snake[i].width = game.seg_cor_height;			
+.LINE 758
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  759				continue;
+.LINE 759
+
+	JR	L_269
+;  760			}
+;  761			else if (nextRect.x > currentRect.x && nextRect.y == currentRect.y && prevRect.x == currentRect.x && prevRect.y < currentRect.y) {
+L_251:
+.LINE 761
+
+	LD	BC,(IX+%FFFFFFE9)
+	LD	HL,(IX+%FFFFFFF5)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_269
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFEB)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_269
+	LD	BC,(IX+%FFFFFFF5)
+	LD	HL,(IX+%FFFFFFE1)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_269
+	LD	BC,(IX+%FFFFFFF7)
+	LD	HL,(IX+%FFFFFFE3)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_269
+;  762				vdp_spriteSetFrame(SPRITE_START + i, 4); // Southwest corner
+.LINE 762
+
+	LD	BC,4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFF1)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  763				game.snake[i].width = game.seg_cor_width;
+.LINE 763
+
+	LD	BC,(IX+%FFFFFFF2)
+	LD	HL,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF80),HL
+	LD	A,(_game+1222)
+	LD	B,%0
+	LD	IY,(IX+%FFFFFF80)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  764				game.snake[i].width = game.seg_cor_height;			
+.LINE 764
+
+	LD	A,(_game+1223)
+	LD	(IY+%4),A
+	LD	(IY+%5),B
+;  765				continue;
+;  766			}				
+;  767	
+;  768		}
+L_269:
+.LINE 768
+
+	INC	(IX+%FFFFFFF1)
+L_270:
+	LD	A,(IX+%FFFFFFF1)
+	LD	HL,_game+14
+	CP	A,(HL)
+	JR	C,L_268
+;  769		
+;  770		//Tail
+;  771		
+;  772		if (game.snake[game.snake_length].x < game.snake[game.snake_length - 1].x && game.snake[game.snake_length].y == game.snake[game.snake_length - 1].y)
+.LINE 772
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFDE),BC
+	LD	(IX+%FFFFFFBC),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDE)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDE)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%0)
+	LD	IY,DE
+	LD	HL,(IY+%0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_282
+	LD	BC,(IX+%FFFFFFDE)
+	LD	(IX+%FFFFFFBC),BC
+	LD	BC,(IX+%FFFFFFDE)
+	LD	(IX+%FFFFFFCB),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDE)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDE)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%2)
+	LD	IY,DE
+	LD	HL,(IY+%2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_282
+;  773			vdp_spriteSetFrame(SPRITE_START + game.snake_length, 9); // Pointing west (going east)
+.LINE 773
+
+	LD	BC,9
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  774		else if (game.snake[game.snake_length].x > game.snake[game.snake_length - 1].x && game.snake[game.snake_length].y == game.snake[game.snake_length - 1].y)
+.LINE 774
+
+	JR	L_284
+L_282:
+	LD	BC,(IX+%FFFFFFBC)
+	LD	(IX+%FFFFFFDB),BC
+	LD	(IX+%FFFFFFBF),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDB)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	DEC	HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDB)
+	ADD	HL,BC
+	LD	BC,(IY+%0)
+	LD	IY,HL
+	LD	HL,(IY+%0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_280
+	LD	BC,(IX+%FFFFFFDB)
+	LD	(IX+%FFFFFFBF),BC
+	LD	BC,(IX+%FFFFFFDB)
+	LD	(IX+%FFFFFFCB),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDB)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFDB)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%2)
+	LD	IY,DE
+	LD	HL,(IY+%2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_280
+;  775			vdp_spriteSetFrame(SPRITE_START + game.snake_length, 7); // Pointing east (going west)
+.LINE 775
+
+	LD	BC,7
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  776		else if (game.snake[game.snake_length].x == game.snake[game.snake_length - 1].x && game.snake[game.snake_length].y < game.snake[game.snake_length - 1].y)
+.LINE 776
+
+	JR	L_284
+L_280:
+	LD	BC,(IX+%FFFFFFBF)
+	LD	(IX+%FFFFFFD8),BC
+	LD	(IX+%FFFFFFC2),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD8)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD8)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%0)
+	LD	IY,DE
+	LD	HL,(IY+%0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_278
+	LD	BC,(IX+%FFFFFFD8)
+	LD	(IX+%FFFFFFC2),BC
+	LD	BC,(IX+%FFFFFFD8)
+	LD	(IX+%FFFFFFCB),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD8)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD8)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%2)
+	LD	IY,DE
+	LD	HL,(IY+%2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_278
+;  777			vdp_spriteSetFrame(SPRITE_START + game.snake_length, 6); // Pointing north (going south)
+.LINE 777
+
+	LD	BC,6
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  778		else if (game.snake[game.snake_length].x == game.snake[game.snake_length - 1].x && game.snake[game.snake_length].y > game.snake[game.snake_length - 1].y)
+.LINE 778
+
+	JR	L_284
+L_278:
+	LD	BC,(IX+%FFFFFFC2)
+	LD	(IX+%FFFFFFD5),BC
+	LD	(IX+%FFFFFFCB),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD5)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD5)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%0)
+	LD	IY,DE
+	LD	HL,(IY+%0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NZ,L_284
+	LD	BC,(IX+%FFFFFFD5)
+	LD	(IX+%FFFFFFCB),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD5)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	DEC	HL
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFD5)
+	ADD	HL,BC
+	LD	BC,(IY+%2)
+	LD	IY,HL
+	LD	HL,(IY+%2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	NC,L_284
+;  779			vdp_spriteSetFrame(SPRITE_START + game.snake_length, 8); // Pointing south (going north)
+.LINE 779
+
+	LD	BC,8
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+L_284:
+;  780		vdp_spriteShow(SPRITE_START + game.snake_length);
+.LINE 780
+
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-161
+	CALL	__istix
+	POP	HL
+	POP	BC
+	CALL	_vdp_spriteShow
+	LD	BC,-161
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	POP	DE
+;  781	
+;  782		//Check for collisions with yourself before rendering anything
+;  783		
+;  784		for (j = 1; j < game.snake_length; j++) {
+.LINE 784
+
+	LD	(IX+%FFFFFFD4),%1
+	JR	L_289
+L_287:
+;  785			if (check_collision(game.snake[0], game.snake[j]) == TRUE) {
+.LINE 785
+
+	LD	DE,(IX+%FFFFFFCB)
+	LD	HL,-131
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-137	; spill
+	CALL	__istix
+	POP	HL
+	LD	BC,IX
+	PUSH	HL
+	LD	HL,BC	; unspill
+	LD	BC,-140	; spill
+	CALL	__istix
+	POP	HL
+	LD	BC,-137	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,-137	; spill
+	CALL	__istix
+	POP	HL
+	LD	BC,-140	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,-137	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	LD	(HL),DE
+	LD	A,(IX+%FFFFFFD4)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	IY,-131
+	LD	DE,IX
+	ADD	IY,DE
+	LD	DE,(IY)
+	ADD	HL,DE
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LD	BC,8
+	LDIR	
+	LD	HL,-131
+	LD	DE,IX
+	ADD	HL,DE
+	LD	HL,(HL)
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LD	BC,8
+	LDIR	
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-161
+	CALL	__istix
+	POP	HL
+	POP	BC
+	CALL	_check_collision
+	LD	BC,-161
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	POP	DE
+	POP	DE
+	POP	DE
+	POP	DE
+	POP	DE
+	POP	DE
+	UEXT	HL
+	LD	L,A
+	LD	DE,1
+	OR	A,A
+	SBC	HL,DE
+	JR	NZ,L_288
+;  786				play_sound(0, 120, 200, 440);
+.LINE 786
+
+	LD	DE,440
+	PUSH	DE
+	LD	DE,200
+	PUSH	DE
+	LD	DE,120
+	PUSH	DE
+	LD	DE,0
+	PUSH	DE
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-161
+	CALL	__istix
+	POP	HL
+	POP	BC
+	CALL	_play_sound
+	LD	BC,-161
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	POP	DE
+	POP	DE
+	POP	DE
+	POP	DE
+;  787				game.game_over = true;
+.LINE 787
+
+	LD	A,%1
+	LD	(_game+1217),A
+;  788				break;
+.LINE 788
+
+	JR	L_293
+;  789			}
+;  790		}
+L_288:
+.LINE 790
+
+	INC	(IX+%FFFFFFD4)
+L_289:
+	LD	A,(IX+%FFFFFFD4)
+	LD	HL,_game+14
+	CP	A,(HL)
+	JR	C,L_287
+L_293:
+;  791		
+;  792		//Food eaten?
+;  793		
+;  794		if (check_collision(game.snake[0], game.current_food)) {
+.LINE 794
+
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,_game+4
+	LD	BC,8
+	LDIR	
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,_game+15
+	LD	BC,8
+	LDIR	
+	CALL	_check_collision
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_294
+;  795		
+;  796			grow_snake();
+.LINE 796
+
+	CALL	_grow_snake
+;  797			game.current_food.x = prand(32, game.screen_width - 32);
+.LINE 797
+
+	LD	BC,_game+4
+	LD	HL,-134
+	LD	DE,IX
+	ADD	HL,DE
+	LD	(HL),BC
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	BC,IY+%FFFFFFE0
+	PUSH	BC
+	LD	BC,32
+	PUSH	BC
+	CALL	_prand
+	POP	BC
+	POP	BC
+	LD	IY,-134
+	LD	BC,IX
+	ADD	IY,BC
+	LD	IY,(IY)
+	LD	BC,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  798			game.current_food.y = prand(32, game.screen_height - 32);
+.LINE 798
+
+	LD	BC,(_game+2)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	BC,IY+%FFFFFFE0
+	PUSH	BC
+	LD	BC,32
+	PUSH	BC
+	CALL	_prand
+	POP	BC
+	POP	BC
+	LD	IY,-134
+	LD	BC,IX
+	ADD	IY,BC
+	LD	IY,(IY)
+	LD	BC,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  799			vdp_spriteMoveTo(SPRITE_FOOD, game.current_food.x, game.current_food.y);
+.LINE 799
+
+	LD	HL,-134
+	LD	BC,IX
+	ADD	HL,BC
+	LD	IY,(HL)
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	HL,-134
+	LD	BC,IX
+	ADD	HL,BC
+	LD	IY,(HL)
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  800			if (game.tick > 100) game.tick--;
+.LINE 800
+
+	LD	A,%64
+	LD	HL,_game+1226
+	CP	A,(HL)
+	JR	NC,L_294
+	LD	A,(_game+1226)
+	DEC	A
+	LD	(_game+1226),A
+;  801			
+;  802		}
+L_294:
+.LINE 802
+
+;  803		
+;  804		//Refresh the snake and other sprites
+;  805		
+;  806		vdp_spriteActivateTotal(SPRITE_START + game.snake_length + 1);
+.LINE 806
+
+	LD	A,(_game+14)
+	ADD	A,%15
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;  807		vdp_spriteRefresh();
+.LINE 807
+
+	CALL	_vdp_spriteRefresh
+;  808		vdp_spriteActivateTotal(0);
+.LINE 808
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteActivateTotal
+	POP	BC
+;  809	
+;  810	
+;  811	}
+L_295:
+.LINE 811
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _move_snake ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteRefresh                  IMPORT  -----   function
+;_vdp_spriteActivateTotal            IMPORT  -----   function
+;_grow_snake                         IMPORT  -----   function
+;_vdp_spriteShow                     IMPORT  -----   function
+;_vdp_spriteSetFrame                 IMPORT  -----   function
+;_vdp_spriteSetFrameSelected         IMPORT  -----   function
+;_vdp_spriteMoveTo                   IMPORT  -----   function
+;_game                               STATIC   1227   variable
+;G_27                                 IX-68      3   variable
+;G_29                                 IX-65      3   variable
+;G_31                                 IX-62      3   variable
+;G_4                                  IX-59      3   variable
+;G_2                                  IX-56      3   variable
+;G_33                                 IX-53      3   variable
+;G_5                                  IX-50      3   variable
+;G_3                                  IX-47      3   variable
+;j                                    IX-44      1   variable
+;G_32                                 IX-43      3   variable
+;G_30                                 IX-40      3   variable
+;G_28                                 IX-37      3   variable
+;G_26                                 IX-34      3   variable
+;prevRect                             IX-31      8   variable
+;nextRect                             IX-23      8   variable
+;i                                    IX-15      1   variable
+;G_7                                  IX-14      3   variable
+;currentRect                          IX-11      8   variable
+;G_6                                   IX-3      3   variable
+
+
+; Stack Frame Size: 167 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "move_snake",811,"_move_snake"
+;  812	
+;  813	void grow_snake() {
+_grow_snake:
+.DEFINE "_grow_snake"
+
+.VALUE _grow_snake
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "grow_snake",813,"_grow_snake"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  814		
+;  815		
+;  816		if (game.snake_length == 100) { game.game_over = true; return; }
+.LINE 816
+
+	LD	A,(_game+14)
+	CP	A,%64
+	JR	NZ,L_298
+	LD	A,%1
+	LD	(_game+1217),A
+	JR	L_300
+;  817		else game.snake_length++;
+L_298:
+.LINE 817
+
+	LD	A,(_game+14)
+	INC	A
+	LD	(_game+14),A
+;  818		
+;  819		change_score();
+.LINE 819
+
+	CALL	_change_score
+;  820		play_sound(0, 120, 200, 880);
+.LINE 820
+
+	LD	BC,880
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_play_sound
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  821		
+;  822		game.snake[game.snake_length].x = game.screen_width;
+.LINE 822
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFFD),BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	BC,(_game)
+	LD	IY,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  823		game.snake[game.snake_length].y = game.screen_height;
+.LINE 823
+
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	BC,(_game+2)
+	LD	IY,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  824		vdp_spriteClearFrames(SPRITE_START + game.snake_length);
+.LINE 824
+
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  825		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_HOR);
+.LINE 825
+
+	LD	BC,4
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  826		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_VER);
+.LINE 826
+
+	LD	BC,5
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  827		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_NE);
+.LINE 827
+
+	LD	BC,6
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  828		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_SE);
+.LINE 828
+
+	LD	BC,7
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  829		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_SW);
+.LINE 829
+
+	LD	BC,8
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  830		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_BODY_NW);
+.LINE 830
+
+	LD	BC,9
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  831		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_TAIL_N);
+.LINE 831
+
+	LD	BC,10
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  832		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_TAIL_E);
+.LINE 832
+
+	LD	BC,11
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  833		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_TAIL_S);
+.LINE 833
+
+	LD	BC,12
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  834		vdp_spriteAddFrame(SPRITE_START + game.snake_length, SNAKE_TAIL_W);	
+.LINE 834
+
+	LD	BC,13
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  835		vdp_spriteMoveTo(SPRITE_START + game.snake_length, game.snake[game.snake_length].x, game.snake[game.snake_length].y);
+.LINE 835
+
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  836		vdp_spriteShow(SPRITE_START + game.snake_length);
+.LINE 836
+
+	LD	A,(_game+14)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteShow
+	POP	BC
+;  837		game.snake[game.snake_length].height = game.snake[game.snake_length - 1].height;
+.LINE 837
+
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	BC,(IY+%6)
+	LD	IY,HL
+	LD	(IY+%6),C
+	LD	(IY+%7),B
+;  838		game.snake[game.snake_length].width = game.snake[game.snake_length - 1].width;
+.LINE 838
+
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	HL,BC
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(_game+14)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFFD)
+	ADD	HL,BC
+	LD	BC,(IY+%4)
+	LD	IY,HL
+	LD	(IY+%4),C
+	LD	(IY+%5),B
+;  839		//move_snake();
+;  840		
+;  841	}
+L_300:
+.LINE 841
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _grow_snake ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteShow                     IMPORT  -----   function
+;_vdp_spriteMoveTo                   IMPORT  -----   function
+;_vdp_spriteAddFrame                 IMPORT  -----   function
+;_vdp_spriteClearFrames              IMPORT  -----   function
+;_game                               STATIC   1227   variable
+;G_34                                  IX-3      3   variable
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: -3 (instruction)
+
+
+.ENDFUNC "grow_snake",841,"_grow_snake"
+;  842	
+;  843	void setup_snake(uint8_t length, uint16_t start_x, uint16_t start_y,
+;  844					const char *head_n, const char *head_e, const char *head_s, const char *head_w,
+;  845					const char *body_hor, const char *body_ver,
+;  846					const char *body_ne, const char *body_se, const char *body_sw, const char *body_nw,
+;  847					const char *tail_n, const char *tail_e, const char *tail_s, const char *tail_w,
+;  848					const char *food, const char *tile) {
+_setup_snake:
+.DEFINE "_setup_snake"
+
+.VALUE _setup_snake
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "setup_snake",848,"_setup_snake"
+
+.LINE 848
+
+.DEFINE "length"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "start_x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "start_y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "head_n"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "head_e"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "head_s"
+
+.CLASS 65
+
+.VALUE 21
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "head_w"
+
+.CLASS 65
+
+.VALUE 24
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_hor"
+
+.CLASS 65
+
+.VALUE 27
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_ver"
+
+.CLASS 65
+
+.VALUE 30
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_ne"
+
+.CLASS 65
+
+.VALUE 33
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_se"
+
+.CLASS 65
+
+.VALUE 36
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_sw"
+
+.CLASS 65
+
+.VALUE 39
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "body_nw"
+
+.CLASS 65
+
+.VALUE 42
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "tail_n"
+
+.CLASS 65
+
+.VALUE 45
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "tail_e"
+
+.CLASS 65
+
+.VALUE 48
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "tail_s"
+
+.CLASS 65
+
+.VALUE 51
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "tail_w"
+
+.CLASS 65
+
+.VALUE 54
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "food"
+
+.CLASS 65
+
+.VALUE 57
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "tile"
+
+.CLASS 65
+
+.VALUE 60
+
+.TYPE 194
+
+.ENDEF
+
+.DEFINE "segment"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "bmp"
+
+.CLASS 65
+
+.VALUE -6
+
+.TAG "NONAME8"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-134
+	ADD	HL,SP
+	LD	SP,HL
+;  849		
+;  850		uint8_t segment;
+;  851		bmp_info bmp;
+;  852		
+;  853		printf("Loading images...");
+.LINE 853
+
+	LD	BC,___print_uputch
+	LD	(___print_xputch),BC
+	LD	BC,L__265
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+;  854						
+;  855		game.vel_x = 1;
+.LINE 855
+
+	LD	A,%1
+	LD	(_game+1215),A
+;  856		game.vel_y = 0;
+.LINE 856
+
+	XOR	A,A
+	LD	(_game+1216),A
+;  857		game.snake_length = length;
+.LINE 857
+
+	LD	A,(IX+%6)
+	LD	(_game+14),A
+;  858		
+;  859	
+;  860		//First load head (4 directions)
+;  861		bmp = load_bmp_direct(head_n, SNAKE_HEAD_N);
+.LINE 861
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,(IX+%F)
+	PUSH	BC
+	PEA	IX+%FFFFFFE6
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  862		game.snake[0].height = bmp.bmp_height;
+.LINE 862
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFEB),BC
+	LD	IY,(IX+%FFFFFFEB)
+	LD	BC,(IX+%FFFFFFFC)
+	LD	(IY+%6),C
+	LD	(IY+%7),B
+;  863		game.snake[0].width = bmp.bmp_width;
+.LINE 863
+
+	LD	BC,(IX+%FFFFFFFA)
+	LD	(IY+%4),C
+	LD	(IY+%5),B
+;  864		
+;  865		load_bmp_direct(head_e, SNAKE_HEAD_E);
+.LINE 865
+
+	LD	BC,1
+	PUSH	BC
+	LD	BC,(IX+%12)
+	PUSH	BC
+	PEA	IX+%FFFFFFE1
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  866		load_bmp_direct(head_s, SNAKE_HEAD_S);
+.LINE 866
+
+	LD	BC,2
+	PUSH	BC
+	LD	BC,(IX+%15)
+	PUSH	BC
+	PEA	IX+%FFFFFFDC
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  867		load_bmp_direct(head_w, SNAKE_HEAD_W);
+.LINE 867
+
+	LD	BC,3
+	PUSH	BC
+	LD	BC,(IX+%18)
+	PUSH	BC
+	PEA	IX+%FFFFFFD7
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  868		
+;  869		//Then load body (horizontal, vertical and corners)
+;  870		bmp = load_bmp_direct(body_hor, SNAKE_BODY_HOR);
+.LINE 870
+
+	LD	BC,4
+	PUSH	BC
+	LD	BC,(IX+%1B)
+	PUSH	BC
+	PEA	IX+%FFFFFFD2
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  871		game.seg_hor_width = bmp.bmp_width;
+.LINE 871
+
+	LD	A,(IX+%FFFFFFFA)
+	LD	(_game+1218),A
+;  872		game.seg_hor_height = bmp.bmp_height;
+.LINE 872
+
+	LD	A,(IX+%FFFFFFFC)
+	LD	(_game+1219),A
+;  873		
+;  874		bmp = load_bmp_direct(body_ver, SNAKE_BODY_VER);
+.LINE 874
+
+	LD	BC,5
+	PUSH	BC
+	LD	BC,(IX+%1E)
+	PUSH	BC
+	PEA	IX+%FFFFFFCD
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  875		game.seg_ver_width = bmp.bmp_width;
+.LINE 875
+
+	LD	A,(IX+%FFFFFFFA)
+	LD	(_game+1220),A
+;  876		game.seg_ver_height = bmp.bmp_height;
+.LINE 876
+
+	LD	A,(IX+%FFFFFFFC)
+	LD	(_game+1221),A
+;  877		
+;  878		bmp = load_bmp_direct(body_ne, SNAKE_BODY_NE);
+.LINE 878
+
+	LD	BC,6
+	PUSH	BC
+	LD	BC,(IX+%21)
+	PUSH	BC
+	PEA	IX+%FFFFFFC8
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  879		game.seg_cor_width = bmp.bmp_width;
+.LINE 879
+
+	LD	A,(IX+%FFFFFFFA)
+	LD	(_game+1222),A
+;  880		game.seg_cor_height = bmp.bmp_height;
+.LINE 880
+
+	LD	A,(IX+%FFFFFFFC)
+	LD	(_game+1223),A
+;  881		
+;  882		load_bmp_direct(body_se, SNAKE_BODY_SE);
+.LINE 882
+
+	LD	BC,7
+	PUSH	BC
+	LD	BC,(IX+%24)
+	PUSH	BC
+	PEA	IX+%FFFFFFC3
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  883		load_bmp_direct(body_sw, SNAKE_BODY_SW);
+.LINE 883
+
+	LD	BC,8
+	PUSH	BC
+	LD	BC,(IX+%27)
+	PUSH	BC
+	PEA	IX+%FFFFFFBE
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  884		load_bmp_direct(body_nw, SNAKE_BODY_NW);
+.LINE 884
+
+	LD	BC,9
+	PUSH	BC
+	LD	BC,(IX+%2A)
+	PUSH	BC
+	PEA	IX+%FFFFFFB9
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  885		
+;  886		//And finally the tail in four directions
+;  887		load_bmp_direct(tail_n, SNAKE_TAIL_N);
+.LINE 887
+
+	LD	BC,10
+	PUSH	BC
+	LD	BC,(IX+%2D)
+	PUSH	BC
+	PEA	IX+%FFFFFFB4
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  888		load_bmp_direct(tail_e, SNAKE_TAIL_E);
+.LINE 888
+
+	LD	BC,11
+	PUSH	BC
+	LD	BC,(IX+%30)
+	PUSH	BC
+	PEA	IX+%FFFFFFAF
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  889		load_bmp_direct(tail_s, SNAKE_TAIL_S);
+.LINE 889
+
+	LD	BC,12
+	PUSH	BC
+	LD	BC,(IX+%33)
+	PUSH	BC
+	PEA	IX+%FFFFFFAA
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  890		load_bmp_direct(tail_w, SNAKE_TAIL_W);
+.LINE 890
+
+	LD	BC,13
+	PUSH	BC
+	LD	BC,(IX+%36)
+	PUSH	BC
+	PEA	IX+%FFFFFFA5
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+;  891		
+;  892		game.snake[0].x = start_x;
+.LINE 892
+
+	LD	BC,_game+15
+	LD	(IX+%FFFFFFF7),BC
+	LD	IY,(IX+%FFFFFFF7)
+	LD	BC,(IX+%9)
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  893		game.snake[0].y = start_y;
+.LINE 893
+
+	LD	BC,(IX+%C)
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  894		vdp_spriteClearFrames(SPRITE_START + 0);
+.LINE 894
+
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  895		vdp_spriteAddFrame(SPRITE_START + 0, SNAKE_HEAD_N);
+.LINE 895
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  896		vdp_spriteAddFrame(SPRITE_START + 0, SNAKE_HEAD_E);
+.LINE 896
+
+	LD	BC,1
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  897		vdp_spriteAddFrame(SPRITE_START + 0, SNAKE_HEAD_S);
+.LINE 897
+
+	LD	BC,2
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  898		vdp_spriteAddFrame(SPRITE_START + 0, SNAKE_HEAD_W);
+.LINE 898
+
+	LD	BC,3
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  899		vdp_spriteMoveTo(SPRITE_START + 0, game.snake[0].x, game.snake[0].y);
+.LINE 899
+
+	LD	BC,(IX+%FFFFFFF7)
+	LD	(IX+%FFFFFFEE),BC
+	LD	BC,(IX+%FFFFFFF7)
+	LD	(IX+%FFFFFFA2),BC
+	LD	IY,(IX+%FFFFFFA2)
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  900		vdp_spriteShow(SPRITE_START + 0);
+.LINE 900
+
+	LD	BC,20
+	PUSH	BC
+	CALL	_vdp_spriteShow
+	POP	BC
+;  901	
+;  902		
+;  903		for (segment = 1; segment <= length; segment++) {
+.LINE 903
+
+	LD	(IX+%FFFFFFFF),%1
+	JR	L_304
+L_302:
+;  904			game.snake[segment].height = game.seg_hor_height;
+.LINE 904
+
+	LD	BC,(IX+%FFFFFFEE)
+	LD	(IX+%FFFFFFF4),BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,HL
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF9F),HL
+	LD	A,(_game+1219)
+	LD	IY,(IX+%FFFFFF9F)
+	LD	(IY+%6),A
+	LD	(IY+%7),%0
+;  905			game.snake[segment].width = game.seg_hor_width;		
+.LINE 905
+
+	LD	A,(_game+1218)
+	LD	(IY+%4),A
+	LD	(IY+%5),%0
+;  906			game.snake[segment].x = start_x + (-1 * game.vel_x * segment * game.seg_hor_width);
+.LINE 906
+
+	LD	A,(_game+1215)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	BC,HL
+	LD.LIS	HL,-1
+	CALL	__smulu
+	LD	(IX+%FFFFFF89),HL
+	LD	C,(IX+%FFFFFFFF)
+	LD	B,%0
+	LD	HL,BC
+	LD	BC,(IX+%FFFFFF89)
+	CALL	__smulu
+	LD	(IX+%FFFFFF86),HL
+	LD	A,(_game+1218)
+	LD	C,A
+	LD	B,%0
+	LD	HL,BC
+	LD	BC,(IX+%FFFFFF86)
+	CALL	__smulu
+	LD	(IX+%FFFFFF83),HL	; spill
+	LD	(IX+%FFFFFF80),DE	; spill
+	LD	BC,HL	; unspill
+	LD	HL,(IX+%FFFFFFF4)
+	LD	(IX+%FFFFFF83),BC	; spill
+	LD	BC,(IX+%FFFFFF80)	; unspill
+	ADD	HL,BC
+	LD	IY,HL
+	LD	HL,(IX+%FFFFFF83)
+	LD	BC,-131	; spill
+	CALL	__istix
+	LD	HL,(IX+%9)	; unspill
+	LD	BC,-134	; spill
+	CALL	__istix
+	LD	BC,-131	; unspill
+	CALL	__ildix
+	LD	BC,HL
+	LD	HL,BC
+	LD	BC,-134	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD.SIS	HL,BC
+	LD	BC,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  907			game.snake[segment].y = start_y;
+.LINE 907
+
+	LD	BC,DE
+	LD	HL,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	BC,(IX+%C)
+	LD	IY,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  908			
+;  909			vdp_spriteClearFrames(SPRITE_START + segment);
+.LINE 909
+
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteClearFrames
+	POP	BC
+;  910			
+;  911			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_HOR); //0
+.LINE 911
+
+	LD	BC,4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  912			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_VER);	//1
+.LINE 912
+
+	LD	BC,5
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  913			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_NE);	//2
+.LINE 913
+
+	LD	BC,6
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  914			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_SE);	//3
+.LINE 914
+
+	LD	BC,7
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  915			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_SW);	//4
+.LINE 915
+
+	LD	BC,8
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  916			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_BODY_NW);	//5
+.LINE 916
+
+	LD	BC,9
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  917			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_TAIL_N);	//6
+.LINE 917
+
+	LD	BC,10
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  918			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_TAIL_E);	//7
+.LINE 918
+
+	LD	BC,11
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  919			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_TAIL_S);	//8
+.LINE 919
+
+	LD	BC,12
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  920			vdp_spriteAddFrame(SPRITE_START + segment, SNAKE_TAIL_W);	//9
+.LINE 920
+
+	LD	BC,13
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  921			
+;  922			vdp_spriteSetFrame(SPRITE_START + segment, SNAKE_BODY_HOR);
+.LINE 922
+
+	LD	BC,4
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+;  923			
+;  924			vdp_spriteMoveTo(SPRITE_START + segment, game.snake[segment].x, game.snake[segment].y);
+.LINE 924
+
+	LD	BC,(IX+%FFFFFFF4)
+	LD	(IX+%FFFFFFEE),BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%FFFFFFF4)
+	ADD	HL,BC
+	LD	(IX+%FFFFFF99),HL
+	LD	(IX+%FFFFFF9C),HL
+	LD	IY,(IX+%FFFFFF9C)
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  925			vdp_spriteShow(SPRITE_START + segment);
+.LINE 925
+
+	LD	A,(IX+%FFFFFFFF)
+	ADD	A,%14
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteShow
+	POP	BC
+	INC	(IX+%FFFFFFFF)
+;  926	
+;  927		}
+L_304:
+.LINE 927
+
+	LD	A,(IX+%6)
+	CP	A,(IX+%FFFFFFFF)
+	JR	NC,L_302
+;  928		
+;  929		bmp = load_bmp_direct(food, SNAKE_FOOD);
+.LINE 929
+
+	LD	BC,14
+	PUSH	BC
+	LD	BC,(IX+%39)
+	PUSH	BC
+	PEA	IX+%FFFFFF91
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  930		game.current_food.width = bmp.bmp_width;
+.LINE 930
+
+	LD	BC,_game+4
+	LD	(IX+%FFFFFFF1),BC
+	LD	(IX+%FFFFFF96),BC
+	LD	BC,(IX+%FFFFFFFA)
+	LD	IY,(IX+%FFFFFFF1)
+	LD	(IY+%4),C
+	LD	(IY+%5),B
+;  931		game.current_food.height = bmp.bmp_height;
+.LINE 931
+
+	LD	BC,(IX+%FFFFFFFC)
+	LD	IY,(IX+%FFFFFF96)
+	LD	(IY+%6),C
+	LD	(IY+%7),B
+;  932		game.current_food.x = prand(32, game.screen_width - 32);
+.LINE 932
+
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	BC,IY+%FFFFFFE0
+	PUSH	BC
+	LD	BC,32
+	PUSH	BC
+	CALL	_prand
+	POP	BC
+	POP	BC
+	LD	IY,(IX+%FFFFFF96)
+	LD	BC,HL
+	LD	(IY+%0),C
+	LD	(IY+%1),B
+;  933		game.current_food.y = prand(32, game.screen_height - 32);	
+.LINE 933
+
+	LD	BC,(_game+2)
+	CALL	__stoiu
+	LD	IY,HL
+	LEA	BC,IY+%FFFFFFE0
+	PUSH	BC
+	LD	BC,32
+	PUSH	BC
+	CALL	_prand
+	POP	BC
+	POP	BC
+	LD	IY,(IX+%FFFFFF96)
+	LD	BC,HL
+	LD	(IY+%2),C
+	LD	(IY+%3),B
+;  934		vdp_spriteAddFrame(SPRITE_FOOD, SNAKE_FOOD);
+.LINE 934
+
+	LD	BC,14
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_vdp_spriteAddFrame
+	POP	BC
+	POP	BC
+;  935		vdp_spriteMoveTo(SPRITE_FOOD, game.current_food.x, game.current_food.y);
+.LINE 935
+
+	LD	IY,(IX+%FFFFFFF1)
+	LD	BC,(IY+%2)
+	PUSH	BC
+	LD	BC,(IY+%0)
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+;  936		vdp_spriteShowSelected();
+.LINE 936
+
+	CALL	_vdp_spriteShowSelected
+;  937		//vdp_bitmapDraw(SNAKE_FOOD, game.current_food.x, game.current_food.y);	
+;  938		
+;  939		bmp = load_bmp_direct(tile, BACKGROUND_TILE);
+.LINE 939
+
+	LD	BC,15
+	PUSH	BC
+	LD	BC,(IX+%3C)
+	PUSH	BC
+	PEA	IX+%FFFFFF8C
+	CALL	_load_bmp_direct
+	POP	BC
+	POP	BC
+	POP	BC
+	LEA	DE,IX+%FFFFFFFA
+	LD	BC,5
+	LDIR	
+;  940		game.bg_tile_width = bmp.bmp_width;
+.LINE 940
+
+	LD	A,(IX+%FFFFFFFA)
+	LD	(_game+1224),A
+;  941		game.bg_tile_height = bmp.bmp_height;
+.LINE 941
+
+	LD	A,(IX+%FFFFFFFC)
+	LD	(_game+1225),A
+;  942		
+;  943	}
+.LINE 943
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setup_snake ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteShowSelected             IMPORT  -----   function
+;_vdp_spriteSetFrame                 IMPORT  -----   function
+;_vdp_spriteShow                     IMPORT  -----   function
+;_vdp_spriteMoveTo                   IMPORT  -----   function
+;_vdp_spriteAddFrame                 IMPORT  -----   function
+;_vdp_spriteClearFrames              IMPORT  -----   function
+;_game                               STATIC   1227   variable
+;___print_sendstring                 IMPORT  -----   function
+;___print_xputch                     IMPORT      3   variable
+;___print_uputch                     IMPORT  -----   function
+;G_37                                 IX-18      3   variable
+;G_39                                 IX-15      3   variable
+;G_38                                 IX-12      3   variable
+;G_36                                  IX-9      3   variable
+;bmp                                   IX-6      5   variable
+;segment                               IX-1      1   variable
+;tile                                 IX+60      3   parameter
+;food                                 IX+57      3   parameter
+;tail_w                               IX+54      3   parameter
+;tail_s                               IX+51      3   parameter
+;tail_e                               IX+48      3   parameter
+;tail_n                               IX+45      3   parameter
+;body_nw                              IX+42      3   parameter
+;body_sw                              IX+39      3   parameter
+;body_se                              IX+36      3   parameter
+;body_ne                              IX+33      3   parameter
+;body_ver                             IX+30      3   parameter
+;body_hor                             IX+27      3   parameter
+;head_w                               IX+24      3   parameter
+;head_s                               IX+21      3   parameter
+;head_e                               IX+18      3   parameter
+;head_n                               IX+15      3   parameter
+;start_y                              IX+12      2   parameter
+;start_x                               IX+9      2   parameter
+;length                                IX+6      1   parameter
+
+
+; Stack Frame Size: 197 (bytes)
+;       Spill Code: -4 (instruction)
+
+
+.ENDFUNC "setup_snake",943,"_setup_snake"
+	SEGMENT STRSECT
+L__265:
+	DB	"Loading images..."
+	DB	0
+	SEGMENT CODE
+;  944	
+;  945	void draw_background() {
+_draw_background:
+.DEFINE "_draw_background"
+
+.VALUE _draw_background
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "draw_background",945,"_draw_background"
+
+.LINE 945
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;  946	
+;  947		uint8_t x, y;
+;  948		
+;  949		//vdp_bitmapSelect(BACKGROUND_TILE);
+;  950		
+;  951		for (x = 0; x < (game.screen_width / game.bg_tile_width) + 1; x++) {
+.LINE 951
+
+	LD	(IX+%FFFFFFFF),%0
+	JR	L_314
+L_312:
+;  952			
+;  953			for (y = 0; y < (game.screen_height / game.bg_tile_height) + 1; y ++) {
+.LINE 953
+
+	LD	(IX+%FFFFFFFE),%0
+	JR	L_311
+L_309:
+;  954			
+;  955				vdp_bitmapDraw(BACKGROUND_TILE, x * game.bg_tile_width, y * game.bg_tile_height);
+.LINE 955
+
+	LD	A,(_game+1225)
+	LD	C,A
+	LD	B,%0
+	LD	DE,BC
+	LD	C,(IX+%FFFFFFFE)
+	LD	HL,BC
+	LD	BC,DE
+	CALL	__smulu
+	PUSH	HL
+	LD	A,(_game+1224)
+	LD	C,A
+	LD	B,%0
+	LD	DE,BC
+	LD	C,(IX+%FFFFFFFF)
+	LD	HL,BC
+	LD	BC,DE
+	CALL	__smulu
+	PUSH	HL
+	LD	BC,15
+	PUSH	BC
+	CALL	_vdp_bitmapDraw
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+%FFFFFFFE)
+;  956				
+;  957			}
+L_311:
+.LINE 957
+
+	LD	BC,(_game+2)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	A,(_game+1225)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__idivs
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+%FFFFFFFE)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L_309
+	INC	(IX+%FFFFFFFF)
+;  958			
+;  959		}
+L_314:
+.LINE 959
+
+	LD	BC,(_game)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	A,(_game+1224)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__idivs
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+%FFFFFFFF)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L__270
+	JP	PE,L_312
+	JR	L__271
+L__270:
+	JP	PO,L_312
+L__271:
+;  960		
+;  961	}
+.LINE 961
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _draw_background ***************************
+;Name                         Addr/Register   Size   Type
+;_game                               STATIC   1227   variable
+;_vdp_bitmapDraw                     IMPORT  -----   function
+;y                                     IX-2      1   variable
+;x                                     IX-1      1   variable
+
+
+; Stack Frame Size: 8 (bytes)
+;       Spill Code: -4 (instruction)
+
+
+.ENDFUNC "draw_background",961,"_draw_background"
+;  962	
+;  963	int main(int argc, char * argv[]) {
+_main:
+.DEFINE "_main"
+
+.VALUE _main
+
+.CLASS 2
+
+.TYPE 68
+
+.ENDEF
+
+.BEGFUNC "main",963,"_main"
+
+.LINE 963
+
+.DEFINE "argc"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 4
+
+.ENDEF
+
+.DEFINE "argv"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 290
+
+.ENDEF
+
+.DEFINE "key"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "next_move"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "keycount"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "millis_old"
+
+.CLASS 65
+
+.VALUE -8
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE -136
+
+.DIM 128
+
+.TYPE 98
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-136
+	ADD	HL,SP
+	LD	SP,HL
+;  964	
+;  965	    int i = 0, j = 0;
+;  966	    UINT24 t = 0;
+;  967	    uint8_t key = 0, pressed = 0, keycount;
+.LINE 967
+
+	LD	(IX+%FFFFFFFF),%0
+;  968	    FIL * fo;
+;  969		uint8_t exit_num = 0;
+;  970		uint24_t millis_old;
+;  971		uint24_t millis_delta = 0;
+;  972		uint24_t next_frame = 0;
+;  973		uint24_t next_move = 0;
+.LINE 973
+
+	LD	BC,0
+	LD	(IX+%FFFFFFFC),BC
+;  974		char text[128];
+;  975		bmp_info bmp;
+;  976		
+;  977		timer1_begin(4608, 4); //1ms timer;
+.LINE 977
+
+	LD	BC,4
+	PUSH	BC
+	LD	BC,4608
+	PUSH	BC
+	CALL	_timer1_begin
+	POP	BC
+	POP	BC
+;  978		
+;  979	    vdp_clearGraphics();
+.LINE 979
+
+	CALL	_vdp_clearGraphics
+;  980		vdp_cls();
+.LINE 980
+
+	CALL	_vdp_cls
+;  981		
+;  982		vdp_mode(2);
+.LINE 982
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_mode
+	POP	BC
+;  983		game.screen_width = 320;
+.LINE 983
+
+	LD	A,%40
+	LD	(_game),A
+	LD	A,%1
+	LD	(_game+1),A
+;  984		game.screen_height = 200;
+.LINE 984
+
+	LD	A,%C8
+	LD	(_game+2),A
+	XOR	A,A
+	LD	(_game+3),A
+;  985		
+;  986		vdp_cursorDisable();
+.LINE 986
+
+	CALL	_vdp_cursorDisable
+;  987		load_font_frame();
+.LINE 987
+
+	CALL	_load_font_frame
+;  988	    setup_text_sprites();
+.LINE 988
+
+	CALL	_setup_text_sprites
+;  989		
+;  990		setup_snake(3, 10, 10, "snake_assets/head_up.bmp","snake_assets/head_right.bmp","snake_assets/head_down.bmp","snake_assets/head_left.bmp",
+;  991		"snake_assets/body_horizontal.bmp","snake_assets/body_vertical.bmp",
+;  992		"snake_assets/body_bottomleft.bmp","snake_assets/body_topleft.bmp","snake_assets/body_topright.bmp","snake_assets/body_bottomright.bmp",
+;  993		"snake_assets/tail_up.bmp","snake_assets/tail_right.bmp","snake_assets/tail_down.bmp","snake_assets/tail_left.bmp",
+;  994		"snake_assets/apple.bmp", "snake_assets/tile.bmp");	
+.LINE 994
+
+	LD	BC,L__273
+	PUSH	BC
+	LD	BC,L__274
+	PUSH	BC
+	LD	BC,L__275
+	PUSH	BC
+	LD	BC,L__276
+	PUSH	BC
+	LD	BC,L__277
+	PUSH	BC
+	LD	BC,L__278
+	PUSH	BC
+	LD	BC,L__279
+	PUSH	BC
+	LD	BC,L__280
+	PUSH	BC
+	LD	BC,L__281
+	PUSH	BC
+	LD	BC,L__282
+	PUSH	BC
+	LD	BC,L__283
+	PUSH	BC
+	LD	BC,L__284
+	PUSH	BC
+	LD	BC,L__285
+	PUSH	BC
+	LD	BC,L__286
+	PUSH	BC
+	LD	BC,L__287
+	PUSH	BC
+	LD	BC,L__288
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	PUSH	BC
+	LD	BC,3
+	PUSH	BC
+	CALL	_setup_snake
+	LD	IY,57
+	ADD	IY,SP
+	LD	SP,IY
+;  995		
+;  996		vdp_cls();
+.LINE 996
+
+	CALL	_vdp_cls
+;  997		
+;  998		//draw_bottom_frame();
+;  999		draw_background();
+.LINE 999
+
+	CALL	_draw_background
+; 1000		//draw_top_frame();
+; 1001	    vdp_spriteMoveTo(SPRITE_SCORE0, 16, game.screen_height - 11);
+.LINE 1001
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF5
+	PUSH	BC
+	LD	BC,16
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+; 1002	    vdp_spriteShowSelected();
+.LINE 1002
+
+	CALL	_vdp_spriteShowSelected
+; 1003	    vdp_spriteMoveTo(SPRITE_SCORE1, 24, game.screen_height - 11);
+.LINE 1003
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF5
+	PUSH	BC
+	LD	BC,24
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+; 1004	    vdp_spriteShowSelected();
+.LINE 1004
+
+	CALL	_vdp_spriteShowSelected
+; 1005		vdp_spriteMoveTo(SPRITE_SCORE2, 32, game.screen_height - 11);
+.LINE 1005
+
+	LD	IY,(_game+2)
+	LEA	BC,IY+%FFFFFFF5
+	PUSH	BC
+	LD	BC,32
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteMoveTo
+	POP	BC
+	POP	BC
+	POP	BC
+; 1006	    vdp_spriteShowSelected();
+.LINE 1006
+
+	CALL	_vdp_spriteShowSelected
+; 1007	    vdp_spriteSetFrame(SPRITE_SCORE0, game.score / 100);		//Hundreds
+.LINE 1007
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+; 1008	    vdp_spriteSetFrame(SPRITE_SCORE1, (game.score % 100) / 10);	//Tens
+.LINE 1008
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,100
+	CALL	__irems
+	LD	BC,10
+	CALL	__idivs
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+; 1009		vdp_spriteSetFrame(SPRITE_SCORE2, game.score % 10);			//Units
+.LINE 1009
+
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,10
+	CALL	__irems
+	LD	C,L
+	LD	B,%0
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	CALL	_vdp_spriteSetFrame
+	POP	BC
+	POP	BC
+; 1010	
+; 1011	    keycount = getsysvar_vkeycount(); //Get initial keycount to compare against
+.LINE 1011
+
+	CALL	_getsysvar_vkeycount
+	LD	(IX+%FFFFFFFB),A
+; 1012		millis_old = timer1;
+.LINE 1012
+
+	LD	BC,(_timer1)
+	LD	(IX+%FFFFFFF8),BC
+; 1013		
+; 1014		
+; 1015		game.game_over = false;
+.LINE 1015
+
+	XOR	A,A
+	LD	(_game+1217),A
+; 1016		game.score = 0;
+.LINE 1016
+
+	XOR	A,A
+	LD	(_game+12),A
+; 1017		game.tick = 200;
+.LINE 1017
+
+	LD	A,%C8
+	LD	(_game+1226),A
+; 1018	    
+; 1019		while (true) {
+L_338:
+.LINE 1019
+
+; 1020			
+; 1021			//printf("%u\r",timer1);
+; 1022			
+; 1023			if (game.game_over == true) break;
+.LINE 1023
+
+	LD	A,(_game+1217)
+	CP	A,%1
+	JR	Z,L_339
+; 1024			
+; 1025			if (timer1 > next_move) {
+.LINE 1025
+
+	LD	BC,(_timer1)
+	LD	HL,(IX+%FFFFFFFC)
+	OR	A,A
+	SBC	HL,BC
+	JR	NC,L_336
+; 1026				move_snake();
+.LINE 1026
+
+	CALL	_move_snake
+; 1027				next_move = timer1 + game.tick;
+.LINE 1027
+
+	LD	A,(_game+1226)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(_timer1)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFC),HL
+; 1028			}
+L_336:
+.LINE 1028
+
+; 1029			
+; 1030			
+; 1031			if (getsysvar_vkeycount() != keycount) { //New key pressed
+.LINE 1031
+
+	CALL	_getsysvar_vkeycount
+	LD	B,A
+	LD	A,(IX+%FFFFFFFB)
+	CP	A,B
+	JR	Z,L_338
+; 1032	
+; 1033				key = getsysvar_keyascii();
+.LINE 1033
+
+	CALL	_getsysvar_keyascii
+	LD	(IX+%FFFFFFFF),A
+; 1034				//pressed = getsysvar_vkeydown();
+; 1035				//printf("Key %u\r\n", key);
+; 1036				
+; 1037				if (key == 'w' || key == 11) { 
+.LINE 1037
+
+	CP	A,%77
+	JR	Z,L_332
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%B
+	JR	NZ,L_333
+L_332:
+; 1038					if (game.vel_y != 1) { //game.game_over = true;
+.LINE 1038
+
+	LD	A,(_game+1216)
+	CP	A,%1
+	JR	Z,L_334
+; 1039						game.vel_y = -1;
+.LINE 1039
+
+	LD	A,%FF
+	LD	(_game+1216),A
+; 1040						game.vel_x = 0;
+.LINE 1040
+
+	XOR	A,A
+	LD	(_game+1215),A
+; 1041						move_snake();
+.LINE 1041
+
+	CALL	_move_snake
+; 1042						next_move = timer1 + game.tick;
+.LINE 1042
+
+	LD	A,(_game+1226)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(_timer1)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFC),HL
+; 1043					}
+; 1044				}
+; 1045				else if	(key == 's' || key == 10) {
+.LINE 1045
+
+	JR	L_334
+L_333:
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%73
+	JR	Z,L_330
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%A
+	JR	NZ,L_331
+L_330:
+; 1046					if (game.vel_y != -1) { //game.game_over = true;
+.LINE 1046
+
+	LD	A,(_game+1216)
+	CP	A,%FFFFFFFF
+	JR	Z,L_334
+; 1047						game.vel_y = 1;
+.LINE 1047
+
+	LD	A,%1
+	LD	(_game+1216),A
+; 1048						game.vel_x = 0;
+.LINE 1048
+
+	XOR	A,A
+	LD	(_game+1215),A
+; 1049						move_snake();
+.LINE 1049
+
+	CALL	_move_snake
+; 1050						next_move = timer1 + game.tick;				
+.LINE 1050
+
+	LD	A,(_game+1226)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(_timer1)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFC),HL
+; 1051					}
+; 1052				}
+; 1053				else if	(key == 'a' || key == 8) {
+.LINE 1053
+
+	JR	L_334
+L_331:
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%61
+	JR	Z,L_328
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%8
+	JR	NZ,L_329
+L_328:
+; 1054					if (game.vel_x != 1) { //game.game_over = true;
+.LINE 1054
+
+	LD	A,(_game+1215)
+	CP	A,%1
+	JR	Z,L_334
+; 1055						game.vel_x = -1;
+.LINE 1055
+
+	LD	A,%FF
+	LD	(_game+1215),A
+; 1056						game.vel_y = 0;
+.LINE 1056
+
+	XOR	A,A
+	LD	(_game+1216),A
+; 1057						move_snake();
+.LINE 1057
+
+	CALL	_move_snake
+; 1058						next_move = timer1 + game.tick;				
+.LINE 1058
+
+	LD	A,(_game+1226)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(_timer1)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFC),HL
+; 1059					}
+; 1060				}
+; 1061				else if	(key == 'd' || key == 21) {
+.LINE 1061
+
+	JR	L_334
+L_329:
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%64
+	JR	Z,L_327
+	LD	A,(IX+%FFFFFFFF)
+	CP	A,%15
+	JR	NZ,L_334
+L_327:
+; 1062					if (game.vel_x != -1) {//game.game_over = true;
+.LINE 1062
+
+	LD	A,(_game+1215)
+	CP	A,%FFFFFFFF
+	JR	Z,L_334
+; 1063						game.vel_x = 1;
+.LINE 1063
+
+	LD	A,%1
+	LD	(_game+1215),A
+; 1064						game.vel_y = 0;
+.LINE 1064
+
+	XOR	A,A
+	LD	(_game+1216),A
+; 1065						move_snake();
+.LINE 1065
+
+	CALL	_move_snake
+; 1066						next_move = timer1 + game.tick;				
+.LINE 1066
+
+	LD	A,(_game+1226)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(_timer1)
+	ADD	HL,BC
+	LD	(IX+%FFFFFFFC),HL
+; 1067					}
+; 1068				}
+L_334:
+.LINE 1068
+
+; 1069				
+; 1070				keycount = getsysvar_vkeycount();
+.LINE 1070
+
+	CALL	_getsysvar_vkeycount
+	LD	(IX+%FFFFFFFB),A
+; 1071				
+; 1072			}
+; 1073			
+; 1074		}
+.LINE 1074
+
+	JR	L_338
+L_339:
+; 1075		
+; 1076		vdp_cls();
+.LINE 1076
+
+	CALL	_vdp_cls
+; 1077		if (game.score != 100) sprintf(text,"Game over!\nYou scored %u points.", game.score);
+.LINE 1077
+
+	LD	A,(_game+12)
+	CP	A,%64
+	JR	Z,L_342
+	LD	HL,IX
+	LD	BC,-136
+	ADD	HL,BC
+	LD	(___print_out),HL
+	LD	BC,___print_sputch
+	LD	(___print_xputch),BC
+	LD	BC,L__305
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+	LD	A,%75
+	LD	(___print_fmt+4),A
+	LD	A,(_game+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	CALL	__itol
+	LD	DE,BC
+	LD	C,A
+	LD	B,%0
+	PUSH	BC
+	PUSH	DE
+	CALL	__u_uitoa
+	POP	BC
+	POP	BC
+	LD	BC,L__306
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	___print_sputch
+	POP	BC
+; 1078		else if (game.score == 100) sprintf(text,"Congratulations, you won!");
+.LINE 1078
+
+	JR	L_343
+L_342:
+	LD	A,(_game+12)
+	CP	A,%64
+	JR	NZ,L_343
+	LD	HL,IX
+	LD	BC,-136
+	ADD	HL,BC
+	LD	(___print_out),HL
+	LD	BC,___print_sputch
+	LD	(___print_xputch),BC
+	LD	BC,L__308
+	PUSH	BC
+	CALL	___print_sendstring
+	POP	BC
+	LD	BC,0
+	PUSH	BC
+	CALL	___print_sputch
+	POP	BC
+L_343:
+; 1079		raw_text_multi_centre(text, 100);
+.LINE 1079
+
+	LD	BC,100
+	PUSH	BC
+	LD	HL,IX
+	LD	BC,-136
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_raw_text_multi_centre
+	POP	BC
+	POP	BC
+; 1080	
+; 1081	    return 0;
+.LINE 1081
+
+	OR	A,A
+	SBC	HL,HL
+.LINE 1082
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;__u_uitoa                           IMPORT  -----   function
+;___print_fmt                        IMPORT     19   variable
+;___print_sendstring                 IMPORT  -----   function
+;___print_xputch                     IMPORT      3   variable
+;___print_sputch                     IMPORT  -----   function
+;___print_out                        IMPORT      3   variable
+;_getsysvar_keyascii                 IMPORT  -----   function
+;_move_snake                         IMPORT  -----   function
+;_timer1                             IMPORT      3   variable
+;_getsysvar_vkeycount                IMPORT  -----   function
+;_vdp_spriteSetFrame                 IMPORT  -----   function
+;_vdp_spriteShowSelected             IMPORT  -----   function
+;_vdp_spriteMoveTo                   IMPORT  -----   function
+;_setup_snake                        IMPORT  -----   function
+;_vdp_cursorDisable                  IMPORT  -----   function
+;_game                               STATIC   1227   variable
+;_vdp_mode                           IMPORT  -----   function
+;_vdp_cls                            IMPORT  -----   function
+;_vdp_clearGraphics                  IMPORT  -----   function
+;_timer1_begin                       IMPORT  -----   function
+;text                                IX-136    128   variable
+;millis_old                            IX-8      3   variable
+;keycount                              IX-5      1   variable
+;next_move                             IX-4      3   variable
+;key                                   IX-1      1   variable
+;argv                                  IX+9      3   parameter
+;argc                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 148 (bytes)
+;       Spill Code: -4 (instruction)
+
+
+.ENDFUNC "main",1082,"_main"
+	SEGMENT STRSECT
+L__273:
+	DB	"snake_assets/tile.bmp"
+	DB	0
+L__274:
+	DB	"snake_assets/apple.bmp"
+	DB	0
+L__275:
+	DB	"snake_assets/tail_left.bmp"
+	DB	0
+L__276:
+	DB	"snake_assets/tail_down.bmp"
+	DB	0
+L__277:
+	DB	"snake_assets/tail_right.bmp"
+	DB	0
+L__278:
+	DB	"snake_assets/tail_up.bmp"
+	DB	0
+L__279:
+	DB	"snake_assets/body_bottomright.bmp"
+	DB	0
+L__280:
+	DB	"snake_assets/body_topright.bmp"
+	DB	0
+L__281:
+	DB	"snake_assets/body_topleft.bmp"
+	DB	0
+L__282:
+	DB	"snake_assets/body_bottomleft.bmp"
+	DB	0
+L__283:
+	DB	"snake_assets/body_vertical.bmp"
+	DB	0
+L__284:
+	DB	"snake_assets/body_horizontal.bmp"
+	DB	0
+L__285:
+	DB	"snake_assets/head_left.bmp"
+	DB	0
+L__286:
+	DB	"snake_assets/head_down.bmp"
+	DB	0
+L__287:
+	DB	"snake_assets/head_right.bmp"
+	DB	0
+L__288:
+	DB	"snake_assets/head_up.bmp"
+	DB	0
+L__305:
+	DB	"Game over!"
+	DB	10
+	DB	"You scored "
+	DB	0
+L__306:
+	DB	" points."
+	DB	0
+L__308:
+	DB	"Congratulations, you won!"
+	DB	0
+	XREF _write16bit:ROM
+	XREF _vdp_spriteRefresh:ROM
+	XREF _vdp_spriteActivateTotal:ROM
+	XREF _vdp_spriteMoveTo:ROM
+	XREF _vdp_spriteHideSelected:ROM
+	XREF _vdp_spriteShow:ROM
+	XREF _vdp_spriteShowSelected:ROM
+	XREF _vdp_spriteSetFrame:ROM
+	XREF _vdp_spriteSetFrameSelected:ROM
+	XREF _vdp_spriteAddFrame:ROM
+	XREF _vdp_spriteAddFrameSelected:ROM
+	XREF _vdp_spriteClearFrames:ROM
+	XREF _vdp_bitmapDraw:ROM
+	XREF _vdp_bitmapSelect:ROM
+	XREF _vdp_clearGraphics:ROM
+	XREF _vdp_cursorDisable:ROM
+	XREF _vdp_cls:ROM
+	XREF _vdp_mode:ROM
+	XREF _mos_getfil:ROM
+	XREF _mos_flseek:ROM
+	XREF _mos_fread:ROM
+	XREF _mos_fgetc:ROM
+	XREF _mos_fclose:ROM
+	XREF _mos_fopen:ROM
+	XREF _getsysvar_vkeycount:ROM
+	XREF _getsysvar_keyascii:ROM
+	XREF _mos_puts:ROM
+	XREF _waitvblank:ROM
+	XREF _putch:ROM
+	XREF _timer1_begin:ROM
+	XREF _timer1:ROM
+	XREF _strlen:ROM
+	XREF _memcpy:ROM
+	XREF _toupper:ROM
+	XREF _isdigit:ROM
+	XREF _malloc:ROM
+	XREF _free:ROM
+	XREF __u_uitoa:ROM
+	XREF ___print_sendstring:ROM
+	XREF ___print_xputch:ROM
+	XREF ___print_sputch:ROM
+	XREF ___print_uputch:ROM
+	XREF ___print_out:ROM
+	XREF ___print_fmt:ROM
+	XREF __lcmps:ROM
+	XREF __lcmpu:ROM
+	XREF __ladd:ROM
+	XREF __lsub:ROM
+	XREF __idivs:ROM
+	XREF __ldivs:ROM
+	XREF __imuls:ROM
+	XREF __lmuls:ROM
+	XREF __imulu:ROM
+	XREF __sor:ROM
+	XREF __ior:ROM
+	XREF __sand:ROM
+	XREF __smulu:ROM
+	XREF __land:ROM
+	XREF __bshl:ROM
+	XREF __sshl:ROM
+	XREF __lshl:ROM
+	XREF __irems:ROM
+	XREF __iremu:ROM
+	XREF __lrems:ROM
+	XREF __ixor:ROM
+	XREF __ishl:ROM
+	XREF __stoiu:ROM
+	XREF __itol:ROM
+	XREF __ildix:ROM
+	XREF __istix:ROM
+	XREF __imul_b:ROM
+	XREF __ladd_b:ROM
+	XREF __ishl_b:ROM
+	XREF __ishru_b:ROM
+	XDEF _main
+	XDEF _draw_background
+	XDEF _setup_snake
+	XDEF _grow_snake
+	XDEF _move_snake
+	XDEF _prand
+	XDEF _xorshift24
+	XDEF _check_collision
+	XDEF _change_score
+	XDEF _show_score
+	XDEF _draw_top_frame
+	XDEF _draw_bottom_frame
+	XDEF _setup_text_sprites
+	XDEF _safe_strcpy
+	XDEF _alt_atoi
+	XDEF _raw_text_centre
+	XDEF _raw_text_multi_centre
+	XDEF _raw_text
+	XDEF _longest_stretch
+	XDEF _count
+	XDEF _load_font_frame
+	XDEF _load_bmp_direct
+	XDEF _twiddle_buffer
+	XDEF _play_sound
+	XDEF _setKthBit_24
+	XDEF _setKthBit_16
+	XDEF _setKthBit
+	XDEF _isKthBitSet_24
+	XDEF _isKthBitSet_16
+	XDEF _isKthBitSet
+	XDEF _dump_sprites
+	XDEF _refresh_screen
+	XDEF _clear_screen
+	XDEF _max
+	XDEF _min
+	XDEF _delay_secs
+	XDEF _game
+	END

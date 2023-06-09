@@ -1,0 +1,1160 @@
+
+IEEE 695 OMF Linker Version 6.25 (19073001)
+Copyright (C) 1999-2008 Zilog, Inc. All Rights Reserved
+
+LINK MAP:
+
+DATE:      Thu Jun 08 23:29:35 2023
+PROCESSOR: assembler
+FILES:     .\init.obj             .\main.obj             .\vdp.obj              
+           .\mos-interface.obj
+           .\agontimer.obj        
+           .\agontimer-timer0.obj
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\chelpD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\crtD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\crtSD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\fplibD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\fplibSD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.0\lib\std\crtSD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\nokernelD.lib
+           C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\zilog\zsldevinitdummy.obj
+           
+
+
+COMMAND LIST:
+=============
+-FORMAT=OMF695,INTEL32
+-map -maxhexlen=64 -quiet -warnoverlap -xref -unresolved=fatal
+-sort NAME=ascending -warn -debug -NOigcase
+
+
+RANGE ROM $000000 : $01FFFF
+RANGE RAM $040000 : $0BFFFF
+RANGE EXTIO $000000 : $00FFFF
+RANGE INTIO $000000 : $0000FF
+
+CHANGE CODE = RAM
+CHANGE STRSECT = RAM
+CHANGE DATA = RAM 
+
+ORDER CODE,DATA
+
+DEFINE __low_bss = base of BSS
+DEFINE __len_bss = length of BSS
+DEFINE __heaptop = highaddr of RAM
+DEFINE __heapbot = top of RAM + 1
+DEFINE _errno = 0
+
+ "template"=  ".\init.obj",  ".\main.obj",  ".\vdp.obj",  ".\mos-interface.obj",  ".\agontimer.obj",  ".\agontimer-timer0.obj",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\chelpD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\crtD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\crtSD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\fplibD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\fplibSD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.0\lib\std\crtSD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\std\nokernelD.lib",  "C:\ZiLOG\ZDSII_eZ80Acclaim!_5.3.5\lib\zilog\zsldevinitdummy.obj"
+
+
+SPACE ALLOCATION:
+=================
+
+Space                     Base         Top      Size      Used    Unused
+------------------ ----------- ----------- --------- --------- ---------
+RAM                   D:040000    D:046379    80000H     637AH    79C86H
+                                          (   524288     25466    498822)
+
+
+SEGMENTS WITHIN SPACE:
+======================
+
+RAM                               Type        Base         Top      Size
+------------------ ------------------- ----------- ----------- ---------
+BSS                normal data            D:045E7D    D:046379      4fdh
+CODE               normal data            D:040000    D:045608     5609h
+DATA               normal data            D:045609    D:0456C7       bfh
+STRSECT            normal data            D:0456C8    D:045E7C      7b5h
+
+SEGMENTS WITHIN MODULES:
+========================
+
+Module: ..\agontimer.c (File: agontimer.obj) Version: 1:0 06/08/2023 23:29:35
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: BSS                               D:046348    D:04634D        6h
+    Segment: CODE                              D:044778    D:0449B8      241h
+
+
+Module: ..\main.c (File: main.obj) Version: 1:0 06/08/2023 23:29:34
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: BSS                               D:045E7D    D:046347      4cbh
+    Segment: CODE                              D:0400E5    D:043823     373fh
+    Segment: STRSECT                           D:0456C8    D:045E7C      7b5h
+
+
+Module: ..\src\boot\common\zsldevinitdummy.asm (File: zsldevinitdummy.obj) Version: 1:0 10/02/2022 22:49:19
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0449EB    D:0449EB        1h
+
+
+Module: ..\vdp.c (File: vdp.obj) Version: 1:0 06/08/2023 23:29:35
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:043824    D:044384      b61h
+
+
+Module: .\rtl\common\abs.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:07
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044DBE    D:044DE6       29h
+
+
+Module: .\rtl\common\bshl.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:49
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045600    D:045608        9h
+
+
+Module: .\rtl\common\case8D.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:53
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04550B    D:045544       3ah
+
+
+Module: .\rtl\common\free.c (Library: nokernelD.lib) Version: 1:0 10/02/2022 22:48:48
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044A01    D:044ACF       cfh
+
+
+Module: .\rtl\common\iand.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0455E5    D:0455FF       1bh
+
+
+Module: .\rtl\common\icmpzero.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:52
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F53    D:044F5E        ch
+
+
+Module: .\rtl\common\idivs.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04502B    D:045063       39h
+
+
+Module: .\rtl\common\idivu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044EB4    D:044ED4       21h
+
+
+Module: .\rtl\common\ildix.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0455BB    D:0455C6        ch
+
+
+Module: .\rtl\common\imulu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044FAC    D:044FF3       48h
+
+
+Module: .\rtl\common\indcall.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04512D    D:04512E        2h
+
+
+Module: .\rtl\common\ineg.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045081    D:045089        9h
+
+
+Module: .\rtl\common\ior.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044D80    D:044D9A       1bh
+
+
+Module: .\rtl\common\irems.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044BB9    D:044BF0       38h
+
+
+Module: .\rtl\common\iremu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044BFD    D:044C05        9h
+
+
+Module: .\rtl\common\isdigit.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:08
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F83    D:044FAB       29h
+
+
+Module: .\rtl\common\ishl.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04508A    D:04509B       12h
+
+
+Module: .\rtl\common\ishru.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044FF4    D:045018       25h
+
+
+Module: .\rtl\common\islower.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:08
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04509C    D:0450C4       29h
+
+
+Module: .\rtl\common\istix.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044BF1    D:044BFC        ch
+
+
+Module: .\rtl\common\itol.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045064    D:04506A        7h
+
+
+Module: .\rtl\common\ixor.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F5F    D:044F79       1bh
+
+
+Module: .\rtl\common\ladd.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0449EC    D:044A00       15h
+
+
+Module: .\rtl\common\land.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0455DC    D:0455E4        9h
+
+
+Module: .\rtl\common\lcmpu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04506B    D:045080       16h
+
+
+Module: .\rtl\common\lcmpzero.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:52
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0452C8    D:0452DB       14h
+
+
+Module: .\rtl\common\ldivs.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044E78    D:044EA6       2fh
+
+
+Module: .\rtl\common\ldivu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044ED5    D:044F0A       36h
+
+
+Module: .\rtl\common\lmulu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04554E    D:0455BA       6dh
+
+
+Module: .\rtl\common\lneg.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044EA7    D:044EB3        dh
+
+
+Module: .\rtl\common\lrems.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0450D4    D:0450FE       2bh
+
+
+Module: .\rtl\common\lremu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:50
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0450FF    D:04510E       10h
+
+
+Module: .\rtl\common\lshl.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0450C5    D:0450D3        fh
+
+
+Module: .\rtl\common\lsub.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F27    D:044F32        ch
+
+
+Module: .\rtl\common\malloc.c (Library: nokernelD.lib) Version: 1:0 10/02/2022 22:48:48
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: BSS                               D:04634E    D:046353        6h
+    Segment: CODE                              D:044AD0    D:044BB8       e9h
+
+
+Module: .\rtl\common\maptab.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:09
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: DATA                              D:045648    D:0456C7       80h
+
+
+Module: .\rtl\common\memcpy.asm (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:13
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F0B    D:044F26       1ch
+
+
+Module: .\rtl\common\print_globals.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:26
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: BSS                               D:046354    D:046379       26h
+    Segment: DATA                              D:045642    D:045644        3h
+
+
+Module: .\rtl\common\print_putch.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:26
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04510F    D:04512C       1eh
+
+
+Module: .\rtl\common\print_putstring.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:27
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044C06    D:044D70      16bh
+
+
+Module: .\rtl\common\print_send.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:27
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0452DC    D:045493      1b8h
+
+
+Module: .\rtl\common\print_sputch.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:26
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044E2E    D:044E58       2bh
+
+
+Module: .\rtl\common\print_uputch.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:26
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044DA1    D:044DBD       1dh
+
+
+Module: .\rtl\common\sand.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F7A    D:044F82        9h
+
+
+Module: .\rtl\common\sbrk.asm (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:13
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044F33    D:044F52       20h
+    Segment: DATA                              D:045645    D:045647        3h
+
+
+Module: .\rtl\common\setflag.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:52
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044D71    D:044D7F        fh
+
+
+Module: .\rtl\common\smulu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0455C7    D:0455DB       15h
+
+
+Module: .\rtl\common\sor.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045545    D:04554D        9h
+
+
+Module: .\rtl\common\sshl.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045019    D:04502A       12h
+
+
+Module: .\rtl\common\stoiu.asm (Library: chelpD.lib) Version: 1:0 10/02/2022 22:48:51
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044D9B    D:044DA0        6h
+
+
+Module: .\rtl\common\toupper.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:12
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044DE7    D:044E18       32h
+
+
+Module: .\rtl\common\ureverse.c (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:13
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:045494    D:04550A       77h
+
+
+Module: .\rtl\common\uuitoa.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:29
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044E59    D:044E77       1fh
+
+
+Module: .\rtl\common\uultoa.c (Library: crtSD.lib) Version: 1:0 10/02/2022 22:48:29
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:04512F    D:0452C7      199h
+
+
+Module: .\strlen.asm (Library: crtD.lib) Version: 1:0 10/02/2022 22:48:13
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044E19    D:044E2D       15h
+
+
+Module: D:\AGON\snake\agontimer-timer0.asm (File: agontimer-timer0.obj) Version: 1:0 06/08/2023 23:29:35
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:0449B9    D:0449EA       32h
+    Segment: DATA                              D:04563C    D:045641        6h
+
+
+Module: D:\AGON\snake\init.asm (File: init.obj) Version: 1:0 06/08/2023 23:29:34
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:040000    D:0400E4       e5h
+    Segment: DATA                              D:045609    D:04563B       33h
+
+
+Module: D:\AGON\snake\mos-interface.asm (File: mos-interface.obj) Version: 1:0 06/08/2023 23:29:35
+
+    Name                                           Base         Top      Size
+    --------------------------------------- ----------- ----------- ---------
+    Segment: CODE                              D:044385    D:044777      3f3h
+
+EXTERNAL DEFINITIONS:
+=====================
+
+Symbol                               Address Module          Segment
+-------------------------------- ----------- --------------- --------------------------------
+___maptab                           D:045648 maptab          DATA                            
+___print_buff                       D:046354 print_globals   BSS                             
+___print_fmt                        D:046362 print_globals   BSS                             
+___print_leading_char               D:046376 print_globals   BSS                             
+___print_len                        D:046375 print_globals   BSS                             
+___print_out                        D:046377 print_globals   BSS                             
+___print_putch                      D:04510F print_putch     CODE                            
+___print_send                       D:0452DC print_send      CODE                            
+___print_sendstring                 D:044C06 print_putstring CODE                            
+___print_sputch                     D:044E2E print_sputch    CODE                            
+___print_uputch                     D:044DA1 print_uputch    CODE                            
+___print_xputch                     D:045642 print_globals   DATA                            
+__alloc_base                        D:04634E malloc          BSS                             
+__bshl                              D:045600 bshl            CODE                            
+__case8D                            D:04550B case8D          CODE                            
+__close_periphdevice                D:0449EB zsldevinitdummy CODE                            
+__heapbot                           0004637A (User Defined)
+__heaptop                           000BFFFF (User Defined)
+__iand                              D:0455E5 iand            CODE                            
+__icmpzero                          D:044F53 icmpzero        CODE                            
+__idivs                             D:04502B idivs           CODE                            
+__idivu                             D:044EB4 idivu           CODE                            
+__idvrmu                            D:044EBE idivu           CODE                            
+__ildix                             D:0455BB ildix           CODE                            
+__imul_b                            D:044FAC imulu           CODE                            
+__imuls                             D:044FB8 imulu           CODE                            
+__imulu                             D:044FB8 imulu           CODE                            
+__indcall                           D:04512D indcall         CODE                            
+__ineg                              D:045081 ineg            CODE                            
+__ior                               D:044D80 ior             CODE                            
+__irems                             D:044BB9 irems           CODE                            
+__iremu                             D:044BFD iremu           CODE                            
+__ishl                              D:045092 ishl            CODE                            
+__ishl_b                            D:04508A ishl            CODE                            
+__ishru                             D:044FFC ishru           CODE                            
+__ishru_b                           D:044FF4 ishru           CODE                            
+__istix                             D:044BF1 istix           CODE                            
+__itol                              D:045064 itol            CODE                            
+__ixor                              D:044F5F ixor            CODE                            
+__ladd                              D:0449FB ladd            CODE                            
+__ladd_b                            D:0449EC ladd            CODE                            
+__land                              D:0455DC land            CODE                            
+__lcmps                             D:04506B lcmpu           CODE                            
+__lcmpu                             D:04506B lcmpu           CODE                            
+__lcmpzero                          D:0452C8 lcmpzero        CODE                            
+__ldivs                             D:044E78 ldivs           CODE                            
+__ldivu                             D:044ED5 ldivu           CODE                            
+__ldvrmu                            D:044EE7 ldivu           CODE                            
+__len_bss                           000004FD (User Defined)
+__lmuls                             D:04554E lmulu           CODE                            
+__lmulu                             D:04554E lmulu           CODE                            
+__lneg                              D:044EA7 lneg            CODE                            
+__low_bss                           00045E7D (User Defined)
+__lrems                             D:0450D4 lrems           CODE                            
+__lremu                             D:0450FF lremu           CODE                            
+__lshl                              D:0450C5 lshl            CODE                            
+__lsub                              D:044F27 lsub            CODE                            
+__open_periphdevice                 D:0449EB zsldevinitdummy CODE                            
+__putch                             D:044385 mos-interface   CODE                            
+__s_sbrk                            D:044F33 sbrk            CODE                            
+__sand                              D:044F7A sand            CODE                            
+__setflag                           D:044D71 setflag         CODE                            
+__smuls                             D:0455C7 smulu           CODE                            
+__smulu                             D:0455C7 smulu           CODE                            
+__sneg                              D:045081 ineg            CODE                            
+__sor                               D:045545 sor             CODE                            
+__sshl                              D:045021 sshl            CODE                            
+__sshl_b                            D:045019 sshl            CODE                            
+__stoiu                             D:044D9B stoiu           CODE                            
+__timer0_prevhandler                D:046348 agontimer       BSS                             
+__timer1_prevhandler                D:04634B agontimer       BSS                             
+__u_reverse                         D:045494 ureverse        CODE                            
+__u_uitoa                           D:044E59 uuitoa          CODE                            
+__u_ultoa                           D:04512F uultoa          CODE                            
+_abs                                D:044DBE abs             CODE                            
+_alt_atoi                           D:041944 main            CODE                            
+_change_score                       D:041DA8 main            CODE                            
+_check_collision                    D:041E4C main            CODE                            
+_clear_screen                       D:040197 main            CODE                            
+_close_periphdevice                 D:0449EB zsldevinitdummy CODE                            
+_count                              D:0412E5 main            CODE                            
+_delay_secs                         D:0400E5 main            CODE                            
+_delayms                            D:044950 agontimer       CODE                            
+_draw_background                    D:0433E2 main            CODE                            
+_draw_bottom_frame                  D:041B5D main            CODE                            
+_draw_top_frame                     D:041C57 main            CODE                            
+_dump_sprites                       D:0401DB main            CODE                            
+_errno                              00000000 (User Defined)
+_free                               D:044A01 free            CODE                            
+_game                               D:045E7D main            BSS                             
+_getch                              D:0443B6 mos-interface   CODE                            
+_getsysvar_audioChannel             D:044426 mos-interface   CODE                            
+_getsysvar_audioSuccess             D:044432 mos-interface   CODE                            
+_getsysvar_cursorX                  D:0443F6 mos-interface   CODE                            
+_getsysvar_cursorY                  D:044402 mos-interface   CODE                            
+_getsysvar_keyascii                 D:0443DE mos-interface   CODE                            
+_getsysvar_keydelay                 D:0444CA mos-interface   CODE                            
+_getsysvar_keyled                   D:0444F0 mos-interface   CODE                            
+_getsysvar_keymods                  D:0443EA mos-interface   CODE                            
+_getsysvar_keyrate                  D:0444DD mos-interface   CODE                            
+_getsysvar_rtc                      D:0444B8 mos-interface   CODE                            
+_getsysvar_scrchar                  D:04440E mos-interface   CODE                            
+_getsysvar_scrColours               D:04447C mos-interface   CODE                            
+_getsysvar_scrCols                  D:044464 mos-interface   CODE                            
+_getsysvar_scrheight                D:044451 mos-interface   CODE                            
+_getsysvar_scrpixel                 D:04441A mos-interface   CODE                            
+_getsysvar_scrpixelIndex            D:044488 mos-interface   CODE                            
+_getsysvar_scrRows                  D:044470 mos-interface   CODE                            
+_getsysvar_scrwidth                 D:04443E mos-interface   CODE                            
+_getsysvar_vkeycode                 D:044494 mos-interface   CODE                            
+_getsysvar_vkeycount                D:0444AC mos-interface   CODE                            
+_getsysvar_vkeydown                 D:0444A0 mos-interface   CODE                            
+_getsysvar_vpd_pflags               D:0443D2 mos-interface   CODE                            
+_grow_snake                         D:042C9B main            CODE                            
+_isdigit                            D:044F83 isdigit         CODE                            
+_isKthBitSet                        D:0401F7 main            CODE                            
+_isKthBitSet_16                     D:040221 main            CODE                            
+_isKthBitSet_24                     D:040256 main            CODE                            
+_islower                            D:04509C islower         CODE                            
+_load_bmp_direct                    D:04054F main            CODE                            
+_load_font_frame                    D:040DBA main            CODE                            
+_longest_stretch                    D:041324 main            CODE                            
+_main                               D:04349C main            CODE                            
+_malloc                             D:044B06 malloc          CODE                            
+_max                                D:04016A main            CODE                            
+_memcpy                             D:044F0B memcpy          CODE                            
+_min                                D:04013D main            CODE                            
+_mos_cd                             D:044532 mos-interface   CODE                            
+_mos_copy                           D:044589 mos-interface   CODE                            
+_mos_del                            D:04455C mos-interface   CODE                            
+_mos_dir                            D:044547 mos-interface   CODE                            
+_mos_editline                       D:0445C2 mos-interface   CODE                            
+_mos_fclose                         D:0445F5 mos-interface   CODE                            
+_mos_feof                           D:044637 mos-interface   CODE                            
+_mos_fgetc                          D:04460A mos-interface   CODE                            
+_mos_flseek                         D:044744 mos-interface   CODE                            
+_mos_fopen                          D:0445DD mos-interface   CODE                            
+_mos_fputc                          D:04461F mos-interface   CODE                            
+_mos_fread                          D:04470A mos-interface   CODE                            
+_mos_fwrite                         D:044727 mos-interface   CODE                            
+_mos_getError                       D:04464C mos-interface   CODE                            
+_mos_getfil                         D:044763 mos-interface   CODE                            
+_mos_getrtc                         D:044682 mos-interface   CODE                            
+_mos_load                           D:0444FC mos-interface   CODE                            
+_mos_mkdir                          D:0445A1 mos-interface   CODE                            
+_mos_oscli                          D:044667 mos-interface   CODE                            
+_mos_puts                           D:04439D mos-interface   CODE                            
+_mos_ren                            D:044571 mos-interface   CODE                            
+_mos_save                           D:044517 mos-interface   CODE                            
+_mos_setintvector                   D:0446AC mos-interface   CODE                            
+_mos_setrtc                         D:044697 mos-interface   CODE                            
+_mos_sysvars                        D:0445B6 mos-interface   CODE                            
+_mos_uclose                         D:0446E0 mos-interface   CODE                            
+_mos_ugetc                          D:0446E9 mos-interface   CODE                            
+_mos_uopen                          D:0446C4 mos-interface   CODE                            
+_mos_uputc                          D:0446FB mos-interface   CODE                            
+_move_snake                         D:041FC8 main            CODE                            
+_open_periphdevice                  D:0449EB zsldevinitdummy CODE                            
+_play_sound                         D:0402F9 main            CODE                            
+_prand                              D:041F89 main            CODE                            
+_putch                              D:044385 mos-interface   CODE                            
+_raw_text                           D:04138D main            CODE                            
+_raw_text_centre                    D:0417C6 main            CODE                            
+_raw_text_multi_centre              D:0414E3 main            CODE                            
+_refresh_screen                     D:0401B4 main            CODE                            
+_safe_strcpy                        D:04199E main            CODE                            
+_setKthBit                          D:040297 main            CODE                            
+_setKthBit_16                       D:0402B1 main            CODE                            
+_setKthBit_24                       D:0402D3 main            CODE                            
+_setup_snake                        D:042EB7 main            CODE                            
+_setup_text_sprites                 D:0419F9 main            CODE                            
+_show_score                         D:041D35 main            CODE                            
+_strlen                             D:044E19 strlen          CODE                            
+_timer0                             D:04563C agontimer-timer DATA                            
+_timer0_begin                       D:044778 agontimer       CODE                            
+_timer0_end                         D:044830 agontimer       CODE                            
+_timer0_handler                     D:0449B9 agontimer-timer CODE                            
+_timer1                             D:04563F agontimer-timer DATA                            
+_timer1_begin                       D:044864 agontimer       CODE                            
+_timer1_end                         D:04491C agontimer       CODE                            
+_timer1_handler                     D:0449D4 agontimer-timer CODE                            
+_toupper                            D:044DE7 toupper         CODE                            
+_twiddle_buffer                     D:040353 main            CODE                            
+_vdp_asciiCodeAt                    D:04423F vdp             CODE                            
+_vdp_bgcolour                       D:043A0C vdp             CODE                            
+_vdp_bitmapCreateSolidColor         D:043DE3 vdp             CODE                            
+_vdp_bitmapCreateSolidColorSelec    D:043D95 vdp             CODE                            
+_vdp_bitmapDraw                     D:043D6E vdp             CODE                            
+_vdp_bitmapDrawSelected             D:043D30 vdp             CODE                            
+_vdp_bitmapSelect                   D:043C24 vdp             CODE                            
+_vdp_bitmapSendData                 D:043D04 vdp             CODE                            
+_vdp_bitmapSendDataSelected         D:043C5D vdp             CODE                            
+_vdp_clearGraphics                  D:043A39 vdp             CODE                            
+_vdp_cls                            D:04396D vdp             CODE                            
+_vdp_cursorDisable                  D:0442E4 vdp             CODE                            
+_vdp_cursorEnable                   D:044310 vdp             CODE                            
+_vdp_cursorGetXpos                  D:0441A5 vdp             CODE                            
+_vdp_cursorGetYpos                  D:0441F2 vdp             CODE                            
+_vdp_cursorGoto                     D:0439B5 vdp             CODE                            
+_vdp_cursorHome                     D:043985 vdp             CODE                            
+_vdp_cursorUp                       D:04399D vdp             CODE                            
+_vdp_fgcolour                       D:0439E7 vdp             CODE                            
+_vdp_getMode                        D:0438E8 vdp             CODE                            
+_vdp_mode                           D:0438C3 vdp             CODE                            
+_vdp_plot                           D:043A80 vdp             CODE                            
+_vdp_plotCircleCircumference        D:043B9B vdp             CODE                            
+_vdp_plotCircleRadius               D:043B78 vdp             CODE                            
+_vdp_plotColour                     D:043A51 vdp             CODE                            
+_vdp_plotLineTo                     D:043B12 vdp             CODE                            
+_vdp_plotMoveTo                     D:043AF0 vdp             CODE                            
+_vdp_plotPoint                      D:043B34 vdp             CODE                            
+_vdp_plotSetOrigin                  D:043BBD vdp             CODE                            
+_vdp_plotTriangle                   D:043B56 vdp             CODE                            
+_vdp_scroll                         D:04433C vdp             CODE                            
+_vdp_setpagedMode                   D:0442BA vdp             CODE                            
+_vdp_setPaletteColor                D:043914 vdp             CODE                            
+_vdp_spriteActivateTotal            D:044140 vdp             CODE                            
+_vdp_spriteAddFrame                 D:043ED1 vdp             CODE                            
+_vdp_spriteAddFrameSelected         D:043E98 vdp             CODE                            
+_vdp_spriteClearFrames              D:043E7B vdp             CODE                            
+_vdp_spriteClearFramesSelected      D:043E4F vdp             CODE                            
+_vdp_spriteHide                     D:044059 vdp             CODE                            
+_vdp_spriteHideSelected             D:04402D vdp             CODE                            
+_vdp_spriteMoveBy                   D:044119 vdp             CODE                            
+_vdp_spriteMoveBySelected           D:0440DB vdp             CODE                            
+_vdp_spriteMoveTo                   D:0440B4 vdp             CODE                            
+_vdp_spriteMoveToSelected           D:044076 vdp             CODE                            
+_vdp_spriteNextFrame                D:043F21 vdp             CODE                            
+_vdp_spriteNextFrameSelected        D:043EF5 vdp             CODE                            
+_vdp_spritePreviousFrame            D:043F6A vdp             CODE                            
+_vdp_spritePreviousFrameSelected    D:043F3E vdp             CODE                            
+_vdp_spriteRefresh                  D:044179 vdp             CODE                            
+_vdp_spriteSelect                   D:043E16 vdp             CODE                            
+_vdp_spriteSetFrame                 D:043FC0 vdp             CODE                            
+_vdp_spriteSetFrameSelected         D:043F87 vdp             CODE                            
+_vdp_spriteShow                     D:044010 vdp             CODE                            
+_vdp_spriteShowSelected             D:043FE4 vdp             CODE                            
+_waitvblank                         D:0443BF mos-interface   CODE                            
+_write16bit                         D:043824 vdp             CODE                            
+_write32bit                         D:043860 vdp             CODE                            
+_xorshift24                         D:041F37 main            CODE                            
+
+241 external symbol(s).
+
+SYMBOL CROSS REFERENCE:
+=======================
+Name                              Use         Module
+--------------------------------- ----------- -------------------------
+___maptab                         Defined     .\rtl\common\maptab.c
+                                  Referenced  .\rtl\common\isdigit.c
+                                  Referenced  .\rtl\common\islower.c
+___print_buff                     Defined     .\rtl\common\print_globals.c
+                                  Referenced  .\rtl\common\uultoa.c
+                                  Referenced  .\rtl\common\print_send.c
+___print_fmt                      Defined     .\rtl\common\print_globals.c
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\uultoa.c
+                                  Referenced  .\rtl\common\print_send.c
+___print_leading_char             Defined     .\rtl\common\print_globals.c
+                                  Referenced  .\rtl\common\print_send.c
+___print_len                      Defined     .\rtl\common\print_globals.c
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\print_send.c
+___print_out                      Defined     .\rtl\common\print_globals.c
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\print_sputch.c
+___print_putch                    Defined     .\rtl\common\print_putch.c
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\print_send.c
+___print_send                     Defined     .\rtl\common\print_send.c
+                                  Referenced  .\rtl\common\uultoa.c
+___print_sendstring               Defined     .\rtl\common\print_putstring.c
+                                  Referenced  ..\main.c
+___print_sputch                   Defined     .\rtl\common\print_sputch.c
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\print_globals.c
+___print_uputch                   Defined     .\rtl\common\print_uputch.c
+                                  Referenced  ..\main.c
+___print_xputch                   Defined     .\rtl\common\print_globals.c
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\print_putch.c
+__alloc_base                      Defined     .\rtl\common\malloc.c
+                                  Referenced  .\rtl\common\free.c
+__bshl                            Defined     .\rtl\common\bshl.asm
+                                  Referenced  ..\main.c
+__case8D                          Defined     .\rtl\common\case8D.asm
+                                  Referenced  .\rtl\common\uultoa.c
+__close_periphdevice              Defined     ..\src\boot\common\zsldevinitdummy.asm
+__heapbot                         Defined     LINKER
+                                  Referenced  .\rtl\common\sbrk.asm
+__heaptop                         Defined     LINKER
+__iand                            Defined     .\rtl\common\iand.asm
+                                  Referenced  .\rtl\common\land.asm
+__icmpzero                        Defined     .\rtl\common\icmpzero.asm
+                                  Referenced  .\rtl\common\free.c
+                                  Referenced  .\rtl\common\malloc.c
+                                  Referenced  .\rtl\common\abs.c
+                                  Referenced  .\rtl\common\toupper.c
+__idivs                           Defined     .\rtl\common\idivs.asm
+                                  Referenced  ..\main.c
+__idivu                           Defined     .\rtl\common\idivu.asm
+                                  Referenced  .\rtl\common\idivs.asm
+__idvrmu                          Defined     .\rtl\common\idivu.asm
+                                  Referenced  .\rtl\common\iremu.asm
+__ildix                           Defined     .\rtl\common\ildix.asm
+                                  Referenced  ..\main.c
+__imul_b                          Defined     .\rtl\common\imulu.asm
+                                  Referenced  ..\main.c
+__imuls                           Defined     .\rtl\common\imulu.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\vdp.c
+__imulu                           Defined     .\rtl\common\imulu.asm
+                                  Referenced  ..\main.c
+__indcall                         Defined     .\rtl\common\indcall.asm
+                                  Referenced  .\rtl\common\print_putch.c
+__ineg                            Defined     .\rtl\common\ineg.asm
+                                  Referenced  .\rtl\common\abs.c
+__ior                             Defined     .\rtl\common\ior.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\vdp.c
+__irems                           Defined     .\rtl\common\irems.asm
+                                  Referenced  ..\main.c
+__iremu                           Defined     .\rtl\common\iremu.asm
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\irems.asm
+__ishl                            Defined     .\rtl\common\ishl.asm
+                                  Referenced  ..\main.c
+__ishl_b                          Defined     .\rtl\common\ishl.asm
+                                  Referenced  ..\main.c
+__ishru                           Defined     .\rtl\common\ishru.asm
+__ishru_b                         Defined     .\rtl\common\ishru.asm
+                                  Referenced  ..\main.c
+__istix                           Defined     .\rtl\common\istix.asm
+                                  Referenced  ..\main.c
+__itol                            Defined     .\rtl\common\itol.asm
+                                  Referenced  ..\main.c
+__ixor                            Defined     .\rtl\common\ixor.asm
+                                  Referenced  ..\main.c
+__ladd                            Defined     .\rtl\common\ladd.asm
+                                  Referenced  ..\main.c
+__ladd_b                          Defined     .\rtl\common\ladd.asm
+                                  Referenced  ..\main.c
+__land                            Defined     .\rtl\common\land.asm
+                                  Referenced  ..\main.c
+__lcmps                           Defined     .\rtl\common\lcmpu.asm
+                                  Referenced  ..\main.c
+__lcmpu                           Defined     .\rtl\common\lcmpu.asm
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\lcmpzero.asm
+__lcmpzero                        Defined     .\rtl\common\lcmpzero.asm
+                                  Referenced  .\rtl\common\uultoa.c
+__ldivs                           Defined     .\rtl\common\ldivs.asm
+                                  Referenced  ..\main.c
+__ldivu                           Defined     .\rtl\common\ldivu.asm
+                                  Referenced  .\rtl\common\ldivs.asm
+                                  Referenced  .\rtl\common\uultoa.c
+__ldvrmu                          Defined     .\rtl\common\ldivu.asm
+                                  Referenced  .\rtl\common\lremu.asm
+__len_bss                         Defined     LINKER
+                                  Referenced  D:\AGON\snake\init.asm
+__lmuls                           Defined     .\rtl\common\lmulu.asm
+                                  Referenced  ..\main.c
+__lmulu                           Defined     .\rtl\common\lmulu.asm
+__lneg                            Defined     .\rtl\common\lneg.asm
+                                  Referenced  .\rtl\common\ldivs.asm
+                                  Referenced  .\rtl\common\lrems.asm
+__low_bss                         Defined     LINKER
+                                  Referenced  D:\AGON\snake\init.asm
+__lrems                           Defined     .\rtl\common\lrems.asm
+                                  Referenced  ..\main.c
+__lremu                           Defined     .\rtl\common\lremu.asm
+                                  Referenced  .\rtl\common\lrems.asm
+                                  Referenced  .\rtl\common\uultoa.c
+__lshl                            Defined     .\rtl\common\lshl.asm
+                                  Referenced  ..\main.c
+__lsub                            Defined     .\rtl\common\lsub.asm
+                                  Referenced  ..\main.c
+__open_periphdevice               Defined     ..\src\boot\common\zsldevinitdummy.asm
+__putch                           Defined     D:\AGON\snake\mos-interface.asm
+__s_sbrk                          Defined     .\rtl\common\sbrk.asm
+                                  Referenced  .\rtl\common\malloc.c
+__sand                            Defined     .\rtl\common\sand.asm
+                                  Referenced  ..\main.c
+__setflag                         Defined     .\rtl\common\setflag.asm
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\abs.c
+                                  Referenced  .\rtl\common\print_send.c
+__smuls                           Defined     .\rtl\common\smulu.asm
+__smulu                           Defined     .\rtl\common\smulu.asm
+                                  Referenced  ..\main.c
+__sneg                            Defined     .\rtl\common\ineg.asm
+__sor                             Defined     .\rtl\common\sor.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\agontimer.c
+__sshl                            Defined     .\rtl\common\sshl.asm
+                                  Referenced  ..\main.c
+__sshl_b                          Defined     .\rtl\common\sshl.asm
+__stoiu                           Defined     .\rtl\common\stoiu.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\vdp.c
+__timer0_prevhandler              Defined     ..\agontimer.c
+__timer1_prevhandler              Defined     ..\agontimer.c
+__u_reverse                       Defined     .\rtl\common\ureverse.c
+                                  Referenced  .\rtl\common\uultoa.c
+__u_uitoa                         Defined     .\rtl\common\uuitoa.c
+                                  Referenced  ..\main.c
+__u_ultoa                         Defined     .\rtl\common\uultoa.c
+                                  Referenced  .\rtl\common\uuitoa.c
+_abs                              Defined     .\rtl\common\abs.c
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\print_send.c
+_alt_atoi                         Defined     ..\main.c
+_change_score                     Defined     ..\main.c
+_check_collision                  Defined     ..\main.c
+_clear_screen                     Defined     ..\main.c
+_close_periphdevice               Defined     ..\src\boot\common\zsldevinitdummy.asm
+_count                            Defined     ..\main.c
+_delay_secs                       Defined     ..\main.c
+_delayms                          Defined     ..\agontimer.c
+_draw_background                  Defined     ..\main.c
+_draw_bottom_frame                Defined     ..\main.c
+_draw_top_frame                   Defined     ..\main.c
+_dump_sprites                     Defined     ..\main.c
+_errno                            Defined     LINKER
+_free                             Defined     .\rtl\common\free.c
+                                  Referenced  ..\main.c
+_game                             Defined     ..\main.c
+_getch                            Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_audioChannel           Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_audioSuccess           Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_cursorX                Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\vdp.c
+_getsysvar_cursorY                Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\vdp.c
+_getsysvar_keyascii               Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_getsysvar_keydelay               Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_keyled                 Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_keymods                Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_keyrate                Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_rtc                    Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrchar                Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\vdp.c
+_getsysvar_scrColours             Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrCols                Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrheight              Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrpixel               Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrpixelIndex          Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrRows                Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_scrwidth               Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_vkeycode               Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_vkeycount              Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_getsysvar_vkeydown               Defined     D:\AGON\snake\mos-interface.asm
+_getsysvar_vpd_pflags             Defined     D:\AGON\snake\mos-interface.asm
+_grow_snake                       Defined     ..\main.c
+_isdigit                          Defined     .\rtl\common\isdigit.c
+                                  Referenced  ..\main.c
+_isKthBitSet                      Defined     ..\main.c
+_isKthBitSet_16                   Defined     ..\main.c
+_isKthBitSet_24                   Defined     ..\main.c
+_islower                          Defined     .\rtl\common\islower.c
+                                  Referenced  .\rtl\common\toupper.c
+_load_bmp_direct                  Defined     ..\main.c
+_load_font_frame                  Defined     ..\main.c
+_longest_stretch                  Defined     ..\main.c
+_main                             Defined     ..\main.c
+                                  Referenced  D:\AGON\snake\init.asm
+_malloc                           Defined     .\rtl\common\malloc.c
+                                  Referenced  ..\main.c
+_max                              Defined     ..\main.c
+_memcpy                           Defined     .\rtl\common\memcpy.asm
+                                  Referenced  ..\main.c
+_min                              Defined     ..\main.c
+_mos_cd                           Defined     D:\AGON\snake\mos-interface.asm
+_mos_copy                         Defined     D:\AGON\snake\mos-interface.asm
+_mos_del                          Defined     D:\AGON\snake\mos-interface.asm
+_mos_dir                          Defined     D:\AGON\snake\mos-interface.asm
+_mos_editline                     Defined     D:\AGON\snake\mos-interface.asm
+_mos_fclose                       Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_feof                         Defined     D:\AGON\snake\mos-interface.asm
+_mos_fgetc                        Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_flseek                       Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_fopen                        Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_fputc                        Defined     D:\AGON\snake\mos-interface.asm
+_mos_fread                        Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_fwrite                       Defined     D:\AGON\snake\mos-interface.asm
+_mos_getError                     Defined     D:\AGON\snake\mos-interface.asm
+_mos_getfil                       Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_getrtc                       Defined     D:\AGON\snake\mos-interface.asm
+_mos_load                         Defined     D:\AGON\snake\mos-interface.asm
+_mos_mkdir                        Defined     D:\AGON\snake\mos-interface.asm
+_mos_oscli                        Defined     D:\AGON\snake\mos-interface.asm
+_mos_puts                         Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_mos_ren                          Defined     D:\AGON\snake\mos-interface.asm
+_mos_save                         Defined     D:\AGON\snake\mos-interface.asm
+_mos_setintvector                 Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\agontimer.c
+_mos_setrtc                       Defined     D:\AGON\snake\mos-interface.asm
+_mos_sysvars                      Defined     D:\AGON\snake\mos-interface.asm
+_mos_uclose                       Defined     D:\AGON\snake\mos-interface.asm
+_mos_ugetc                        Defined     D:\AGON\snake\mos-interface.asm
+_mos_uopen                        Defined     D:\AGON\snake\mos-interface.asm
+_mos_uputc                        Defined     D:\AGON\snake\mos-interface.asm
+_move_snake                       Defined     ..\main.c
+_open_periphdevice                Defined     ..\src\boot\common\zsldevinitdummy.asm
+_play_sound                       Defined     ..\main.c
+_prand                            Defined     ..\main.c
+_putch                            Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\vdp.c
+                                  Referenced  .\rtl\common\print_uputch.c
+_raw_text                         Defined     ..\main.c
+_raw_text_centre                  Defined     ..\main.c
+_raw_text_multi_centre            Defined     ..\main.c
+_refresh_screen                   Defined     ..\main.c
+_safe_strcpy                      Defined     ..\main.c
+_setKthBit                        Defined     ..\main.c
+_setKthBit_16                     Defined     ..\main.c
+_setKthBit_24                     Defined     ..\main.c
+_setup_snake                      Defined     ..\main.c
+_setup_text_sprites               Defined     ..\main.c
+_show_score                       Defined     ..\main.c
+_strlen                           Defined     .\strlen.asm
+                                  Referenced  ..\main.c
+                                  Referenced  .\rtl\common\print_putstring.c
+                                  Referenced  .\rtl\common\print_send.c
+                                  Referenced  .\rtl\common\ureverse.c
+_timer0                           Defined     D:\AGON\snake\agontimer-timer0.asm
+                                  Referenced  ..\agontimer.c
+_timer0_begin                     Defined     ..\agontimer.c
+_timer0_end                       Defined     ..\agontimer.c
+_timer0_handler                   Defined     D:\AGON\snake\agontimer-timer0.asm
+                                  Referenced  ..\agontimer.c
+_timer1                           Defined     D:\AGON\snake\agontimer-timer0.asm
+                                  Referenced  ..\main.c
+                                  Referenced  ..\agontimer.c
+_timer1_begin                     Defined     ..\agontimer.c
+                                  Referenced  ..\main.c
+_timer1_end                       Defined     ..\agontimer.c
+_timer1_handler                   Defined     D:\AGON\snake\agontimer-timer0.asm
+                                  Referenced  ..\agontimer.c
+_toupper                          Defined     .\rtl\common\toupper.c
+                                  Referenced  ..\main.c
+_twiddle_buffer                   Defined     ..\main.c
+_vdp_asciiCodeAt                  Defined     ..\vdp.c
+_vdp_bgcolour                     Defined     ..\vdp.c
+_vdp_bitmapCreateSolidColor       Defined     ..\vdp.c
+_vdp_bitmapCreateSolidColorSelect Defined     ..\vdp.c
+_vdp_bitmapDraw                   Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_bitmapDrawSelected           Defined     ..\vdp.c
+_vdp_bitmapSelect                 Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_bitmapSendData               Defined     ..\vdp.c
+_vdp_bitmapSendDataSelected       Defined     ..\vdp.c
+_vdp_clearGraphics                Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_cls                          Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_cursorDisable                Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_cursorEnable                 Defined     ..\vdp.c
+_vdp_cursorGetXpos                Defined     ..\vdp.c
+_vdp_cursorGetYpos                Defined     ..\vdp.c
+_vdp_cursorGoto                   Defined     ..\vdp.c
+_vdp_cursorHome                   Defined     ..\vdp.c
+_vdp_cursorUp                     Defined     ..\vdp.c
+_vdp_fgcolour                     Defined     ..\vdp.c
+_vdp_getMode                      Defined     ..\vdp.c
+_vdp_mode                         Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_plot                         Defined     ..\vdp.c
+_vdp_plotCircleCircumference      Defined     ..\vdp.c
+_vdp_plotCircleRadius             Defined     ..\vdp.c
+_vdp_plotColour                   Defined     ..\vdp.c
+_vdp_plotLineTo                   Defined     ..\vdp.c
+_vdp_plotMoveTo                   Defined     ..\vdp.c
+_vdp_plotPoint                    Defined     ..\vdp.c
+_vdp_plotSetOrigin                Defined     ..\vdp.c
+_vdp_plotTriangle                 Defined     ..\vdp.c
+_vdp_scroll                       Defined     ..\vdp.c
+_vdp_setpagedMode                 Defined     ..\vdp.c
+_vdp_setPaletteColor              Defined     ..\vdp.c
+_vdp_spriteActivateTotal          Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteAddFrame               Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteAddFrameSelected       Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteClearFrames            Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteClearFramesSelected    Defined     ..\vdp.c
+_vdp_spriteHide                   Defined     ..\vdp.c
+_vdp_spriteHideSelected           Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteMoveBy                 Defined     ..\vdp.c
+_vdp_spriteMoveBySelected         Defined     ..\vdp.c
+_vdp_spriteMoveTo                 Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteMoveToSelected         Defined     ..\vdp.c
+_vdp_spriteNextFrame              Defined     ..\vdp.c
+_vdp_spriteNextFrameSelected      Defined     ..\vdp.c
+_vdp_spritePreviousFrame          Defined     ..\vdp.c
+_vdp_spritePreviousFrameSelected  Defined     ..\vdp.c
+_vdp_spriteRefresh                Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteSelect                 Defined     ..\vdp.c
+_vdp_spriteSetFrame               Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteSetFrameSelected       Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteShow                   Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_vdp_spriteShowSelected           Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_waitvblank                       Defined     D:\AGON\snake\mos-interface.asm
+                                  Referenced  ..\main.c
+_write16bit                       Defined     ..\vdp.c
+                                  Referenced  ..\main.c
+_write32bit                       Defined     ..\vdp.c
+_xorshift24                       Defined     ..\main.c
+
+OUTPUT CHECKSUM
+===============
+template.hex         2B702C
+template.lod         2B702C
+
+
+
+END OF LINK MAP:
+================
+0 Errors
+0 Warnings
