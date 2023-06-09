@@ -1,0 +1,17 @@
+Hardware revision changes for AgonLight2
+
+Board revision can be identified by the white print. It is printed on the board itself. Boards were designed with KiCAD.
+
+--- Hardware revision B (initial release)
+
+First public release. Major changes compared to hardware revision A:
+
+1. VGA and audio jack moved to the left 1mm;
+2. ZDI connector pinout fixed;
+3. R22 now 2.2K, moved between B and C of transistor for feedback;
+4. Improved the logo print;
+5. R41 now NA;
+6. Improved keyboard design, R35 and R36 now NA;
+7. R17 now 10K.
+
+--- Hardware revision A (preliminary, unrleased)
