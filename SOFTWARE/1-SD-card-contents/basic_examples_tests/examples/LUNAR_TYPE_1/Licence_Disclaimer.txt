@@ -1,0 +1,3 @@
+Project was not created by Olimex.
+Project made by: Jay A Carlson
+GitHub link: https://github.com/JayACarlsonAtHome/AgonLight2

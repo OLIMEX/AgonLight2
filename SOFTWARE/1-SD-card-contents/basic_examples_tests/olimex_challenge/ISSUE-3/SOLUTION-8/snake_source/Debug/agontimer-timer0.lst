@@ -1,0 +1,260 @@
+Zilog eZ80 Macro Assembler Version 4.3 (19073001) RELISTED08-Jun-23     23:29:35     page:   1
+
+
+PC     Object              I  Line    Source 
+                           A     1    ;
+                           A     2    ; Title:	AGON Interrupt handler for timer0 i
+                           A     3    ; Author:	Jeroen Venema
+                           A     4    ; Created:	22/01/2023
+                           A     5    ; Last Updated:	22/01/2023
+                           A     6    
+                           B     0    			INCLUDE "ez80f92.inc"
+                           B     1    ;**********************************************
+                           B     2    ;*    eZ80F92.inc
+                           B     3    ;*
+                           B     4    ;*		eZ80F92 Registers
+                           B     5    ;*
+                           B     6    ;**********************************************
+                           B     7    ;* Start eZ80F92 Include file
+                           B     8    
+                           B     9    ;* TIMER registers
+                           B    10    
+       00000080            B    11    TMR0_CTL:	.equ  %80
+       00000081            B    12    TMR0_DR_L:	.equ  %81
+       00000081            B    13    TMR0_RR_L:	.equ  %81
+       00000082            B    14    TMR0_DR_H:	.equ  %82
+       00000082            B    15    TMR0_RR_H:	.equ  %82
+       00000083            B    16    TMR1_CTL:	.equ  %83
+       00000084            B    17    TMR1_DR_L:	.equ  %84
+       00000084            B    18    TMR1_RR_L:	.equ  %84
+       00000085            B    19    TMR1_DR_H:	.equ  %85
+       00000085            B    20    TMR1_RR_H:	.equ  %85
+       00000086            B    21    TMR2_CTL:	.equ  %86
+       00000087            B    22    TMR2_DR_L:	.equ  %87
+       00000087            B    23    TMR2_RR_L:	.equ  %87
+       00000088            B    24    TMR2_DR_H:	.equ  %88
+       00000088            B    25    TMR2_RR_H:	.equ  %88
+       00000089            B    26    TMR3_CTL:	.equ  %89
+       0000008A            B    27    TMR3_DR_L:	.equ  %8a
+       0000008A            B    28    TMR3_RR_L:	.equ  %8a
+       0000008B            B    29    TMR3_DR_H:	.equ  %8b
+       0000008B            B    30    TMR3_RR_H:	.equ  %8b
+       0000008C            B    31    TMR4_CTL:	.equ  %8c
+       0000008D            B    32    TMR4_DR_L:	.equ  %8d
+       0000008D            B    33    TMR4_RR_L:	.equ  %8d
+       0000008E            B    34    TMR4_DR_H:	.equ  %8e
+       0000008E            B    35    TMR4_RR_H:	.equ  %8e
+       0000008F            B    36    TMR5_CTL:	.equ  %8f
+       00000090            B    37    TMR5_DR_L:	.equ  %90
+       00000090            B    38    TMR5_RR_L:	.equ  %90
+       00000091            B    39    TMR5_DR_H:	.equ  %91
+       00000091            B    40    TMR5_RR_H:	.equ  %91
+       00000092            B    41    TMR_ISS:	.equ  %92
+                           B    42    
+                           B    43    ;* WDT Registers
+                           B    44    
+       00000093            B    45    WDT_CTL:	.equ %93
+       00000094            B    46    WDT_RR:	.equ  %94
+                           B    47    
+                           B    48    
+                           B    49    ;* PORT Registers
+                           B    50    
+       0000009A            B    51    PB_DR:		.equ %9A
+       0000009B            B    52    PB_DDR:		.equ %9B
+       0000009C            B    53    PB_ALT1:	.equ %9C
+       0000009D            B    54    PB_ALT2:	.equ %9D
+       0000009E            B    55    PC_DR:		.equ %9E
+       0000009F            B    56    PC_DDR:		.equ %9F
+       000000A0            B    57    PC_ALT1:	.equ %A0
+       000000A1            B    58    PC_ALT2:	.equ %A1
+       000000A2            B    59    PD_DR:		.equ %A2
+       000000A3            B    60    PD_DDR:		.equ %A3
+       000000A4            B    61    PD_ALT1:	.equ %A4
+       000000A5            B    62    PD_ALT2:	.equ %A5
+                           B    63    
+                           B    64    ;* Chip Select
+       000000A8            B    65    CS0_LBR:	.equ %A8
+       000000A9            B    66    CS0_UBR:	.equ %A9
+       000000AA            B    67    CS0_CTL:	.equ %AA
+       000000AB            B    68    CS1_LBR:	.equ %AB
+       000000AC            B    69    CS1_UBR:	.equ %AC
+       000000AD            B    70    CS1_CTL:	.equ %AD
+       000000AE            B    71    CS2_LBR:	.equ %AE
+       000000AF            B    72    CS2_UBR:	.equ %AF
+       000000B0            B    73    CS2_CTL:	.equ %B0
+       000000B1            B    74    CS3_LBR:	.equ %B1
+       000000B2            B    75    CS3_UBR:	.equ %B2
+       000000B3            B    76    CS3_CTL:	.equ %B3
+                           B    77    
+                           B    78    ;* RAMCTL Registers
+       000000B4            B    79    RAM_CTL0:	.equ %B4
+       000000B4            B    80    RAM_CTL:	.equ %B4
+       000000B5            B    81    RAM_ADDR_U:	.equ %B5
+                           B    82    
+                           B    83    ;* SPI Registers
+                           B    84    
+       000000B8            B    85    SPI_BRG_L:	.equ %B8
+       000000B9            B    86    SPI_BRG_H:	.equ %B9
+       000000BA            B    87    SPI_CTL:	.equ %BA
+       000000BB            B    88    SPI_SR:		.equ %BB
+       000000BC            B    89    SPI_RBR:	.equ %BC
+       000000BC            B    90    SPI_TSR:	.equ %BC
+                           B    91    
+                           B    92    ;* UART0 Registers
+                           B    93    
+       000000C0            B    94    UART0_RBR:	.equ  %C0
+       000000C0            B    95    UART0_THR:	.equ  %C0
+       000000C0            B    96    UART0_BRG_L:	.equ  %C0
+       000000C1            B    97    UART0_IER:	.equ  %C1
+       000000C1            B    98    UART0_BRG_H:	.equ  %C1
+       000000C2            B    99    UART0_IIR:	.equ  %C2
+       000000C2            B   100    UART0_FCTL:	.equ  %C2
+       000000C3            B   101    UART0_LCTL:	.equ  %C3
+       000000C4            B   102    UART0_MCTL:	.equ  %C4
+       000000C5            B   103    UART0_LSR:	.equ  %C5
+       000000C6            B   104    UART0_MSR:	.equ  %C6
+       000000C7            B   105    UART0_SPR:	.equ  %C7
+                           B   106    
+                           B   107    ;* I2C Registers
+                           B   108    
+       000000C8            B   109    I2C_SAR:	.equ  %C8
+       000000C9            B   110    I2C_XSAR:	.equ  %C9
+       000000CA            B   111    I2C_DR:		.equ  %CA
+       000000CB            B   112    I2C_CTL:	.equ  %CB
+       000000CC            B   113    I2C_SR:		.equ  %CC
+       000000CC            B   114    I2C_CCR:	.equ  %CC
+       000000CD            B   115    I2C_SRR:	.equ  %CD
+                           B   116    
+                           B   117    ;* UART1 Registers
+                           B   118    
+       000000D0            B   119    UART1_RBR:	.equ  %D0
+       000000D0            B   120    UART1_THR:	.equ  %D0
+       000000D0            B   121    UART1_BRG_L:	.equ  %D0
+       000000D1            B   122    UART1_IER:	.equ  %D1
+       000000D1            B   123    UART1_BRG_H:	.equ  %D1
+       000000D2            B   124    UART1_IIR:	.equ  %D2
+       000000D2            B   125    UART1_FCTL:	.equ  %D2
+       000000D3            B   126    UART1_LCTL:	.equ  %D3
+       000000D4            B   127    UART1_MCTL:	.equ  %D4
+       000000D5            B   128    UART1_LSR:	.equ  %D5
+       000000D6            B   129    UART1_MSR:	.equ  %D6
+       000000D7            B   130    UART1_SPR:	.equ  %D7
+                           B   131    
+                           B   132    ;* IR Registers
+                           B   133    
+       000000BF            B   134    IR_CTL:		.equ   %BF
+                           B   135    
+                           B   136    ;* CLK Registers
+                           B   137    
+       000000DB            B   138    CLK_PPD1:	.equ   %DB
+       000000DC            B   139    CLK_PPD2:	.equ   %DC
+                           B   140    
+                           B   141    ;* RTC Registers
+                           B   142    
+       000000E0            B   143    RTC_SEC:	.equ  %E0
+       000000E1            B   144    RTC_MIN:	.equ  %E1
+       000000E2            B   145    RTC_HRS:	.equ  %E2
+       000000E3            B   146    RTC_DOW:	.equ  %E3
+       000000E4            B   147    RTC_DOM:	.equ  %E4
+       000000E5            B   148    RTC_MON:	.equ  %E5
+       000000E6            B   149    RTC_YR:		.equ  %E6
+       000000E7            B   150    RTC_CEN:	.equ  %E7
+       000000E8            B   151    RTC_ASEC:	.equ  %E8
+       000000E9            B   152    RTC_AMIN:	.equ  %E9
+       000000EA            B   153    RTC_AHRS:	.equ  %EA
+       000000EB            B   154    RTC_ADOW:	.equ  %EB
+       000000EC            B   155    RTC_ACTRL:	.equ  %EC
+       000000ED            B   156    RTC_CTRL:	.equ  %ED
+                           B   157    
+                           B   158    ;* CSBMC Registers
+                           B   159    
+       000000F0            B   160    CS0_BMC:	.equ %F0
+       000000F1            B   161    CS1_BMC:	.equ %F1
+       000000F2            B   162    CS2_BMC:	.equ %F2
+       000000F3            B   163    CS3_BMC:	.equ %F3
+                           B   164    
+                           B   165    ;* FLASH Registers
+                           B   166    
+       000000F5            B   167    FLASH_KEY:	.equ  %F5
+       000000F6            B   168    FLASH_DATA:	.equ  %F6
+       000000F7            B   169    FLASH_ADDR_U:	.equ  %F7
+       000000F8            B   170    FLASH_CTRL:	.equ  %F8
+       000000F9            B   171    FLASH_FDIV:	.equ  %F9
+       000000FA            B   172    FLASH_PROT:	.equ  %FA
+       000000FB            B   173    FLASH_IRQ:	.equ  %FB
+       000000FC            B   174    FLASH_PAGE:	.equ  %FC
+       000000FD            B   175    FLASH_ROW:	.equ  %FD
+       000000FE            B   176    FLASH_COL:	.equ  %FE
+       000000FF            B   177    FLASH_PGCTL:	.equ  %FF
+                           B   178    
+                           B   179    ;* End eZ80F92 inc file 
+                           A     8    
+                           A     9    			.ASSUME	ADL = 1
+                           A    10    			SEGMENT CODE
+                           A    11    			
+                           A    12    			XDEF	_timer0_handler
+                           A    13    			XDEF	_timer0
+                           A    14    			XDEF	_timer1_handler
+                           A    15    			XDEF	_timer1
+                           A    16    
+                           A    17    ; AGON Timer 0 Interrupt Handler
+                           A    18    ;
+0449B9                     A    19    _timer0_handler:	
+0449B9 F3                  A    20    			DI
+0449BA F5                  A    21    			PUSH	AF
+0449BB ED3880              A    22    			IN0		A,(TMR0_CTL)		; Clear
+0449BE E5                  A    23    			PUSH	HL
+0449BF D5                  A    24    			PUSH	DE
+                           A    25    			
+0449C0 110B0000            A    26    			LD		DE, 11
+0449C4 2A 3C 56 04         A    27    			LD		HL, (_timer0)		; Incre
+                           A    28    			
+0449C8 19                  A    29    			ADD		HL, DE
+                           A    30    			
+                           A    31    			; INC		BC
+                           A    32    			; INC		BC
+                           A    33    			; INC		BC
+                           A    34    			; INC		BC
+                           A    35    			; INC		BC; x5
+                           A    36    			
+                           A    37    			; INC		BC
+                           A    38    			; INC		BC
+                           A    39    			; INC		BC
+                           A    40    			; INC		BC
+                           A    41    			; INC		BC ;x5
+                           A    42    
+                           A    43    			; INC		BC
+                           A    44    			; INC		BC
+                           A    45    			; INC		BC
+                           A    46    			; INC		BC
+                           A    47    			; INC		BC ;x5	
+                           A    48    
+0449C9 22 3C 56 04         A    49    			LD		(_timer0), HL
+0449CD D1                  A    50    			POP		DE
+0449CE E1                  A    51    			POP		HL
+0449CF F1                  A    52    			POP		AF
+0449D0 FB                  A    53    			EI
+0449D1 5BED4D              A    54    			RETI.L
+                           A    55    			
+0449D4                     A    56    _timer1_handler:	
+0449D4 F3                  A    57    			DI
+0449D5 F5                  A    58    			PUSH	AF
+0449D6 ED3883              A    59    			IN0		A,(TMR1_CTL)		; Clear
+0449D9 C5                  A    60    			PUSH	BC
+0449DA ED4B 3F 56 04       A    61    			LD		BC, (_timer1)		; Incre
+0449DF 03                  A    62    			INC		BC
+0449E0 ED43 3F 56 04       A    63    			LD		(_timer1), BC
+0449E5 C1                  A    64    			POP		BC
+0449E6 F1                  A    65    			POP		AF
+0449E7 FB                  A    66    			EI
+0449E8 5BED4D              A    67    			RETI.L			
+                           A    68    	
+                           A    69    			SEGMENT DATA
+                           A    70    			
+04563C                     A    71    _timer0			DS	3		
+04563F                     A    72    _timer1			DS	3
+
+
+Errors: 0
+Warnings: 0
+Lines Assembled: 252

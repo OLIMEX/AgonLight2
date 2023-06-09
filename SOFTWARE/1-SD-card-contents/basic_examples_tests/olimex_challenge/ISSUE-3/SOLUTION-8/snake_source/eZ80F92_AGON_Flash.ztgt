@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Target name="eZ80F92_AGON_Flash" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="target.tsd" xsi:type="Target">
+   <Clock>
+      <clockType>Oscillator</clockType>
+      <frequency>18432000</frequency>
+   </Clock>
+   <ControlReg>
+      <pc>000000</pc>
+      <splStackPtr>C0000</splStackPtr>
+      <spsStackPtr>FFFF</spsStackPtr>
+      <useAdlMode>true</useAdlMode>
+   </ControlReg>
+   <ExtFlash>
+      <device />
+      <externalAddress>0</externalAddress>
+      <externalAutoSelect>false</externalAutoSelect>
+      <externalRamLower>40000</externalRamLower>
+      <externalRamUpper>BFFFF</externalRamUpper>
+      <manufacturer />
+      <units>1</units>
+      <usingExternal>false</usingExternal>
+      <usingInternal>true</usingInternal>
+   </ExtFlash>
+   <Memory>
+      <ChipSelects>
+         <CS0>
+            <busMode>1</busMode>
+            <controlRegister>8</controlRegister>
+            <lower>2</lower>
+            <upper>9</upper>
+         </CS0>
+         <CS1>
+            <busMode>02</busMode>
+            <controlRegister>28</controlRegister>
+            <lower>C0</lower>
+            <upper>C7</upper>
+         </CS1>
+         <CS2>
+            <busMode>81</busMode>
+            <controlRegister>28</controlRegister>
+            <lower>80</lower>
+            <upper>BF</upper>
+         </CS2>
+         <CS3>
+            <busMode>02</busMode>
+            <controlRegister>00</controlRegister>
+            <lower>00</lower>
+            <upper>00</upper>
+         </CS3>
+      </ChipSelects>
+      <Internal>
+         <mapFlashToPage>0</mapFlashToPage>
+         <mapRamToPage>ff</mapRamToPage>
+         <useFlashRam>true</useFlashRam>
+         <useInternalDataRam>true</useInternalDataRam>
+      </Internal>
+      <waitStates>1</waitStates>
+   </Memory>
+   <cpu>eZ80F92</cpu>
+   <schemaVersion>1.0.1</schemaVersion>
+   <version>1.00</version>
+</Target>

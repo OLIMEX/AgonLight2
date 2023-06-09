@@ -1,0 +1,4786 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -nomodsect -optspeed -noreduceopt -nopadbranch -debug
+; -peephole -globalopt -localcse -const=ROM 
+	FILE	"..\vdp.c"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",8
+.DEFINE "baudRate"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "dataBits"
+.VALUE 3
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "stopBits"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "parity"
+.VALUE 5
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flowcontrol"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "eir"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",15
+.DEFINE "fs"
+.VALUE 0
+.CLASS 8
+.TYPE 46
+.ENDEF
+.DEFINE "id"
+.VALUE 3
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "attr"
+.VALUE 5
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "stat"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "sclust"
+.VALUE 7
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "objsize"
+.VALUE 11
+.CLASS 8
+.TYPE 15
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "NONAME2",36
+.DEFINE "obj"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME1"
+.TYPE 8
+.ENDEF
+.DEFINE "flag"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "err"
+.VALUE 16
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "fptr"
+.VALUE 17
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "clust"
+.VALUE 21
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "sect"
+.VALUE 25
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "dir_sect"
+.VALUE 29
+.CLASS 8
+.TYPE 15
+.ENDEF
+.DEFINE "dir_ptr"
+.VALUE 33
+.CLASS 8
+.TYPE 46
+.ENDEF
+.ENDREC "NONAME2"
+;    1	#include <defines.h>
+;    2	#include "vdp.h"
+;    3	#include "mos-interface.h"
+;    4	
+;    5	// Generic functions
+;    6	
+;    7	void write16bit(UINT16 w)
+;    8	{
+_write16bit:
+.DEFINE "_write16bit"
+
+.VALUE _write16bit
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "write16bit",8,"_write16bit"
+
+.LINE 8
+
+.DEFINE "w"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;    9		putch(w & 0xFF); // write LSB
+.LINE 9
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	A,L
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   10		putch(w >> 8);	 // write MSB	
+.LINE 10
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	BC,HL
+	DEC	SP
+	PUSH	BC
+	INC	SP
+	POP	AF
+	SEXT	HL
+	PUSH	HL
+	PUSH	BC
+	INC	SP
+	POP	BC
+	INC	SP
+	INC	SP
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   11	}
+.LINE 11
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _write16bit ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;w                                     IX+6      2   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "write16bit",11,"_write16bit"
+;   12	
+;   13	void write32bit(UINT32 l)
+;   14	{
+_write32bit:
+.DEFINE "_write32bit"
+
+.VALUE _write32bit
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "write32bit",14,"_write32bit"
+
+.LINE 14
+
+.DEFINE "l"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "temp"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 15
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;   15		UINT32 temp = l;
+;   16		
+;   17		putch(temp & 0xFF); // write LSB
+.LINE 17
+
+	LD	HL,(IX+%6)
+	LD	A,L
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   18		temp = temp >> 8;
+.LINE 18
+
+	LD	BC,(IX+%7)
+	XOR	A,A
+	LD	(IX+%FFFFFFFC),BC
+	LD	(IX+%FFFFFFFF),A
+;   19		putch(temp & 0xFF);
+.LINE 19
+
+	LD	HL,BC
+	LD	A,L
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   20		temp = temp >> 8;
+.LINE 20
+
+	LD	BC,(IX+%FFFFFFFD)
+	XOR	A,A
+	LD	(IX+%FFFFFFFC),BC
+	LD	(IX+%FFFFFFFF),A
+;   21		putch(temp & 0xFF);
+.LINE 21
+
+	LD	HL,BC
+	LD	A,L
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   22		temp = temp >> 8;
+.LINE 22
+
+	LD	BC,(IX+%FFFFFFFD)
+	XOR	A,A
+	LD	(IX+%FFFFFFFC),BC
+	LD	(IX+%FFFFFFFF),A
+;   23		putch(temp & 0xFF);
+.LINE 23
+
+	LD	HL,BC
+	LD	A,L
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   24		return;	
+;   25	}
+.LINE 25
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _write32bit ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;temp                                  IX-4      4   variable
+;l                                     IX+6      4   parameter
+
+
+; Stack Frame Size: 16 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "write32bit",25,"_write32bit"
+;   26	
+;   27	void vdp_mode(unsigned char mode)
+;   28	{
+_vdp_mode:
+.DEFINE "_vdp_mode"
+
+.VALUE _vdp_mode
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_mode",28,"_vdp_mode"
+
+.LINE 28
+
+.DEFINE "mode"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   29	    putch(22);
+.LINE 29
+
+	LD	BC,22
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   30	    putch(mode);
+.LINE 30
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   31	}
+.LINE 31
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_mode ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;mode                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_mode",31,"_vdp_mode"
+;   32	
+;   33	void vdp_getMode(void) {
+_vdp_getMode:
+.DEFINE "_vdp_getMode"
+
+.VALUE _vdp_getMode
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_getMode",33,"_vdp_getMode"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   34		putch(23);
+.LINE 34
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   35		putch(0);
+.LINE 35
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   36		putch(0x86);
+.LINE 36
+
+	LD	BC,134
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   37	}
+.LINE 37
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_getMode ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_getMode",37,"_vdp_getMode"
+;   38	
+;   39	void vdp_setPaletteColor(UINT8 index, UINT8 color, UINT8 r, UINT8 g, UINT8 b) {
+_vdp_setPaletteColor:
+.DEFINE "_vdp_setPaletteColor"
+
+.VALUE _vdp_setPaletteColor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_setPaletteColor",39,"_vdp_setPaletteColor"
+
+.LINE 39
+
+.DEFINE "index"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "color"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "r"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "g"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "b"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   40		putch(0x13); // VDU palette
+.LINE 40
+
+	LD	BC,19
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   41		putch(index);
+.LINE 41
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   42		putch(color); // 255 - set R/G/B colors, or <80 color lookup table
+.LINE 42
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   43		putch(r);
+.LINE 43
+
+	LD	A,(IX+%C)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   44		putch(g);
+.LINE 44
+
+	LD	A,(IX+%F)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   45		putch(b);
+.LINE 45
+
+	LD	A,(IX+%12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   46	}
+.LINE 46
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_setPaletteColor ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;b                                    IX+18      1   parameter
+;g                                    IX+15      1   parameter
+;r                                    IX+12      1   parameter
+;color                                 IX+9      1   parameter
+;index                                 IX+6      1   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_setPaletteColor",46,"_vdp_setPaletteColor"
+;   47	
+;   48	// Text functions
+;   49	void vdp_cls()
+;   50	{
+_vdp_cls:
+.DEFINE "_vdp_cls"
+
+.VALUE _vdp_cls
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cls",50,"_vdp_cls"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   51	    putch(12);
+.LINE 51
+
+	LD	BC,12
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   52	}
+.LINE 52
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cls ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cls",52,"_vdp_cls"
+;   53	
+;   54	void vdp_cursorHome()
+;   55	{
+_vdp_cursorHome:
+.DEFINE "_vdp_cursorHome"
+
+.VALUE _vdp_cursorHome
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorHome",55,"_vdp_cursorHome"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   56	    putch(30);
+.LINE 56
+
+	LD	BC,30
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   57	}
+.LINE 57
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorHome ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorHome",57,"_vdp_cursorHome"
+;   58	
+;   59	void vdp_cursorUp()
+;   60	{
+_vdp_cursorUp:
+.DEFINE "_vdp_cursorUp"
+
+.VALUE _vdp_cursorUp
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorUp",60,"_vdp_cursorUp"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   61	    putch(11);
+.LINE 61
+
+	LD	BC,11
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   62	}
+.LINE 62
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorUp ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorUp",62,"_vdp_cursorUp"
+;   63	
+;   64	void vdp_cursorGoto(unsigned char x, unsigned char y)
+;   65	{
+_vdp_cursorGoto:
+.DEFINE "_vdp_cursorGoto"
+
+.VALUE _vdp_cursorGoto
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorGoto",65,"_vdp_cursorGoto"
+
+.LINE 65
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   66	    putch(31); // TAB
+.LINE 66
+
+	LD	BC,31
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   67	    putch(x);
+.LINE 67
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   68	    putch(y);
+.LINE 68
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   69	}
+.LINE 69
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorGoto ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                     IX+9      1   parameter
+;x                                     IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorGoto",69,"_vdp_cursorGoto"
+;   70	
+;   71	void vdp_fgcolour(unsigned char colorindex) {
+_vdp_fgcolour:
+.DEFINE "_vdp_fgcolour"
+
+.VALUE _vdp_fgcolour
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_fgcolour",71,"_vdp_fgcolour"
+
+.LINE 71
+
+.DEFINE "colorindex"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   72		putch(17); // COLOUR
+.LINE 72
+
+	LD	BC,17
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   73		putch(colorindex);	
+.LINE 73
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   74	}
+.LINE 74
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_fgcolour ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;colorindex                            IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_fgcolour",74,"_vdp_fgcolour"
+;   75	
+;   76	void vdp_bgcolour(unsigned char colorindex) {
+_vdp_bgcolour:
+.DEFINE "_vdp_bgcolour"
+
+.VALUE _vdp_bgcolour
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bgcolour",76,"_vdp_bgcolour"
+
+.LINE 76
+
+.DEFINE "colorindex"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   77		putch(17); // COLOUR
+.LINE 77
+
+	LD	BC,17
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   78		putch(colorindex | 0x80);	
+.LINE 78
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	LD	BC,128
+	CALL	__ior
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   79	}
+.LINE 79
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bgcolour ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;colorindex                            IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bgcolour",79,"_vdp_bgcolour"
+;   80	
+;   81	//
+;   82	// Graphics functions
+;   83	//
+;   84	
+;   85	void vdp_clearGraphics()
+;   86	{
+_vdp_clearGraphics:
+.DEFINE "_vdp_clearGraphics"
+
+.VALUE _vdp_clearGraphics
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_clearGraphics",86,"_vdp_clearGraphics"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   87	    putch(16);    
+.LINE 87
+
+	LD	BC,16
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   88	}
+.LINE 88
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_clearGraphics ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_clearGraphics",88,"_vdp_clearGraphics"
+;   89	
+;   90	void vdp_plotColour(unsigned char colorindex)
+;   91	{
+_vdp_plotColour:
+.DEFINE "_vdp_plotColour"
+
+.VALUE _vdp_plotColour
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotColour",91,"_vdp_plotColour"
+
+.LINE 91
+
+.DEFINE "colorindex"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   92	    putch(18); // GCOL
+.LINE 92
+
+	LD	BC,18
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   93	    putch(1);
+.LINE 93
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;   94		putch(colorindex);
+.LINE 94
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;   95	}
+.LINE 95
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotColour ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;colorindex                            IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotColour",95,"_vdp_plotColour"
+;   96	
+;   97	// internal function
+;   98	void vdp_plot(unsigned char mode, unsigned int x, unsigned int y)
+;   99	{
+_vdp_plot:
+.DEFINE "_vdp_plot"
+
+.VALUE _vdp_plot
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plot",99,"_vdp_plot"
+
+.LINE 99
+
+.DEFINE "mode"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  100	    putch(25); // PLOT
+.LINE 100
+
+	LD	BC,25
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  101	    putch(mode);
+.LINE 101
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  102	    putch(x & 0xFF);
+.LINE 102
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	(IX+%FFFFFFFF),A
+	CALL	_putch
+	LD	A,(IX+%FFFFFFFF)
+	POP	BC
+;  103	    putch(x >> 8);
+.LINE 103
+
+	UEXT	HL
+	PUSH	HL
+	LD	HL,(IX+%9)
+	PUSH	HL
+	INC	SP
+	POP	HL
+	INC	SP
+	INC	SP
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  104	    putch(y & 0xFF);
+.LINE 104
+
+	LD	A,(IX+%C)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	(IX+%FFFFFFFF),A
+	CALL	_putch
+	LD	A,(IX+%FFFFFFFF)
+	POP	BC
+;  105	    putch(y >> 8);
+.LINE 105
+
+	UEXT	HL
+	PUSH	HL
+	LD	HL,(IX+%C)
+	PUSH	HL
+	INC	SP
+	POP	HL
+	INC	SP
+	INC	SP
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  106	}
+.LINE 106
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plot ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                    IX+12      3   parameter
+;x                                     IX+9      3   parameter
+;mode                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 16 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plot",106,"_vdp_plot"
+;  107	
+;  108	void vdp_plotMoveTo(unsigned int x, unsigned int y)
+;  109	{
+_vdp_plotMoveTo:
+.DEFINE "_vdp_plotMoveTo"
+
+.VALUE _vdp_plotMoveTo
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotMoveTo",109,"_vdp_plotMoveTo"
+
+.LINE 109
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  110		vdp_plot(0x04,x,y);
+.LINE 110
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  111	}
+.LINE 111
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotMoveTo ***************************
+;Name                         Addr/Register   Size   Type
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotMoveTo",111,"_vdp_plotMoveTo"
+;  112	
+;  113	void vdp_plotLineTo(unsigned int x, unsigned int y)
+;  114	{
+_vdp_plotLineTo:
+.DEFINE "_vdp_plotLineTo"
+
+.VALUE _vdp_plotLineTo
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotLineTo",114,"_vdp_plotLineTo"
+
+.LINE 114
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  115		vdp_plot(0x05,x,y);
+.LINE 115
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,5
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  116	}
+.LINE 116
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotLineTo ***************************
+;Name                         Addr/Register   Size   Type
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotLineTo",116,"_vdp_plotLineTo"
+;  117	
+;  118	void vdp_plotPoint(unsigned int x, unsigned int y)
+;  119	{
+_vdp_plotPoint:
+.DEFINE "_vdp_plotPoint"
+
+.VALUE _vdp_plotPoint
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotPoint",119,"_vdp_plotPoint"
+
+.LINE 119
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  120		vdp_plot(0x40,x,y);
+.LINE 120
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,64
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  121	}
+.LINE 121
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotPoint ***************************
+;Name                         Addr/Register   Size   Type
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotPoint",121,"_vdp_plotPoint"
+;  122	
+;  123	void vdp_plotTriangle(unsigned int x, unsigned int y)
+;  124	{
+_vdp_plotTriangle:
+.DEFINE "_vdp_plotTriangle"
+
+.VALUE _vdp_plotTriangle
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotTriangle",124,"_vdp_plotTriangle"
+
+.LINE 124
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  125		vdp_plot(0x50,x,y);
+.LINE 125
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,80
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  126	}
+.LINE 126
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotTriangle ***************************
+;Name                         Addr/Register   Size   Type
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotTriangle",126,"_vdp_plotTriangle"
+;  127	
+;  128	void vdp_plotCircleRadius(unsigned int r)
+;  129	{
+_vdp_plotCircleRadius:
+.DEFINE "_vdp_plotCircleRadius"
+
+.VALUE _vdp_plotCircleRadius
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotCircleRadius",129,"_vdp_plotCircleRadius"
+
+.LINE 129
+
+.DEFINE "r"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  130		vdp_plot(0x90,r,0);
+.LINE 130
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,144
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  131	}
+.LINE 131
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotCircleRadius ***************************
+;Name                         Addr/Register   Size   Type
+;r                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotCircleRadius",131,"_vdp_plotCircleRadius"
+;  132	
+;  133	void vdp_plotCircleCircumference(unsigned int x, unsigned int y)
+;  134	{
+_vdp_plotCircleCircumference:
+.DEFINE "_vdp_plotCircleCircumference"
+
+.VALUE _vdp_plotCircleCircumference
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotCircleCircumference",134,"_vdp_plotCircleCircumference"
+
+.LINE 134
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  135		vdp_plot(0x95,x,y);
+.LINE 135
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	LD	BC,(IX+%6)
+	PUSH	BC
+	LD	BC,149
+	PUSH	BC
+	CALL	_vdp_plot
+	POP	BC
+	POP	BC
+	POP	BC
+;  136	}
+.LINE 136
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotCircleCircumference ***************************
+;Name                         Addr/Register   Size   Type
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotCircleCircumference",136,"_vdp_plotCircleCircumference"
+;  137	
+;  138	void vdp_plotSetOrigin(unsigned int x, unsigned int y)
+;  139	{
+_vdp_plotSetOrigin:
+.DEFINE "_vdp_plotSetOrigin"
+
+.VALUE _vdp_plotSetOrigin
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_plotSetOrigin",139,"_vdp_plotSetOrigin"
+
+.LINE 139
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  140	    putch(29); //Graphics ORIGIN
+.LINE 140
+
+	LD	BC,29
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  141	    putch(x & 0xF);
+.LINE 141
+
+	LD	A,(IX+%6)
+	AND	A,%F
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	(IX+%FFFFFFFF),A
+	CALL	_putch
+	LD	A,(IX+%FFFFFFFF)
+	POP	BC
+;  142	    putch(x >> 8);
+.LINE 142
+
+	UEXT	HL
+	PUSH	HL
+	LD	HL,(IX+%6)
+	PUSH	HL
+	INC	SP
+	POP	HL
+	INC	SP
+	INC	SP
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  143	    putch(y & 0xF);
+.LINE 143
+
+	LD	A,(IX+%9)
+	AND	A,%F
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	(IX+%FFFFFFFF),A
+	CALL	_putch
+	LD	A,(IX+%FFFFFFFF)
+	POP	BC
+;  144	    putch(y >> 8);
+.LINE 144
+
+	UEXT	HL
+	PUSH	HL
+	LD	HL,(IX+%9)
+	PUSH	HL
+	INC	SP
+	POP	HL
+	INC	SP
+	INC	SP
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  145	}
+.LINE 145
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_plotSetOrigin ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                     IX+9      3   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_plotSetOrigin",145,"_vdp_plotSetOrigin"
+;  146	
+;  147	// Bitmap VDP functions
+;  148	void vdp_bitmapSelect(UINT8 id)
+;  149	{
+_vdp_bitmapSelect:
+.DEFINE "_vdp_bitmapSelect"
+
+.VALUE _vdp_bitmapSelect
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapSelect",149,"_vdp_bitmapSelect"
+
+.LINE 149
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  150		putch(23); // vdu_sys
+.LINE 150
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  151		putch(27); // sprite command
+.LINE 151
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  152		putch(0);  // select command
+.LINE 152
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  153		putch(id); // bitmap_id
+.LINE 153
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  154		return;	
+;  155	}
+.LINE 155
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapSelect ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapSelect",155,"_vdp_bitmapSelect"
+;  156	
+;  157	void vdp_bitmapSendDataSelected(UINT16 width, UINT16 height, UINT32 *data)
+;  158	{
+_vdp_bitmapSendDataSelected:
+.DEFINE "_vdp_bitmapSendDataSelected"
+
+.VALUE _vdp_bitmapSendDataSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapSendDataSelected",158,"_vdp_bitmapSendDataSelected"
+
+.LINE 158
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 47
+
+.ENDEF
+
+.DEFINE "n"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;  159		UINT16 n;
+;  160		
+;  161		putch(23); // vdu_sys
+.LINE 161
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  162		putch(27); // sprite command
+.LINE 162
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  163		putch(1);  // send data to selected bitmap
+.LINE 163
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  164		
+;  165		write16bit(width);
+.LINE 165
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  166		write16bit(height);
+.LINE 166
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  167		
+;  168		for(n = 0; n < (width*height); n++)
+.LINE 168
+
+	LD	(IX+%FFFFFFFE),%0
+	LD	(IX+%FFFFFFFF),%0
+	JR	L_25
+L_23:
+;  169		{
+;  170			write32bit(data[n]);
+.LINE 170
+
+	LD	BC,(IX+%FFFFFFFE)
+	CALL	__stoiu
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+%C)
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IY)
+	LD	A,(IY+%3)
+	LD	H,%0
+	LD	L,A
+	PUSH	HL
+	PUSH	BC
+	CALL	_write32bit
+	POP	BC
+	POP	BC
+	LD	HL,(IX+%FFFFFFFE)
+	INC	HL
+	LD	(IX+%FFFFFFFE),L
+	LD	(IX+%FFFFFFFF),H
+;  171			//delayms(1);
+;  172		}
+L_25:
+.LINE 172
+
+	LD	BC,(IX+%6)
+	CALL	__stoiu
+	LD	DE,HL
+	LD	BC,(IX+%9)
+	CALL	__stoiu
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__imuls
+	LD	DE,HL
+	LD	BC,(IX+%FFFFFFFE)
+	CALL	__stoiu
+	OR	A,A
+	SBC	HL,DE
+	JP	M,L__23
+	JP	PE,L_23
+	JR	L__24
+L__23:
+	JP	PO,L_23
+L__24:
+;  173		return;		
+;  174	}
+.LINE 174
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapSendDataSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;n                                     IX-2      2   variable
+;data                                 IX+12      3   parameter
+;height                                IX+9      2   parameter
+;width                                 IX+6      2   parameter
+
+
+; Stack Frame Size: 17 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapSendDataSelected",174,"_vdp_bitmapSendDataSelected"
+;  175	
+;  176	void vdp_bitmapSendData(UINT8 id, UINT16 width, UINT16 height, UINT32 *data)
+;  177	{
+_vdp_bitmapSendData:
+.DEFINE "_vdp_bitmapSendData"
+
+.VALUE _vdp_bitmapSendData
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapSendData",177,"_vdp_bitmapSendData"
+
+.LINE 177
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "data"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 47
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  178		vdp_bitmapSelect(id);
+.LINE 178
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapSelect
+	POP	BC
+;  179		vdp_bitmapSendDataSelected(width, height, data);
+.LINE 179
+
+	LD	BC,(IX+%F)
+	PUSH	BC
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_vdp_bitmapSendDataSelected
+	POP	BC
+	POP	BC
+	POP	BC
+;  180		return;	
+;  181	}
+.LINE 181
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapSendData ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_bitmapSendDataSelected         IMPORT  -----   function
+;_vdp_bitmapSelect                   IMPORT  -----   function
+;data                                 IX+15      3   parameter
+;height                               IX+12      2   parameter
+;width                                 IX+9      2   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapSendData",181,"_vdp_bitmapSendData"
+;  182	
+;  183	void vdp_bitmapDrawSelected(UINT16 x, UINT16 y)
+;  184	{
+_vdp_bitmapDrawSelected:
+.DEFINE "_vdp_bitmapDrawSelected"
+
+.VALUE _vdp_bitmapDrawSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapDrawSelected",184,"_vdp_bitmapDrawSelected"
+
+.LINE 184
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  185		putch(23); // vdu_sys
+.LINE 185
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  186		putch(27); // sprite command
+.LINE 186
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  187		putch(3);  // draw selected bitmap
+.LINE 187
+
+	LD	BC,3
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  188		
+;  189		write16bit(x);
+.LINE 189
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  190		write16bit(y);
+.LINE 190
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  191		
+;  192		return;
+;  193	}
+.LINE 193
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapDrawSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                     IX+9      2   parameter
+;x                                     IX+6      2   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapDrawSelected",193,"_vdp_bitmapDrawSelected"
+;  194	
+;  195	void vdp_bitmapDraw(UINT8 id, UINT16 x, UINT16 y)
+;  196	{
+_vdp_bitmapDraw:
+.DEFINE "_vdp_bitmapDraw"
+
+.VALUE _vdp_bitmapDraw
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapDraw",196,"_vdp_bitmapDraw"
+
+.LINE 196
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  197		vdp_bitmapSelect(id);
+.LINE 197
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapSelect
+	POP	BC
+;  198		vdp_bitmapDrawSelected(x,y);
+.LINE 198
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_vdp_bitmapDrawSelected
+	POP	BC
+	POP	BC
+;  199		return;	
+;  200	}
+.LINE 200
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapDraw ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_bitmapDrawSelected             IMPORT  -----   function
+;_vdp_bitmapSelect                   IMPORT  -----   function
+;y                                    IX+12      2   parameter
+;x                                     IX+9      2   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapDraw",200,"_vdp_bitmapDraw"
+;  201	
+;  202	void vdp_bitmapCreateSolidColorSelected(UINT16 width, UINT16 height, UINT32 abgr)
+;  203	{
+_vdp_bitmapCreateSolidColorSelected:
+.DEFINE "_vdp_bitmapCreateSolidColorSelected"
+
+.VALUE _vdp_bitmapCreateSolidColorSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapCreateSolidColorSelected",203,"_vdp_bitmapCreateSolidColorSelected"
+
+.LINE 203
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "abgr"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 15
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  204		putch(23); // vdu_sys
+.LINE 204
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  205		putch(27); // sprite command
+.LINE 205
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  206		putch(2);  // define in single color command
+.LINE 206
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  207		
+;  208		write16bit(width);
+.LINE 208
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  209		write16bit(height);
+.LINE 209
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  210		write32bit(abgr);
+.LINE 210
+
+	LD	C,(IX+%F)
+	LD	B,%0
+	PUSH	BC
+	LD	BC,(IX+%C)
+	PUSH	BC
+	CALL	_write32bit
+	POP	BC
+	POP	BC
+;  211		return;		
+;  212	}
+.LINE 212
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapCreateSolidColorSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;abgr                                 IX+12      4   parameter
+;height                                IX+9      2   parameter
+;width                                 IX+6      2   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapCreateSolidColorSelected",212,"_vdp_bitmapCreateSolidColorSelected"
+;  213	
+;  214	void vdp_bitmapCreateSolidColor(UINT8 id, UINT16 width, UINT16 height, UINT32 abgr)
+;  215	{
+_vdp_bitmapCreateSolidColor:
+.DEFINE "_vdp_bitmapCreateSolidColor"
+
+.VALUE _vdp_bitmapCreateSolidColor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_bitmapCreateSolidColor",215,"_vdp_bitmapCreateSolidColor"
+
+.LINE 215
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "abgr"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 15
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  216		vdp_bitmapSelect(id);
+.LINE 216
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_bitmapSelect
+	POP	BC
+;  217		vdp_bitmapCreateSolidColorSelected(width, height, abgr);
+.LINE 217
+
+	LD	C,(IX+%12)
+	LD	B,%0
+	PUSH	BC
+	LD	BC,(IX+%F)
+	PUSH	BC
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_vdp_bitmapCreateSolidColorSelected
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  218		return;	
+;  219	}
+.LINE 219
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_bitmapCreateSolidColor ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_bitmapCreateSolidColorSelected      IMPORT  -----   function
+;_vdp_bitmapSelect                   IMPORT  -----   function
+;abgr                                 IX+15      4   parameter
+;height                               IX+12      2   parameter
+;width                                 IX+9      2   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_bitmapCreateSolidColor",219,"_vdp_bitmapCreateSolidColor"
+;  220	
+;  221	// Sprite VDP functions
+;  222	void vdp_spriteSelect(UINT8 id)
+;  223	{
+_vdp_spriteSelect:
+.DEFINE "_vdp_spriteSelect"
+
+.VALUE _vdp_spriteSelect
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteSelect",223,"_vdp_spriteSelect"
+
+.LINE 223
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  224		putch(23); // vdu_sys
+.LINE 224
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  225		putch(27); // sprite command
+.LINE 225
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  226		putch(4);  // select sprite
+.LINE 226
+
+	LD	BC,4
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  227		putch(id);
+.LINE 227
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  228		return;			
+;  229	}
+.LINE 229
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteSelect ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteSelect",229,"_vdp_spriteSelect"
+;  230	
+;  231	void vdp_spriteClearFramesSelected(void)
+;  232	{
+_vdp_spriteClearFramesSelected:
+.DEFINE "_vdp_spriteClearFramesSelected"
+
+.VALUE _vdp_spriteClearFramesSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteClearFramesSelected",232,"_vdp_spriteClearFramesSelected"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  233		putch(23); // vdu_sys
+.LINE 233
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  234		putch(27); // sprite command
+.LINE 234
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  235		putch(5);  // clear frames
+.LINE 235
+
+	LD	BC,5
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  236		return;				
+;  237	}
+.LINE 237
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteClearFramesSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteClearFramesSelected",237,"_vdp_spriteClearFramesSelected"
+;  238	
+;  239	void vdp_spriteClearFrames(UINT8 bitmapid)
+;  240	{
+_vdp_spriteClearFrames:
+.DEFINE "_vdp_spriteClearFrames"
+
+.VALUE _vdp_spriteClearFrames
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteClearFrames",240,"_vdp_spriteClearFrames"
+
+.LINE 240
+
+.DEFINE "bitmapid"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  241		vdp_spriteSelect(bitmapid);
+.LINE 241
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  242		vdp_spriteClearFramesSelected();
+.LINE 242
+
+	CALL	_vdp_spriteClearFramesSelected
+;  243		return;				
+;  244	}
+.LINE 244
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteClearFrames ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteClearFramesSelected      IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;bitmapid                              IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteClearFrames",244,"_vdp_spriteClearFrames"
+;  245	
+;  246	void vdp_spriteAddFrameSelected(UINT8 bitmapid)
+;  247	{
+_vdp_spriteAddFrameSelected:
+.DEFINE "_vdp_spriteAddFrameSelected"
+
+.VALUE _vdp_spriteAddFrameSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteAddFrameSelected",247,"_vdp_spriteAddFrameSelected"
+
+.LINE 247
+
+.DEFINE "bitmapid"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  248		putch(23); // vdu_sys
+.LINE 248
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  249		putch(27); // sprite command
+.LINE 249
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  250		putch(6);  // add frame
+.LINE 250
+
+	LD	BC,6
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  251		putch(bitmapid);
+.LINE 251
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  252		return;	
+;  253	}
+.LINE 253
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteAddFrameSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;bitmapid                              IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteAddFrameSelected",253,"_vdp_spriteAddFrameSelected"
+;  254	
+;  255	void vdp_spriteAddFrame(UINT8 id, UINT8 bitmapid)
+;  256	{
+_vdp_spriteAddFrame:
+.DEFINE "_vdp_spriteAddFrame"
+
+.VALUE _vdp_spriteAddFrame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteAddFrame",256,"_vdp_spriteAddFrame"
+
+.LINE 256
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "bitmapid"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  257		vdp_spriteSelect(id);
+.LINE 257
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  258		vdp_spriteAddFrameSelected(bitmapid);
+.LINE 258
+
+	LD	C,(IX+%9)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteAddFrameSelected
+	POP	BC
+;  259		return;	
+;  260	}
+.LINE 260
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteAddFrame ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteAddFrameSelected         IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;bitmapid                              IX+9      1   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteAddFrame",260,"_vdp_spriteAddFrame"
+;  261	
+;  262	void vdp_spriteNextFrameSelected(void)
+;  263	{
+_vdp_spriteNextFrameSelected:
+.DEFINE "_vdp_spriteNextFrameSelected"
+
+.VALUE _vdp_spriteNextFrameSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteNextFrameSelected",263,"_vdp_spriteNextFrameSelected"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  264		putch(23); // vdu_sys
+.LINE 264
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  265		putch(27); // sprite command
+.LINE 265
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  266		putch(8);  // next frame
+.LINE 266
+
+	LD	BC,8
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  267		return;			
+;  268	}
+.LINE 268
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteNextFrameSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteNextFrameSelected",268,"_vdp_spriteNextFrameSelected"
+;  269	
+;  270	void vdp_spriteNextFrame(UINT8 id)
+;  271	{
+_vdp_spriteNextFrame:
+.DEFINE "_vdp_spriteNextFrame"
+
+.VALUE _vdp_spriteNextFrame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteNextFrame",271,"_vdp_spriteNextFrame"
+
+.LINE 271
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  272		vdp_spriteSelect(id);
+.LINE 272
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  273		vdp_spriteNextFrameSelected();
+.LINE 273
+
+	CALL	_vdp_spriteNextFrameSelected
+;  274		return;
+;  275	}
+.LINE 275
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteNextFrame ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteNextFrameSelected        IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteNextFrame",275,"_vdp_spriteNextFrame"
+;  276	
+;  277	void vdp_spritePreviousFrameSelected(void)
+;  278	{
+_vdp_spritePreviousFrameSelected:
+.DEFINE "_vdp_spritePreviousFrameSelected"
+
+.VALUE _vdp_spritePreviousFrameSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spritePreviousFrameSelected",278,"_vdp_spritePreviousFrameSelected"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  279		putch(23); // vdu_sys
+.LINE 279
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  280		putch(27); // sprite command
+.LINE 280
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  281		putch(9); // previous frame
+.LINE 281
+
+	LD	BC,9
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  282		return;	
+;  283	}
+.LINE 283
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spritePreviousFrameSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spritePreviousFrameSelected",283,"_vdp_spritePreviousFrameSelected"
+;  284	
+;  285	void vdp_spritePreviousFrame(UINT8 id)
+;  286	{
+_vdp_spritePreviousFrame:
+.DEFINE "_vdp_spritePreviousFrame"
+
+.VALUE _vdp_spritePreviousFrame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spritePreviousFrame",286,"_vdp_spritePreviousFrame"
+
+.LINE 286
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  287		vdp_spriteSelect(id);
+.LINE 287
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  288		vdp_spritePreviousFrameSelected();
+.LINE 288
+
+	CALL	_vdp_spritePreviousFrameSelected
+;  289		return;
+;  290	}
+.LINE 290
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spritePreviousFrame ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spritePreviousFrameSelected      IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spritePreviousFrame",290,"_vdp_spritePreviousFrame"
+;  291	
+;  292	void vdp_spriteSetFrameSelected(UINT8 framenumber)
+;  293	{
+_vdp_spriteSetFrameSelected:
+.DEFINE "_vdp_spriteSetFrameSelected"
+
+.VALUE _vdp_spriteSetFrameSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteSetFrameSelected",293,"_vdp_spriteSetFrameSelected"
+
+.LINE 293
+
+.DEFINE "framenumber"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  294		putch(23); // vdu_sys
+.LINE 294
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  295		putch(27); // sprite command
+.LINE 295
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  296		putch(10); // set current frame
+.LINE 296
+
+	LD	BC,10
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  297		putch(framenumber);
+.LINE 297
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  298		return;	
+;  299	}
+.LINE 299
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteSetFrameSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;framenumber                           IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteSetFrameSelected",299,"_vdp_spriteSetFrameSelected"
+;  300	
+;  301	void vdp_spriteSetFrame(UINT8 id, UINT8 framenumber)
+;  302	{
+_vdp_spriteSetFrame:
+.DEFINE "_vdp_spriteSetFrame"
+
+.VALUE _vdp_spriteSetFrame
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteSetFrame",302,"_vdp_spriteSetFrame"
+
+.LINE 302
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "framenumber"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  303		vdp_spriteSelect(id);
+.LINE 303
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  304		vdp_spriteSetFrameSelected(framenumber);
+.LINE 304
+
+	LD	C,(IX+%9)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSetFrameSelected
+	POP	BC
+;  305		return;
+;  306	}
+.LINE 306
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteSetFrame ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteSetFrameSelected         IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;framenumber                           IX+9      1   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteSetFrame",306,"_vdp_spriteSetFrame"
+;  307	
+;  308	void vdp_spriteShowSelected(void)
+;  309	{
+_vdp_spriteShowSelected:
+.DEFINE "_vdp_spriteShowSelected"
+
+.VALUE _vdp_spriteShowSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteShowSelected",309,"_vdp_spriteShowSelected"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  310		putch(23); // vdu_sys
+.LINE 310
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  311		putch(27); // sprite command
+.LINE 311
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  312		putch(11); // show sprite
+.LINE 312
+
+	LD	BC,11
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  313		return;			
+;  314	}
+.LINE 314
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteShowSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteShowSelected",314,"_vdp_spriteShowSelected"
+;  315	
+;  316	void vdp_spriteShow(UINT8 id)
+;  317	{
+_vdp_spriteShow:
+.DEFINE "_vdp_spriteShow"
+
+.VALUE _vdp_spriteShow
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteShow",317,"_vdp_spriteShow"
+
+.LINE 317
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  318		vdp_spriteSelect(id);
+.LINE 318
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  319		vdp_spriteShowSelected();
+.LINE 319
+
+	CALL	_vdp_spriteShowSelected
+;  320		return;
+;  321	}
+.LINE 321
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteShow ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteShowSelected             IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteShow",321,"_vdp_spriteShow"
+;  322	
+;  323	void vdp_spriteHideSelected(void)
+;  324	{
+_vdp_spriteHideSelected:
+.DEFINE "_vdp_spriteHideSelected"
+
+.VALUE _vdp_spriteHideSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteHideSelected",324,"_vdp_spriteHideSelected"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  325		putch(23); // vdu_sys
+.LINE 325
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  326		putch(27); // sprite command
+.LINE 326
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  327		putch(12); // hide sprite
+.LINE 327
+
+	LD	BC,12
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  328		return;		
+;  329	}
+.LINE 329
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteHideSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteHideSelected",329,"_vdp_spriteHideSelected"
+;  330	
+;  331	void vdp_spriteHide(UINT8 id)
+;  332	{
+_vdp_spriteHide:
+.DEFINE "_vdp_spriteHide"
+
+.VALUE _vdp_spriteHide
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteHide",332,"_vdp_spriteHide"
+
+.LINE 332
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  333		vdp_spriteSelect(id);
+.LINE 333
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  334		vdp_spriteHideSelected();
+.LINE 334
+
+	CALL	_vdp_spriteHideSelected
+;  335		return;
+;  336	}
+.LINE 336
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteHide ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteHideSelected             IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteHide",336,"_vdp_spriteHide"
+;  337	
+;  338	void vdp_spriteMoveToSelected(UINT16 x, UINT16 y)
+;  339	{
+_vdp_spriteMoveToSelected:
+.DEFINE "_vdp_spriteMoveToSelected"
+
+.VALUE _vdp_spriteMoveToSelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteMoveToSelected",339,"_vdp_spriteMoveToSelected"
+
+.LINE 339
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  340		putch(23); // vdu_sys
+.LINE 340
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  341		putch(27); // sprite command
+.LINE 341
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  342		putch(13); // move to
+.LINE 342
+
+	LD	BC,13
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  343		write16bit(x);
+.LINE 343
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  344		write16bit(y);
+.LINE 344
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  345		return;	
+;  346	}
+.LINE 346
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteMoveToSelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                     IX+9      2   parameter
+;x                                     IX+6      2   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteMoveToSelected",346,"_vdp_spriteMoveToSelected"
+;  347	
+;  348	void vdp_spriteMoveTo(UINT8 id, UINT16 x, UINT16 y)
+;  349	{
+_vdp_spriteMoveTo:
+.DEFINE "_vdp_spriteMoveTo"
+
+.VALUE _vdp_spriteMoveTo
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteMoveTo",349,"_vdp_spriteMoveTo"
+
+.LINE 349
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  350		vdp_spriteSelect(id);
+.LINE 350
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  351		vdp_spriteMoveToSelected(x,y);
+.LINE 351
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_vdp_spriteMoveToSelected
+	POP	BC
+	POP	BC
+;  352		return;
+;  353	}
+.LINE 353
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteMoveTo ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteMoveToSelected           IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;y                                    IX+12      2   parameter
+;x                                     IX+9      2   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteMoveTo",353,"_vdp_spriteMoveTo"
+;  354	
+;  355	void vdp_spriteMoveBySelected(UINT16 x, UINT16 y)
+;  356	{
+_vdp_spriteMoveBySelected:
+.DEFINE "_vdp_spriteMoveBySelected"
+
+.VALUE _vdp_spriteMoveBySelected
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteMoveBySelected",356,"_vdp_spriteMoveBySelected"
+
+.LINE 356
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  357		putch(23); // vdu_sys
+.LINE 357
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  358		putch(27); // sprite command
+.LINE 358
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  359		putch(14); // move by
+.LINE 359
+
+	LD	BC,14
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  360		write16bit(x);
+.LINE 360
+
+	LD	BC,(IX+%6)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  361		write16bit(y);
+.LINE 361
+
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_write16bit
+	POP	BC
+;  362		return;	
+;  363	}
+.LINE 363
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteMoveBySelected ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;y                                     IX+9      2   parameter
+;x                                     IX+6      2   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteMoveBySelected",363,"_vdp_spriteMoveBySelected"
+;  364	
+;  365	void vdp_spriteMoveBy(UINT8 id, UINT16 x, UINT16 y)
+;  366	{
+_vdp_spriteMoveBy:
+.DEFINE "_vdp_spriteMoveBy"
+
+.VALUE _vdp_spriteMoveBy
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteMoveBy",366,"_vdp_spriteMoveBy"
+
+.LINE 366
+
+.DEFINE "id"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  367		vdp_spriteSelect(id);
+.LINE 367
+
+	LD	C,(IX+%6)
+	LD	B,%0
+	PUSH	BC
+	CALL	_vdp_spriteSelect
+	POP	BC
+;  368		vdp_spriteMoveBySelected(x,y);
+.LINE 368
+
+	LD	BC,(IX+%C)
+	PUSH	BC
+	LD	BC,(IX+%9)
+	PUSH	BC
+	CALL	_vdp_spriteMoveBySelected
+	POP	BC
+	POP	BC
+;  369		return;
+;  370	}
+.LINE 370
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteMoveBy ***************************
+;Name                         Addr/Register   Size   Type
+;_vdp_spriteMoveBySelected           IMPORT  -----   function
+;_vdp_spriteSelect                   IMPORT  -----   function
+;y                                    IX+12      2   parameter
+;x                                     IX+9      2   parameter
+;id                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteMoveBy",370,"_vdp_spriteMoveBy"
+;  371	
+;  372	void vdp_spriteActivateTotal(UINT8 number)
+;  373	{
+_vdp_spriteActivateTotal:
+.DEFINE "_vdp_spriteActivateTotal"
+
+.VALUE _vdp_spriteActivateTotal
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteActivateTotal",373,"_vdp_spriteActivateTotal"
+
+.LINE 373
+
+.DEFINE "number"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  374		putch(23); // vdu_sys
+.LINE 374
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  375		putch(27); // sprite command
+.LINE 375
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  376		putch(7);  // set number of sprites
+.LINE 376
+
+	LD	BC,7
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  377		putch(number);
+.LINE 377
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  378		return;	
+;  379	}
+.LINE 379
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteActivateTotal ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;number                                IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteActivateTotal",379,"_vdp_spriteActivateTotal"
+;  380	
+;  381	void vdp_spriteRefresh(void)
+;  382	{
+_vdp_spriteRefresh:
+.DEFINE "_vdp_spriteRefresh"
+
+.VALUE _vdp_spriteRefresh
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_spriteRefresh",382,"_vdp_spriteRefresh"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  383		putch(23);	// vdu_sys
+.LINE 383
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  384		putch(27);	// sprite command
+.LINE 384
+
+	LD	BC,27
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  385		putch(15);	// refresh all sprites
+.LINE 385
+
+	LD	BC,15
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  386		return;
+;  387	}
+.LINE 387
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_spriteRefresh ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_spriteRefresh",387,"_vdp_spriteRefresh"
+;  388	
+;  389	UINT8 vdp_cursorGetXpos(void)
+;  390	{
+_vdp_cursorGetXpos:
+.DEFINE "_vdp_cursorGetXpos"
+
+.VALUE _vdp_cursorGetXpos
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorGetXpos",390,"_vdp_cursorGetXpos"
+
+.LINE 390
+
+.DEFINE "delay"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  391		unsigned int delay;
+;  392		
+;  393		putch(23);	// VDP command
+.LINE 393
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  394		putch(0);	// VDP command
+.LINE 394
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  395		putch(0x82);	// Request cursor position
+.LINE 395
+
+	LD	BC,130
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  396		
+;  397		delay = 255;
+.LINE 397
+
+	LD	BC,255
+	LD	(IX+%FFFFFFFD),BC
+;  398		while(delay--);
+L_56:
+.LINE 398
+
+	LD	HL,(IX+%FFFFFFFD)
+	LD	IY,(IX+%FFFFFFFD)
+	LEA	IY,IY+%FFFFFFFF
+	LD	(IX+%FFFFFFFD),IY
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_56
+;  399		return(getsysvar_cursorX());
+.LINE 399
+
+	CALL	_getsysvar_cursorX
+;  400	
+;  401	}
+.LINE 401
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorGetXpos ***************************
+;Name                         Addr/Register   Size   Type
+;_getsysvar_cursorX                  IMPORT  -----   function
+;_putch                              IMPORT  -----   function
+;delay                                 IX-3      3   variable
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorGetXpos",401,"_vdp_cursorGetXpos"
+;  402	
+;  403	UINT8 vdp_cursorGetYpos(void)
+;  404	{
+_vdp_cursorGetYpos:
+.DEFINE "_vdp_cursorGetYpos"
+
+.VALUE _vdp_cursorGetYpos
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorGetYpos",404,"_vdp_cursorGetYpos"
+
+.LINE 404
+
+.DEFINE "delay"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  405		unsigned int delay;
+;  406		
+;  407		putch(23);	// VDP command
+.LINE 407
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  408		putch(0);	// VDP command
+.LINE 408
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  409		putch(0x82);	// Request cursor position
+.LINE 409
+
+	LD	BC,130
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  410		
+;  411		delay = 255;
+.LINE 411
+
+	LD	BC,255
+	LD	(IX+%FFFFFFFD),BC
+;  412		while(delay--);
+L_61:
+.LINE 412
+
+	LD	HL,(IX+%FFFFFFFD)
+	LD	IY,(IX+%FFFFFFFD)
+	LEA	IY,IY+%FFFFFFFF
+	LD	(IX+%FFFFFFFD),IY
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_61
+;  413		return(getsysvar_cursorY());
+.LINE 413
+
+	CALL	_getsysvar_cursorY
+;  414	}
+.LINE 414
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorGetYpos ***************************
+;Name                         Addr/Register   Size   Type
+;_getsysvar_cursorY                  IMPORT  -----   function
+;_putch                              IMPORT  -----   function
+;delay                                 IX-3      3   variable
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorGetYpos",414,"_vdp_cursorGetYpos"
+;  415	
+;  416	char vdp_asciiCodeAt(unsigned char x, unsigned char y)
+;  417	{
+_vdp_asciiCodeAt:
+.DEFINE "_vdp_asciiCodeAt"
+
+.VALUE _vdp_asciiCodeAt
+
+.CLASS 2
+
+.TYPE 66
+
+.ENDEF
+
+.BEGFUNC "vdp_asciiCodeAt",417,"_vdp_asciiCodeAt"
+
+.LINE 417
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "delay"
+
+.CLASS 65
+
+.VALUE -3
+
+.TYPE 14
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  418		unsigned int delay;
+;  419		
+;  420		putch(23);	// VDP command
+.LINE 420
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  421		putch(0);	// VDP command
+.LINE 421
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  422		putch(0x83);	// Request ascii code at position (x,y)
+.LINE 422
+
+	LD	BC,131
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  423		putch(x);
+.LINE 423
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  424		putch(0);
+.LINE 424
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  425		putch(y);
+.LINE 425
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  426		putch(0);
+.LINE 426
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  427		
+;  428		delay = 64000;
+.LINE 428
+
+	LD	BC,64000
+	LD	(IX+%FFFFFFFD),BC
+;  429		while(delay--);
+L_66:
+.LINE 429
+
+	LD	HL,(IX+%FFFFFFFD)
+	LD	IY,(IX+%FFFFFFFD)
+	LEA	IY,IY+%FFFFFFFF
+	LD	(IX+%FFFFFFFD),IY
+	LD	BC,0
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_66
+;  430		return(getsysvar_scrchar());
+.LINE 430
+
+	CALL	_getsysvar_scrchar
+;  431	}
+.LINE 431
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_asciiCodeAt ***************************
+;Name                         Addr/Register   Size   Type
+;_getsysvar_scrchar                  IMPORT  -----   function
+;_putch                              IMPORT  -----   function
+;delay                                 IX-3      3   variable
+;y                                     IX+9      1   parameter
+;x                                     IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_asciiCodeAt",431,"_vdp_asciiCodeAt"
+;  432	
+;  433	void  vdp_setpagedMode(bool mode) {
+_vdp_setpagedMode:
+.DEFINE "_vdp_setpagedMode"
+
+.VALUE _vdp_setpagedMode
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_setpagedMode",433,"_vdp_setpagedMode"
+
+.LINE 433
+
+.DEFINE "mode"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  434		if(mode) putch(0x0E);
+.LINE 434
+
+	LD	A,(IX+%6)
+	OR	A,A
+	JR	Z,L_70
+	LD	BC,14
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  435		else putch(0x0F);
+.LINE 435
+
+	JR	L_71
+L_70:
+	LD	BC,15
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  436	}
+L_71:
+.LINE 436
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_setpagedMode ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;mode                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_setpagedMode",436,"_vdp_setpagedMode"
+;  437	
+;  438	void vdp_cursorDisable(void)
+;  439	{
+_vdp_cursorDisable:
+.DEFINE "_vdp_cursorDisable"
+
+.VALUE _vdp_cursorDisable
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorDisable",439,"_vdp_cursorDisable"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  440		putch(23);
+.LINE 440
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  441		putch(1);
+.LINE 441
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  442		putch(0);
+.LINE 442
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  443	}
+.LINE 443
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorDisable ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorDisable",443,"_vdp_cursorDisable"
+;  444	
+;  445	void vdp_cursorEnable(void)
+;  446	{
+_vdp_cursorEnable:
+.DEFINE "_vdp_cursorEnable"
+
+.VALUE _vdp_cursorEnable
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_cursorEnable",446,"_vdp_cursorEnable"
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  447		putch(23);
+.LINE 447
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  448		putch(1);
+.LINE 448
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  449		putch(1);
+.LINE 449
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  450	}
+.LINE 450
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_cursorEnable ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_cursorEnable",450,"_vdp_cursorEnable"
+;  451	
+;  452	void vdp_scroll(unsigned char extent, unsigned char direction, unsigned char speed)
+;  453	{
+_vdp_scroll:
+.DEFINE "_vdp_scroll"
+
+.VALUE _vdp_scroll
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "vdp_scroll",453,"_vdp_scroll"
+
+.LINE 453
+
+.DEFINE "extent"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "direction"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "speed"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  454		putch(23);
+.LINE 454
+
+	LD	BC,23
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  455		putch(7);	// scroll
+.LINE 455
+
+	LD	BC,7
+	PUSH	BC
+	CALL	_putch
+	POP	BC
+;  456		putch(extent);
+.LINE 456
+
+	LD	A,(IX+%6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  457		putch(direction);
+.LINE 457
+
+	LD	A,(IX+%9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+;  458		putch(speed);
+.LINE 458
+
+	LD	A,(IX+%C)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_putch
+	POP	BC
+.LINE 459
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _vdp_scroll ***************************
+;Name                         Addr/Register   Size   Type
+;_putch                              IMPORT  -----   function
+;speed                                IX+12      1   parameter
+;direction                             IX+9      1   parameter
+;extent                                IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "vdp_scroll",459,"_vdp_scroll"
+	XREF _getsysvar_scrchar:ROM
+	XREF _getsysvar_cursorY:ROM
+	XREF _getsysvar_cursorX:ROM
+	XREF _putch:ROM
+	XREF __imuls:ROM
+	XREF __ior:ROM
+	XREF __stoiu:ROM
+	XDEF _vdp_scroll
+	XDEF _vdp_cursorEnable
+	XDEF _vdp_cursorDisable
+	XDEF _vdp_setpagedMode
+	XDEF _vdp_asciiCodeAt
+	XDEF _vdp_cursorGetYpos
+	XDEF _vdp_cursorGetXpos
+	XDEF _vdp_spriteRefresh
+	XDEF _vdp_spriteActivateTotal
+	XDEF _vdp_spriteMoveBy
+	XDEF _vdp_spriteMoveBySelected
+	XDEF _vdp_spriteMoveTo
+	XDEF _vdp_spriteMoveToSelected
+	XDEF _vdp_spriteHide
+	XDEF _vdp_spriteHideSelected
+	XDEF _vdp_spriteShow
+	XDEF _vdp_spriteShowSelected
+	XDEF _vdp_spriteSetFrame
+	XDEF _vdp_spriteSetFrameSelected
+	XDEF _vdp_spritePreviousFrame
+	XDEF _vdp_spritePreviousFrameSelected
+	XDEF _vdp_spriteNextFrame
+	XDEF _vdp_spriteNextFrameSelected
+	XDEF _vdp_spriteAddFrame
+	XDEF _vdp_spriteAddFrameSelected
+	XDEF _vdp_spriteClearFrames
+	XDEF _vdp_spriteClearFramesSelected
+	XDEF _vdp_spriteSelect
+	XDEF _vdp_bitmapCreateSolidColor
+	XDEF _vdp_bitmapCreateSolidColorSelected
+	XDEF _vdp_bitmapDraw
+	XDEF _vdp_bitmapDrawSelected
+	XDEF _vdp_bitmapSendData
+	XDEF _vdp_bitmapSendDataSelected
+	XDEF _vdp_bitmapSelect
+	XDEF _vdp_plotSetOrigin
+	XDEF _vdp_plotCircleCircumference
+	XDEF _vdp_plotCircleRadius
+	XDEF _vdp_plotTriangle
+	XDEF _vdp_plotPoint
+	XDEF _vdp_plotLineTo
+	XDEF _vdp_plotMoveTo
+	XDEF _vdp_plot
+	XDEF _vdp_plotColour
+	XDEF _vdp_clearGraphics
+	XDEF _vdp_bgcolour
+	XDEF _vdp_fgcolour
+	XDEF _vdp_cursorGoto
+	XDEF _vdp_cursorUp
+	XDEF _vdp_cursorHome
+	XDEF _vdp_cls
+	XDEF _vdp_setPaletteColor
+	XDEF _vdp_getMode
+	XDEF _vdp_mode
+	XDEF _write32bit
+	XDEF _write16bit
+	END

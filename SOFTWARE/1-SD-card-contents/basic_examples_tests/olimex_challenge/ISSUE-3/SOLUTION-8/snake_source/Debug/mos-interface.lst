@@ -1,0 +1,872 @@
+Zilog eZ80 Macro Assembler Version 4.3 (19073001) RELISTED08-Jun-23     23:29:35     page:   1
+
+
+PC     Object              I  Line    Source 
+                           A     1    ;
+                           A     2    ; Title:		AGON MOS - MOS assembly interfa
+                           A     3    ; Author:		Jeroen Venema
+                           A     4    ; Created:		15/10/2022
+                           A     5    ; Last Updated:	23/02/2023
+                           A     6    ; 
+                           A     7    ; Modinfo:
+                           A     8    ; 15/10/2022:		Added _putch, _getch
+                           A     9    ; 21/10/2022:		Added _puts
+                           A    10    ; 22/10/2022:		Added _waitvblank, _mos_f* 
+                           A    11    ; 26/11/2022:       __putch, changed default ro
+                           A    12    ; 10/01/2023:		Added _getsysvar_cursorX/Y 
+                           A    13    ; 23/02/2023:		Added _mos_save and _mos_de
+                           A    14    ; 16/04/2023:		Added _mos_fread, _mos_fwri
+                           A    15    ; 18/04/2023:		_mos_flseek fix
+                           A    16    ; 19/04/2023:		_mos_getfil added
+                           A    17    
+                           B     0    	.include "mos_api.inc"
+                           B     1    ;
+                           B     2    ; Title:	AGON MOS - API for user projects
+                           B     3    ; Author:	Dean Belfield
+                           B     4    ; Created:	03/08/2022
+                           B     5    ; Last Updated:	15/04/2023
+                           B     6    ;
+                           B     7    ; Modinfo:
+                           B     8    ; 05/08/2022:	Added mos_feof
+                           B     9    ; 09/08/2022:	Added system variables: cursorX
+                           B    10    ; 18/08/2022:	Added system variables: scrchar
+                           B    11    ; 05/09/2022:	Added mos_ren, vdp_pflag_mode
+                           B    12    ; 24/09/2022:	Added mos_getError, mos_mkdir
+                           B    13    ; 13/10/2022:	Added mos_oscli
+                           B    14    ; 23/02/2023:	Added more sysvars, fixed typo 
+                           B    15    ; 04/03/2023:	Added sysvar_scrpixelIndex
+                           B    16    ; 08/03/2023:	Renamed sysvar_keycode to sysva
+                           B    17    ; 15/03/2023:	Added mos_copy, mos_getrtc, mos
+                           B    18    ; 21/03/2023:	Added mos_setintvector, sysvars
+                           B    19    ; 22/03/2023:	The VDP commands are now indexe
+                           B    20    ; 29/03/2023:	Added mos_uopen, mos_uclose, mo
+                           B    21    ; 13/04/2023:	Added FatFS file structures (FF
+                           B    22    ; 15/04/2023:	Added mos_getfil, mos_fread, mo
+                           B    23    
+                           B    24    ; VDP control (VDU 23, 0, n)
+                           B    25    ;
+       00000080            B    26    vdp_gp:			EQU 	80h
+       00000081            B    27    vdp_keycode:		EQU 	81h
+       00000082            B    28    vdp_cursor:		EQU	82h
+       00000083            B    29    vdp_scrchar:		EQU	83h
+       00000084            B    30    vdp_scrpixel:		EQU	84h
+       00000085            B    31    vdp_audio:		EQU	85h
+       00000086            B    32    vdp_mode:		EQU	86h
+       00000087            B    33    vdp_rtc:		EQU	87h
+       00000088            B    34    vdp_keystate:		EQU	88h
+       000000C0            B    35    vdp_logicalcoords:	EQU	C0h
+       000000FF            B    36    vdp_terminalmode:	EQU	FFh
+                           B    37    
+                           B    38    ; MOS high level functions
+                           B    39    ;
+       00000000            B    40    mos_getkey:		EQU	00h
+       00000001            B    41    mos_load:		EQU	01h
+       00000002            B    42    mos_save:		EQU	02h
+       00000003            B    43    mos_cd:			EQU	03h
+       00000004            B    44    mos_dir:		EQU	04h
+       00000005            B    45    mos_del:		EQU	05h
+       00000006            B    46    mos_ren:		EQU	06h
+       00000007            B    47    mos_mkdir:		EQU	07h
+       00000008            B    48    mos_sysvars:		EQU	08h
+       00000009            B    49    mos_editline:		EQU	09h
+       0000000A            B    50    mos_fopen:		EQU	0Ah
+       0000000B            B    51    mos_fclose:		EQU	0Bh
+       0000000C            B    52    mos_fgetc:		EQU	0Ch
+       0000000D            B    53    mos_fputc:		EQU	0Dh
+       0000000E            B    54    mos_feof:		EQU	0Eh
+       0000000F            B    55    mos_getError:		EQU	0Fh
+       00000010            B    56    mos_oscli:		EQU	10h
+       00000011            B    57    mos_copy:		EQU	11h
+       00000012            B    58    mos_getrtc:		EQU	12h
+       00000013            B    59    mos_setrtc:		EQU	13h
+       00000014            B    60    mos_setintvector:	EQU	14h
+       00000015            B    61    mos_uopen:		EQU	15h
+       00000016            B    62    mos_uclose:		EQU	16h
+       00000017            B    63    mos_ugetc:		EQU	17h
+       00000018            B    64    mos_uputc:		EQU 	18h
+       00000019            B    65    mos_getfil:		EQU	19h
+       0000001A            B    66    mos_fread:		EQU	1Ah
+       0000001B            B    67    mos_fwrite:		EQU	1Bh
+       0000001C            B    68    mos_flseek:		EQU	1Ch
+                           B    69    
+                           B    70    ; FatFS file access functions
+                           B    71    ;
+       00000080            B    72    ffs_fopen:		EQU	80h
+       00000081            B    73    ffs_fclose:		EQU	81h
+       00000082            B    74    ffs_fread:		EQU	82h
+       00000083            B    75    ffs_fwrite:		EQU	83h
+       00000084            B    76    ffs_flseek:		EQU	84h
+       00000085            B    77    ffs_ftruncate:		EQU	85h
+       00000086            B    78    ffs_fsync:		EQU	86h
+       00000087            B    79    ffs_fforward:		EQU	87h
+       00000088            B    80    ffs_fexpand:		EQU	88h
+       00000089            B    81    ffs_fgets:		EQU	89h
+       0000008A            B    82    ffs_fputc:		EQU	8Ah
+       0000008B            B    83    ffs_fputs:		EQU	8Bh
+       0000008C            B    84    ffs_fprintf:		EQU	8Ch
+       0000008D            B    85    ffs_ftell:		EQU	8Dh
+       0000008E            B    86    ffs_feof:		EQU	8Eh
+       0000008F            B    87    ffs_fsize:		EQU	8Fh
+       00000090            B    88    ffs_ferror:		EQU	90h
+                           B    89    
+                           B    90    ; FatFS directory access functions
+                           B    91    ;
+       00000091            B    92    ffs_dopen:		EQU	91h
+       00000092            B    93    ffs_dclose:		EQU	92h
+       00000093            B    94    ffs_dread:		EQU	93h
+       00000094            B    95    ffs_dfindfirst:		EQU	94h
+       00000095            B    96    ffs_dfindnext:		EQU	95h
+                           B    97    
+                           B    98    ; FatFS file and directory management functions
+                           B    99    ;
+       00000096            B   100    ffs_stat:		EQU	96h
+       00000097            B   101    ffs_unlink:		EQU	97h
+       00000098            B   102    ffs_rename:		EQU	98h
+       00000099            B   103    ffs_chmod:		EQU	99h
+       0000009A            B   104    ffs_utime:		EQU	9Ah
+       0000009B            B   105    ffs_mkdir:		EQU	9Bh
+       0000009C            B   106    ffs_chdir:		EQU	9Ch
+       0000009D            B   107    ffs_chdrive:		EQU	9Dh
+       0000009E            B   108    ffs_getcwd:		EQU	9Eh
+                           B   109    
+                           B   110    ; FatFS volume management and system configurat
+                           B   111    ;
+       0000009F            B   112    ffs_mount:		EQU	9Fh
+       000000A0            B   113    ffs_mkfs:		EQU	A0h
+       000000A1            B   114    ffs_fdisk		EQU	A1h
+       000000A2            B   115    ffs_getfree:		EQU	A2h
+       000000A3            B   116    ffs_getlabel:		EQU	A3h
+       000000A4            B   117    ffs_setlabel:		EQU	A4h
+       000000A5            B   118    ffs_setcp:		EQU	A5h
+                           B   119    	
+                           B   120    ; File access modes
+                           B   121    ;
+       00000001            B   122    fa_read:		EQU	01h
+       00000002            B   123    fa_write:		EQU	02h
+       00000000            B   124    fa_open_existing:	EQU	00h
+       00000004            B   125    fa_create_new:		EQU	04h
+       00000008            B   126    fa_create_always:	EQU	08h
+       00000010            B   127    fa_open_always:		EQU	10h
+       00000030            B   128    fa_open_append:		EQU	30h
+                           B   129    	
+                           B   130    ; System variable indexes for api_sysvars
+                           B   131    ; Index into _sysvars in globals.asm
+                           B   132    ;
+       00000000            B   133    sysvar_time:		EQU	00h	; 4: Clock timer in
+       00000004            B   134    sysvar_vpd_pflags:	EQU	04h	; 1: Flags to indic
+       00000005            B   135    sysvar_keyascii:	EQU	05h	; 1: ASCII keycode,
+       00000006            B   136    sysvar_keymods:		EQU	06h	; 1: Keycode modifi
+       00000007            B   137    sysvar_cursorX:		EQU	07h	; 1: Cursor X posit
+       00000008            B   138    sysvar_cursorY:		EQU	08h	; 1: Cursor Y posit
+       00000009            B   139    sysvar_scrchar:		EQU	09h	; 1: Character read
+       0000000A            B   140    sysvar_scrpixel:	EQU	0Ah	; 3: Pixel data rea
+       0000000D            B   141    sysvar_audioChannel:	EQU	0Dh	; 1: Audio chan
+       0000000E            B   142    sysvar_audioSuccess:	EQU	0Eh	; 1: Audio chan
+       0000000F            B   143    sysvar_scrWidth:	EQU	0Fh	; 2: Screen width i
+       00000011            B   144    sysvar_scrHeight:	EQU	11h	; 2: Screen height 
+       00000013            B   145    sysvar_scrCols:		EQU	13h	; 1: Screen columns
+       00000014            B   146    sysvar_scrRows:		EQU	14h	; 1: Screen rows in
+       00000015            B   147    sysvar_scrColours:	EQU	15h	; 1: Number of colo
+       00000016            B   148    sysvar_scrpixelIndex:	EQU	16h	; 1: Index of p
+       00000017            B   149    sysvar_vkeycode:	EQU	17h	; 1: Virtual key co
+       00000018            B   150    sysvar_vkeydown		EQU	18h	; 1: Virtual key st
+       00000019            B   151    sysvar_vkeycount:	EQU	19h	; 1: Incremented ev
+       0000001A            B   152    sysvar_rtc:		EQU	1Ah	; 8: Real time clock da
+       00000022            B   153    sysvar_keydelay:	EQU	22h	; 2: Keyboard repea
+       00000024            B   154    sysvar_keyrate:		EQU	24h	; 2: Keyboard repea
+       00000026            B   155    sysvar_keyled:		EQU	26h	; 1: Keyboard LED s
+                           B   156    	
+                           B   157    ; Flags for the VPD protocol
+                           B   158    ;
+       00000001            B   159    vdp_pflag_cursor:	EQU	00000001b
+       00000002            B   160    vdp_pflag_scrchar:	EQU	00000010b
+       00000004            B   161    vdp_pflag_point:	EQU	00000100b
+       00000008            B   162    vdp_pflag_audio:	EQU	00001000b
+       00000010            B   163    vdp_pflag_mode:		EQU	00010000b
+       00000020            B   164    vdp_pflag_rtc:		EQU	00100000b
+                           B   165    
+                           B   166    ;
+                           B   167    ; FatFS structures
+                           B   168    ; These mirror the structures contained in src_
+                           B   169    ;
+                           B   170    ; Object ID and allocation information (FFOBJID
+                           B   171    ;
+                           B   172    FFOBJID	.STRUCT
+000000                     B   173    	fs:		DS	3	; Pointer to the hosting vo
+000003                     B   174    	id:		DS	2	; Hosting volume mount ID
+000005                     B   175    	attr:		DS	1	; Object attribute
+000006                     B   176    	stat:		DS	1	; Object chain status (
+000007                     B   177    	sclust:		DS	4	; Object data start clu
+00000B                     B   178    	objsize:	DS	4	; Object size (valid wh
+       0000000F            B   179    FFOBJID_SIZE .ENDSTRUCT FFOBJID
+                           B   180    ;
+                           B   181    ; File object structure (FIL)
+                           B   182    ;
+                           B   183    FIL .STRUCT
+000000                     B   184    	obj:		.TAG	FFOBJID	; Object identi
+00000F                     B   185    	flag:		DS	1	; File status flags
+000010                     B   186    	err:		DS	1	; Abort flag (error cod
+000011                     B   187    	fptr:		DS	4	; File read/write point
+000015                     B   188    	clust:		DS	4	; Current cluster of fp
+000019                     B   189    	sect:		DS	4	; Sector number appeari
+00001D                     B   190    	dir_sect:	DS	4	; Sector number contain
+000021                     B   191    	dir_ptr:	DS	3	; Pointer to the direct
+       00000024            B   192    FIL_SIZE .ENDSTRUCT FIL
+                           B   193    ;
+                           B   194    ; Directory object structure (DIR)
+                           B   195    ; 
+                           B   196    DIR .STRUCT
+000000                     B   197    	obj:		.TAG	FFOBJID	; Object identi
+00000F                     B   198    	dptr:		DS	4	; Current read/write of
+000013                     B   199    	clust:		DS	4	; Current cluster
+000017                     B   200    	sect:		DS	4	; Current sector (0:Rea
+00001B                     B   201    	dir:		DS	3	; Pointer to the direct
+00001E                     B   202    	fn:		DS	12	; SFN (in/out) {body[8],ext
+00002A                     B   203    	blk_ofs:	DS	4	; Offset of current ent
+       0000002E            B   204    DIR_SIZE .ENDSTRUCT DIR
+                           B   205    ;
+                           B   206    ; File information structure (FILINFO)
+                           B   207    ;
+                           B   208    FILINFO .STRUCT
+000000                     B   209    	fsize:		DS 	4	; File size
+000004                     B   210    	fdate:		DS	2	; Modified date
+000006                     B   211    	ftime:		DS	2	; Modified time
+000008                     B   212    	fattrib:	DS	1	; File attribute
+000009                     B   213    	altname:	DS	13	; Alternative file name
+000016                     B   214    	fname:		DS	256	; Primary file name
+       00000116            B   215    FILINFO_SIZE .ENDSTRUCT FILINFO
+                           B   216    
+                           B   217    ;
+                           B   218    ; Macro for calling the API
+                           B   219    ; Parameters:
+                           B   220    ; - function: One of the function numbers liste
+                           B   221    ;
+                           B   222    MOSCALL:		MACRO	function
+                           B   223    			LD	A, function
+                           B   224    			RST.LIS	08h
+                           B   225    			ENDMACRO 	
+                           A    19    
+                           A    20    	XDEF _putch
+                           A    21    	XDEF __putch
+                           A    22    	XDEF _getch
+                           A    23    	XDEF _waitvblank
+                           A    24    	XDEF _mos_puts
+                           A    25    	XDEF _mos_load
+                           A    26    	XDEF _mos_save
+                           A    27    	XDEF _mos_cd
+                           A    28    	XDEF _mos_dir
+                           A    29    	XDEF _mos_del
+                           A    30    	XDEF _mos_ren
+                           A    31    	XDEF _mos_copy
+                           A    32    	XDEF _mos_mkdir
+                           A    33    	XDEF _mos_sysvars
+                           A    34    	XDEF _mos_editline
+                           A    35    	XDEF _mos_fopen
+                           A    36    	XDEF _mos_fclose
+                           A    37    	XDEF _mos_fgetc
+                           A    38    	XDEF _mos_fputc
+                           A    39    	XDEF _mos_feof
+                           A    40    	XDEF _mos_getError
+                           A    41    	XDEF _mos_oscli
+                           A    42    	XDEF _mos_getrtc
+                           A    43    	XDEF _mos_setrtc
+                           A    44    	XDEF _mos_setintvector
+                           A    45    	XDEF _mos_uopen
+                           A    46    	XDEF _mos_uclose
+                           A    47    	XDEF _mos_ugetc
+                           A    48    	XDEF _mos_uputc
+                           A    49    	XDEF _mos_fread
+                           A    50    	XDEF _mos_fwrite
+                           A    51    	XDEF _mos_flseek
+                           A    52    	XDEF _mos_getfil
+                           A    53    
+                           A    54    	XDEF _getsysvar_vpd_pflags
+                           A    55    	XDEF _getsysvar_keyascii
+                           A    56    	XDEF _getsysvar_keymods
+                           A    57    	XDEF _getsysvar_cursorX
+                           A    58    	XDEF _getsysvar_cursorY
+                           A    59    	XDEF _getsysvar_scrchar
+                           A    60    	XDEF _getsysvar_scrpixel
+                           A    61    	XDEF _getsysvar_audioChannel
+                           A    62    	XDEF _getsysvar_audioSuccess
+                           A    63    	XDEF _getsysvar_scrwidth
+                           A    64    	XDEF _getsysvar_scrheight
+                           A    65    	XDEF _getsysvar_scrCols
+                           A    66    	XDEF _getsysvar_scrRows
+                           A    67    	XDEF _getsysvar_scrColours
+                           A    68    	XDEF _getsysvar_scrpixelIndex
+                           A    69    	XDEF _getsysvar_vkeycode
+                           A    70    	XDEF _getsysvar_vkeydown
+                           A    71    	XDEF _getsysvar_vkeycount
+                           A    72    	XDEF _getsysvar_rtc
+                           A    73    	XDEF _getsysvar_keydelay
+                           A    74    	XDEF _getsysvar_keyrate
+                           A    75    	XDEF _getsysvar_keyled
+                           A    76    	
+                           A    77    	segment CODE
+                           A    78    	.assume ADL=1
+                           A    79    	
+044385                     A    80    _putch:
+044385                     A    81    __putch:
+044385 DDE5                A    82    	push 	ix
+044387 DD210000 00         A    83    	ld 		ix,0
+04438C DD39                A    84    	add 	ix, sp
+04438E DD7E06              A    85    	ld 		a, (ix+6)
+044391 5BD7                A    86    	rst.lil	10h
+044393 21000000            A    87    	ld		hl,0
+044397 6F                  A    88    	ld		l,a
+044398 DDF9                A    89    	ld		sp,ix
+04439A DDE1                A    90    	pop		ix
+04439C C9                  A    91    	ret
+                           A    92    
+04439D                     A    93    _mos_puts:
+04439D DDE5                A    94    	push	ix
+04439F DD210000 00         A    95    	ld 		ix,0
+0443A4 DD39                A    96    	add 	ix, sp
+0443A6 DD2706              A    97    	ld 		hl,	(ix+6)	; Address of buffer
+0443A9 DD0709              A    98    	ld		bc, (ix+9)	; Size to write from bu
+0443AC DD7E0C              A    99    	ld		a,	(ix+12) ; delimiter - only if s
+0443AF 5BDF                A   100    	rst.lil	18h			; Write a block of byte
+0443B1 DDF9                A   101    	ld		sp,ix
+0443B3 DDE1                A   102    	pop		ix
+0443B5 C9                  A   103    	ret
+                           A   104    
+0443B6                     A   105    _getch:
+0443B6 DDE5                A   106    	push	ix
+0443B8 3E00                A   107    	ld		a, mos_getkey	; Read a keypress f
+0443BA 5BCF                A   108    	rst.lil	08h
+0443BC DDE1                A   109    	pop		ix
+0443BE C9                  A   110    	ret
+                           A   111    
+0443BF                     A   112    _waitvblank:
+0443BF DDE5                A   113    	push	ix
+0443C1 3E08                A   114    	ld		a, mos_sysvars
+0443C3 5BCF                A   115    	rst.lil	08h
+0443C5 5BDD7E00            A   116    	ld.lil	a, (ix + sysvar_time + 0)
+0443C9 5BDDBE00            A   117    $$:	cp.lil	a, (ix + sysvar_time + 0)
+0443CD 28 FA               A   118    	jr		z, $B
+0443CF DDE1                A   119    	pop		ix
+0443D1 C9                  A   120    	ret
+                           A   121    
+0443D2                     A   122    _getsysvar_vpd_pflags:
+0443D2 DDE5                A   123    	push	ix
+0443D4 3E08                A   124    	ld		a, mos_sysvars
+0443D6 5BCF                A   125    	rst.lil	08h
+0443D8 DD7E04              A   126    	ld		a, (ix+sysvar_vpd_pflags)
+0443DB DDE1                A   127    	pop		ix
+0443DD C9                  A   128    	ret
+                           A   129    
+0443DE                     A   130    _getsysvar_keyascii:
+0443DE DDE5                A   131    	push	ix
+0443E0 3E08                A   132    	ld		a, mos_sysvars
+0443E2 5BCF                A   133    	rst.lil	08h
+0443E4 DD7E05              A   134    	ld		a, (ix+sysvar_keyascii)
+0443E7 DDE1                A   135    	pop		ix
+0443E9 C9                  A   136    	ret
+                           A   137    
+0443EA                     A   138    _getsysvar_keymods:
+0443EA DDE5                A   139    	push	ix
+0443EC 3E08                A   140    	ld		a, mos_sysvars
+0443EE 5BCF                A   141    	rst.lil	08h
+0443F0 DD7E06              A   142    	ld		a, (ix+sysvar_keymods)
+0443F3 DDE1                A   143    	pop		ix
+0443F5 C9                  A   144    	ret
+                           A   145    
+0443F6                     A   146    _getsysvar_cursorX:
+0443F6 DDE5                A   147    	push	ix
+0443F8 3E08                A   148    	ld		a, mos_sysvars			; MOS Call 
+0443FA 5BCF                A   149    	rst.lil	08h					; returns point
+0443FC DD7E07              A   150    	ld		a, (ix+sysvar_cursorX)
+0443FF DDE1                A   151    	pop		ix
+044401 C9                  A   152    	ret
+                           A   153    
+044402                     A   154    _getsysvar_cursorY:
+044402 DDE5                A   155    	push 	ix
+044404 3E08                A   156    	ld		a, mos_sysvars			; MOS Call 
+044406 5BCF                A   157    	rst.lil	08h					; returns point
+044408 DD7E08              A   158    	ld		a, (ix+sysvar_cursorY)
+04440B DDE1                A   159    	pop		ix
+04440D C9                  A   160    	ret
+                           A   161    
+04440E                     A   162    _getsysvar_scrchar:
+04440E DDE5                A   163    	push	ix
+044410 3E08                A   164    	ld		a, mos_sysvars
+044412 5BCF                A   165    	rst.lil	08h
+044414 DD7E09              A   166    	ld		a, (ix+sysvar_scrchar)
+044417 DDE1                A   167    	pop		ix
+044419 C9                  A   168    	ret
+                           A   169    
+04441A                     A   170    _getsysvar_scrpixel:
+04441A DDE5                A   171    	push	ix
+04441C 3E08                A   172    	ld		a, mos_sysvars
+04441E 5BCF                A   173    	rst.lil	08h
+044420 DD270A              A   174    	ld		hl, (ix+sysvar_scrpixel)
+044423 DDE1                A   175    	pop		ix
+044425 C9                  A   176    	ret
+                           A   177    
+044426                     A   178    _getsysvar_audioChannel:
+044426 DDE5                A   179    	push	ix
+044428 3E08                A   180    	ld		a, mos_sysvars
+04442A 5BCF                A   181    	rst.lil	08h
+04442C DD7E0D              A   182    	ld		a, (ix+sysvar_audioChannel)
+04442F DDE1                A   183    	pop		ix
+044431 C9                  A   184    	ret
+                           A   185    
+044432                     A   186    _getsysvar_audioSuccess:
+044432 DDE5                A   187    	push	ix
+044434 3E08                A   188    	ld		a, mos_sysvars
+044436 5BCF                A   189    	rst.lil	08h
+044438 DD7E0E              A   190    	ld		a, (ix+sysvar_audioSuccess)
+04443B DDE1                A   191    	pop		ix
+04443D C9                  A   192    	ret
+                           A   193    
+04443E                     A   194    _getsysvar_scrwidth:
+04443E DDE5                A   195    	push	ix
+044440 3E08                A   196    	ld		a, mos_sysvars			; MOS Call 
+044442 5BCF                A   197    	rst.lil	08h					; returns point
+044444 21000000            A   198    	ld		hl,0
+044448 DD6E0F              A   199    	ld		l, (ix+sysvar_scrWidth)	; get curre
+04444B DD6610              A   200    	ld		h, (ix+sysvar_scrWidth+1)
+04444E DDE1                A   201    	pop		ix
+044450 C9                  A   202    	ret
+                           A   203    
+044451                     A   204    _getsysvar_scrheight:
+044451 DDE5                A   205    	push 	ix
+044453 3E08                A   206    	ld		a, mos_sysvars			; MOS Call 
+044455 5BCF                A   207    	rst.lil	08h					; returns point
+044457 21000000            A   208    	ld		hl,0
+04445B DD6E11              A   209    	ld		l, (ix+sysvar_scrHeight)	; get c
+04445E DD6612              A   210    	ld		h, (ix+sysvar_scrHeight+1)
+044461 DDE1                A   211    	pop		ix
+044463 C9                  A   212    	ret
+                           A   213    
+044464                     A   214    _getsysvar_scrCols:
+044464 DDE5                A   215    	push	ix
+044466 3E08                A   216    	ld		a, mos_sysvars
+044468 5BCF                A   217    	rst.lil	08h
+04446A DD7E13              A   218    	ld		a, (ix+sysvar_scrCols)
+04446D DDE1                A   219    	pop		ix
+04446F C9                  A   220    	ret
+                           A   221    
+044470                     A   222    _getsysvar_scrRows:
+044470 DDE5                A   223    	push	ix
+044472 3E08                A   224    	ld		a, mos_sysvars
+044474 5BCF                A   225    	rst.lil	08h
+044476 DD7E14              A   226    	ld		a, (ix+sysvar_scrRows)
+044479 DDE1                A   227    	pop		ix
+04447B C9                  A   228    	ret
+                           A   229    
+04447C                     A   230    _getsysvar_scrColours:
+04447C DDE5                A   231    	push	ix
+04447E 3E08                A   232    	ld		a, mos_sysvars
+044480 5BCF                A   233    	rst.lil	08h
+044482 DD7E15              A   234    	ld		a, (ix+sysvar_scrColours)
+044485 DDE1                A   235    	pop		ix
+044487 C9                  A   236    	ret
+                           A   237    
+044488                     A   238    _getsysvar_scrpixelIndex:
+044488 DDE5                A   239    	push	ix
+04448A 3E08                A   240    	ld		a, mos_sysvars
+04448C 5BCF                A   241    	rst.lil	08h
+04448E DD7E16              A   242    	ld		a, (ix+sysvar_scrpixelIndex)
+044491 DDE1                A   243    	pop		ix
+044493 C9                  A   244    	ret
+                           A   245    
+044494                     A   246    _getsysvar_vkeycode:
+044494 DDE5                A   247    	push	ix
+044496 3E08                A   248    	ld		a, mos_sysvars
+044498 5BCF                A   249    	rst.lil	08h
+04449A DD7E17              A   250    	ld		a, (ix+sysvar_vkeycode)
+04449D DDE1                A   251    	pop		ix
+04449F C9                  A   252    	ret
+                           A   253    
+0444A0                     A   254    _getsysvar_vkeydown:
+0444A0 DDE5                A   255    	push	ix
+0444A2 3E08                A   256    	ld		a, mos_sysvars
+0444A4 5BCF                A   257    	rst.lil	08h
+0444A6 DD7E18              A   258    	ld		a, (ix+sysvar_vkeydown)
+0444A9 DDE1                A   259    	pop		ix
+0444AB C9                  A   260    	ret
+                           A   261    
+0444AC                     A   262    _getsysvar_vkeycount:
+0444AC DDE5                A   263    	push	ix
+0444AE 3E08                A   264    	ld		a, mos_sysvars
+0444B0 5BCF                A   265    	rst.lil	08h
+0444B2 DD7E19              A   266    	ld		a, (ix+sysvar_vkeycount)
+0444B5 DDE1                A   267    	pop		ix
+0444B7 C9                  A   268    	ret
+                           A   269    
+0444B8                     A   270    _getsysvar_rtc:
+0444B8 DDE5                A   271    	push	ix
+0444BA 3E08                A   272    	ld		a, mos_sysvars
+0444BC 5BCF                A   273    	rst.lil	08h
+0444BE 111A0000            A   274    	ld		de, sysvar_rtc
+0444C2 DD19                A   275    	add		ix, de
+0444C4 DDE5E1              A   276    	ld		hl, ix
+0444C7 DDE1                A   277    	pop		ix
+0444C9 C9                  A   278    	ret
+                           A   279    
+0444CA                     A   280    _getsysvar_keydelay:
+0444CA DDE5                A   281    	push	ix
+0444CC 3E08                A   282    	ld		a, mos_sysvars			; MOS Call 
+0444CE 5BCF                A   283    	rst.lil	08h						; returns p
+0444D0 21000000            A   284    	ld		hl,0
+0444D4 DD6E22              A   285    	ld		l, (ix+sysvar_keydelay)
+0444D7 DD6623              A   286    	ld		h, (ix+sysvar_keydelay+1)
+0444DA DDE1                A   287    	pop		ix
+0444DC C9                  A   288    	ret
+                           A   289    
+0444DD                     A   290    _getsysvar_keyrate:
+0444DD DDE5                A   291    	push	ix
+0444DF 3E08                A   292    	ld		a, mos_sysvars			; MOS Call 
+0444E1 5BCF                A   293    	rst.lil	08h						; returns p
+0444E3 21000000            A   294    	ld		hl,0
+0444E7 DD6E24              A   295    	ld		l, (ix+sysvar_keyrate)
+0444EA DD6625              A   296    	ld		h, (ix+sysvar_keyrate+1)
+0444ED DDE1                A   297    	pop		ix
+0444EF C9                  A   298    	ret
+                           A   299    
+0444F0                     A   300    _getsysvar_keyled:
+0444F0 DDE5                A   301    	push	ix
+0444F2 3E08                A   302    	ld		a, mos_sysvars
+0444F4 5BCF                A   303    	rst.lil	08h
+0444F6 DD7E26              A   304    	ld		a, (ix+sysvar_keyled)
+0444F9 DDE1                A   305    	pop		ix
+0444FB C9                  A   306    	ret
+                           A   307    
+0444FC                     A   308    _mos_load:
+0444FC DDE5                A   309    	push	ix
+0444FE DD210000 00         A   310    	ld 		ix,0
+044503 DD39                A   311    	add 	ix, sp
+044505 DD2706              A   312    	ld 		hl, (ix+6)	; address of filename (
+044508 DD1709              A   313    	ld		de, (ix+9)	; address at which to l
+04450B DD070C              A   314    	ld		bc, (ix+12)	; maximum allowed size
+04450E 3E01                A   315    	ld a,	mos_load
+044510 5BCF                A   316    	rst.lil	08h			; Load a file from SD c
+044512 DDF9                A   317    	ld		sp,ix
+044514 DDE1                A   318    	pop		ix
+044516 C9                  A   319    	ret
+                           A   320    
+044517                     A   321    _mos_save:
+044517 DDE5                A   322    	push	ix
+044519 DD210000 00         A   323    	ld 		ix,0
+04451E DD39                A   324    	add 	ix, sp
+044520 DD2706              A   325    	ld 		hl, (ix+6)	; address of filename (
+044523 DD1709              A   326    	ld		de, (ix+9)	; address to save from
+044526 DD070C              A   327    	ld		bc, (ix+12)	; number of bytes to sa
+044529 3E02                A   328    	ld a,	mos_save
+04452B 5BCF                A   329    	rst.lil	08h			; save file to SD card
+04452D DDF9                A   330    	ld		sp,ix
+04452F DDE1                A   331    	pop		ix
+044531 C9                  A   332    	ret
+                           A   333    
+044532                     A   334    _mos_cd:
+044532 DDE5                A   335    	push	ix
+044534 DD210000 00         A   336    	ld 		ix,0
+044539 DD39                A   337    	add 	ix, sp
+04453B DD2706              A   338    	ld 		hl, (ix+6)	; address of pathname (
+04453E 3E03                A   339    	ld a,	mos_cd
+044540 5BCF                A   340    	rst.lil	08h			; Change current direct
+044542 DDF9                A   341    	ld		sp,ix
+044544 DDE1                A   342    	pop		ix
+044546 C9                  A   343    	ret
+                           A   344    
+044547                     A   345    _mos_dir:
+044547 DDE5                A   346    	push	ix
+044549 DD210000 00         A   347    	ld 		ix,0
+04454E DD39                A   348    	add 	ix, sp
+044550 DD2706              A   349    	ld 		hl, (ix+6)	; address of pathname (
+044553 3E04                A   350    	ld a,	mos_dir
+044555 5BCF                A   351    	rst.lil	08h			; List SD card folder c
+044557 DDF9                A   352    	ld		sp,ix
+044559 DDE1                A   353    	pop		ix
+04455B C9                  A   354    	ret
+                           A   355    
+04455C                     A   356    _mos_del:
+04455C DDE5                A   357    	push	ix
+04455E DD210000 00         A   358    	ld 		ix,0
+044563 DD39                A   359    	add 	ix, sp
+044565 DD2706              A   360    	ld 		hl, (ix+6)	; Address of path (zero
+044568 3E05                A   361    	ld a,	mos_del
+04456A 5BCF                A   362    	rst.lil	08h			; Delete a file or fold
+04456C DDF9                A   363    	ld		sp,ix
+04456E DDE1                A   364    	pop		ix
+044570 C9                  A   365    	ret
+                           A   366    
+044571                     A   367    _mos_ren:
+044571 DDE5                A   368    	push	ix
+044573 DD210000 00         A   369    	ld 		ix,0
+044578 DD39                A   370    	add 	ix, sp
+04457A DD2706              A   371    	ld 		hl, (ix+6)	; Address of filename1 
+04457D DD1709              A   372    	ld		de, (ix+9)	; Address of filename2 
+044580 3E06                A   373    	ld a,	mos_ren
+044582 5BCF                A   374    	rst.lil	08h			; Rename a file on the 
+044584 DDF9                A   375    	ld		sp,ix
+044586 DDE1                A   376    	pop		ix
+044588 C9                  A   377    	ret
+                           A   378    
+044589                     A   379    _mos_copy:
+044589 DDE5                A   380    	push	ix
+04458B DD210000 00         A   381    	ld 		ix,0
+044590 DD39                A   382    	add 	ix, sp
+044592 DD2706              A   383    	ld 		hl, (ix+6)	; Address of filename1 
+044595 DD1709              A   384    	ld		de, (ix+9)	; Address of filename2 
+044598 3E11                A   385    	ld a,	mos_copy
+04459A 5BCF                A   386    	rst.lil	08h			; Copy a file on the SD
+04459C DDF9                A   387    	ld		sp,ix
+04459E DDE1                A   388    	pop		ix
+0445A0 C9                  A   389    	ret
+                           A   390    
+0445A1                     A   391    _mos_mkdir:
+0445A1 DDE5                A   392    	push	ix
+0445A3 DD210000 00         A   393    	ld 		ix,0
+0445A8 DD39                A   394    	add 	ix, sp
+0445AA DD2706              A   395    	ld 		hl, (ix+6)	; Address of path (zero
+0445AD 3E07                A   396    	ld a,	mos_mkdir
+0445AF 5BCF                A   397    	rst.lil	08h			; Make a folder on the 
+0445B1 DDF9                A   398    	ld		sp,ix
+0445B3 DDE1                A   399    	pop		ix
+0445B5 C9                  A   400    	ret
+                           A   401    
+0445B6                     A   402    _mos_sysvars:
+0445B6 DDE5                A   403    	push	ix
+0445B8 3E08                A   404    	ld a,	mos_sysvars
+0445BA 5BCF                A   405    	rst.lil	08h			; Fetch a pointer to th
+0445BC DDE5E1              A   406    	ld 		hl, ix
+0445BF DDE1                A   407    	pop		ix
+0445C1 C9                  A   408    	ret
+                           A   409    
+0445C2                     A   410    _mos_editline:
+0445C2 DDE5                A   411    	push	ix
+0445C4 DD210000 00         A   412    	ld 		ix,0
+0445C9 DD39                A   413    	add 	ix, sp
+0445CB DD2706              A   414    	ld 		hl, (ix+6)	; Address of the buffer
+0445CE DD0709              A   415    	ld		bc, (ix+9)	; Buffer length
+0445D1 DD5E0C              A   416    	ld      e,  (ix+12) ; 0 to not clear buffer
+0445D4 3E09                A   417    	ld a,	mos_editline
+0445D6 5BCF                A   418    	rst.lil	08h			; Invoke the line edito
+0445D8 DDF9                A   419    	ld		sp,ix
+0445DA DDE1                A   420    	pop		ix
+0445DC C9                  A   421    	ret
+                           A   422    
+0445DD                     A   423    _mos_fopen:
+0445DD DDE5                A   424    	push	ix
+0445DF DD210000 00         A   425    	ld		ix,0
+0445E4 DD39                A   426    	add		ix, sp
+0445E6 DD2706              A   427    	ld		hl, (ix+6)	; address to 0-terminat
+0445E9 DD4E09              A   428    	ld		c,  (ix+9)	; mode : fa_read / fa_w
+0445EC 3E0A                A   429    	ld		a, mos_fopen
+0445EE 5BCF                A   430    	rst.lil	08h		; returns filehandle in A
+0445F0 DDF9                A   431    	ld		sp,ix
+0445F2 DDE1                A   432    	pop		ix
+0445F4 C9                  A   433    	ret	
+                           A   434    
+0445F5                     A   435    _mos_fclose:
+0445F5 DDE5                A   436    	push	ix
+0445F7 DD210000 00         A   437    	ld		ix,0
+0445FC DD39                A   438    	add		ix, sp
+0445FE DD4E06              A   439    	ld		c, (ix+6)	; filehandle, or 0 to c
+044601 3E0B                A   440    	ld		a, mos_fclose
+044603 5BCF                A   441    	rst.lil	08h		; returns number of files s
+044605 DDF9                A   442    	ld		sp,ix
+044607 DDE1                A   443    	pop		ix
+044609 C9                  A   444    	ret	
+                           A   445    
+04460A                     A   446    _mos_fgetc:
+04460A DDE5                A   447    	push	ix
+04460C DD210000 00         A   448    	ld		ix,0
+044611 DD39                A   449    	add		ix, sp
+044613 DD4E06              A   450    	ld		c, (ix+6)	; filehandle
+044616 3E0C                A   451    	ld		a, mos_fgetc
+044618 5BCF                A   452    	rst.lil	08h		; returns character in A
+04461A DDF9                A   453    	ld		sp,ix
+04461C DDE1                A   454    	pop		ix
+04461E C9                  A   455    	ret	
+                           A   456    
+04461F                     A   457    _mos_fputc:
+04461F DDE5                A   458    	push	ix
+044621 DD210000 00         A   459    	ld		ix,0
+044626 DD39                A   460    	add		ix, sp
+044628 DD4E06              A   461    	ld		c, (ix+6)	; filehandle
+04462B DD4609              A   462    	ld		b, (ix+9)	; character to write
+04462E 3E0D                A   463    	ld		a, mos_fputc
+044630 5BCF                A   464    	rst.lil	08h		; returns nothing
+044632 DDF9                A   465    	ld		sp,ix
+044634 DDE1                A   466    	pop		ix
+044636 C9                  A   467    	ret	
+                           A   468    
+044637                     A   469    _mos_feof:
+044637 DDE5                A   470    	push	ix
+044639 DD210000 00         A   471    	ld		ix,0
+04463E DD39                A   472    	add		ix, sp
+044640 DD4E06              A   473    	ld		c, (ix+6)	; filehandle
+044643 3E0E                A   474    	ld		a, mos_feof
+044645 5BCF                A   475    	rst.lil	08h		; returns A: 1 at End-of-Fi
+044647 DDF9                A   476    	ld		sp,ix
+044649 DDE1                A   477    	pop		ix
+04464B C9                  A   478    	ret	
+                           A   479    
+04464C                     A   480    _mos_getError:
+04464C DDE5                A   481    	push	ix
+04464E DD210000 00         A   482    	ld		ix,0
+044653 DD39                A   483    	add		ix, sp
+044655 DD5E06              A   484    	ld		e, (ix+6)	; The error code
+044658 DD2707              A   485    	ld		hl,(ix+7)	; Address of buffer to 
+04465B DD070A              A   486    	ld		bc,(ix+10)  ; Size of buffer
+04465E 3E0F                A   487    	ld		a, mos_getError
+044660 5BCF                A   488    	rst.lil	08h			; Copy an error string 
+044662 DDF9                A   489    	ld		sp,ix
+044664 DDE1                A   490    	pop		ix
+044666 C9                  A   491    	ret	
+                           A   492    
+044667                     A   493    _mos_oscli:
+044667 DDE5                A   494    	push	ix
+044669 DD210000 00         A   495    	ld 		ix,0
+04466E DD39                A   496    	add 	ix, sp
+044670 DD2706              A   497    	ld 		hl, (ix+6)	; Pointer the the MOS c
+044673 DD0709              A   498    	ld		bc, (ix+9)	; Pointer to additional
+044676 DD170C              A   499    	ld      de, (ix+12) ; Number of additional 
+044679 3E10                A   500    	ld a,	mos_oscli
+04467B 5BCF                A   501    	rst.lil	08h			; Execute a MOS command
+04467D DDF9                A   502    	ld		sp,ix
+04467F DDE1                A   503    	pop		ix
+044681 C9                  A   504    	ret
+                           A   505    
+044682                     A   506    _mos_getrtc:
+044682 DDE5                A   507    	push	ix
+044684 DD210000 00         A   508    	ld 		ix,0
+044689 DD39                A   509    	add 	ix, sp
+04468B DD2706              A   510    	ld 		hl, (ix+6)	; Pointer to a buffer t
+04468E 3E12                A   511    	ld a,	mos_getrtc
+044690 5BCF                A   512    	rst.lil	08h			; Get a time string fro
+044692 DDF9                A   513    	ld		sp,ix
+044694 DDE1                A   514    	pop		ix
+044696 C9                  A   515    	ret
+                           A   516    
+044697                     A   517    _mos_setrtc:
+044697 DDE5                A   518    	push	ix
+044699 DD210000 00         A   519    	ld 		ix,0
+04469E DD39                A   520    	add 	ix, sp
+0446A0 DD2706              A   521    	ld 		hl, (ix+6)	; Pointer to a 6-byte b
+0446A3 3E13                A   522    	ld a,	mos_setrtc
+0446A5 5BCF                A   523    	rst.lil	08h			; Set the RTC (Requires
+0446A7 DDF9                A   524    	ld		sp,ix
+0446A9 DDE1                A   525    	pop		ix
+0446AB C9                  A   526    	ret
+                           A   527    
+0446AC                     A   528    _mos_setintvector:
+0446AC DDE5                A   529    	push	ix
+0446AE DD210000 00         A   530    	ld 		ix,0
+0446B3 DD39                A   531    	add 	ix, sp
+0446B5 DD1706              A   532    	ld 		de,	(ix+6)	; Interrupt vector numb
+0446B8 DD2709              A   533    	ld		hl, (ix+9)	; Address of new interr
+0446BB 3E14                A   534    	ld a,	mos_setintvector
+0446BD 5BCF                A   535    	rst.lil	08h			; Set an interrupt vect
+0446BF DDF9                A   536    	ld		sp,ix
+0446C1 DDE1                A   537    	pop		ix
+0446C3 C9                  A   538    	ret
+                           A   539    
+0446C4                     A   540    _mos_uopen:
+0446C4 DDE5                A   541    	push	ix
+0446C6 DD210000 00         A   542    	ld 		ix,0
+0446CB DD39                A   543    	add 	ix, sp
+0446CD DD2706              A   544    	ld 		hl, (ix+6)	; Address of uart1 sett
+0446D0 DDE5                A   545    	push	ix
+0446D2 E5DDE1              A   546    	ld		ix, hl
+0446D5 3E15                A   547    	ld		a, mos_uopen
+0446D7 5BCF                A   548    	rst.lil 08h
+0446D9 DDE1                A   549    	pop		ix
+0446DB DDF9                A   550    	ld		sp,ix
+0446DD DDE1                A   551    	pop		ix
+0446DF C9                  A   552    	ret
+                           A   553    
+0446E0                     A   554    _mos_uclose:
+0446E0 DDE5                A   555    	push	ix
+0446E2 3E16                A   556    	ld		a, mos_uclose
+0446E4 5BCF                A   557    	rst.lil	08h
+0446E6 DDE1                A   558    	pop		ix
+0446E8 C9                  A   559    	ret
+                           A   560    
+0446E9                     A   561    _mos_ugetc:
+0446E9 DDE5                A   562    	push	ix
+0446EB 21000000            A   563    	ld		hl, 0
+0446EF 3E17                A   564    	ld		a, mos_ugetc	; Read a byte from 
+0446F1 5BCF                A   565    	rst.lil	08h
+0446F3 6F                  A   566    	ld		l, a
+0446F4 30 02               A   567    	jr		nc, $F
+0446F6 2601                A   568    	ld		h, 1h			; error, return >25
+0446F8                     A   569    $$:
+0446F8 DDE1                A   570    	pop		ix
+0446FA C9                  A   571    	ret
+                           A   572    
+0446FB                     A   573    _mos_uputc:
+0446FB DDE5                A   574    	push	ix
+0446FD 4F                  A   575    	ld		c, a
+0446FE 3E18                A   576    	ld		a, mos_uputc
+044700 5BCF                A   577    	rst.lil	08h
+044702 3E01                A   578    	ld		a, 1h
+044704 30 01               A   579    	jr		nc, $F
+044706 AF                  A   580    	xor		a,a				; error condition, 
+044707                     A   581    $$:
+044707 DDE1                A   582    	pop		ix
+044709 C9                  A   583    	ret
+                           A   584    
+04470A                     A   585    _mos_fread:
+04470A DDE5                A   586    	push	ix
+04470C DD210000 00         A   587    	ld 		ix,0
+044711 DD39                A   588    	add 	ix, sp
+044713 DD0706              A   589    	ld 		bc, (ix+6)	; file handle
+044716 DD2709              A   590    	ld		hl, (ix+9)	; buffer address
+044719 DD170C              A   591    	ld		de, (ix+12)	; number of bytes to re
+04471C 3E1A                A   592    	ld a,	mos_fread
+04471E 5BCF                A   593    	rst.lil	08h
+044720 D5E1                A   594    	ld		hl, de		; number of bytes read
+044722 DDF9                A   595    	ld		sp,ix
+044724 DDE1                A   596    	pop		ix
+044726 C9                  A   597    	ret
+                           A   598    
+044727                     A   599    _mos_fwrite:
+044727 DDE5                A   600    	push	ix
+044729 DD210000 00         A   601    	ld 		ix,0
+04472E DD39                A   602    	add 	ix, sp
+044730 DD0706              A   603    	ld 		bc, (ix+6)	; file handle
+044733 DD2709              A   604    	ld		hl, (ix+9)	; buffer address
+044736 DD170C              A   605    	ld		de, (ix+12)	; number of bytes to wr
+044739 3E1B                A   606    	ld a,	mos_fwrite
+04473B 5BCF                A   607    	rst.lil	08h
+04473D D5E1                A   608    	ld		hl, de		; number of bytes writt
+04473F DDF9                A   609    	ld		sp,ix
+044741 DDE1                A   610    	pop		ix
+044743 C9                  A   611    	ret
+                           A   612    
+044744                     A   613    _mos_flseek:
+044744 DDE5                A   614    	push	ix
+044746 DD210000 00         A   615    	ld 		ix,0
+04474B DD39                A   616    	add 	ix, sp
+04474D DD0706              A   617    	ld 		bc, (ix+6)	; file handle
+044750 11000000            A   618    	ld		de, 0
+044754 DD2709              A   619    	ld		hl, (ix+9)  ; 24 least significant 
+044757 DD5E0C              A   620    	ld		e,  (ix+12)	; 8 most most significa
+04475A 3E1C                A   621    	ld a,	mos_flseek
+04475C 5BCF                A   622    	rst.lil	08h
+04475E DDF9                A   623    	ld		sp,ix
+044760 DDE1                A   624    	pop		ix
+044762 C9                  A   625    	ret
+                           A   626    
+044763                     A   627    _mos_getfil:
+044763 DDE5                A   628    	push	ix
+044765 DD210000 00         A   629    	ld 		ix,0
+04476A DD39                A   630    	add 	ix, sp
+04476C DD0706              A   631    	ld 		bc, (ix+6)	; File identifier
+04476F 3E19                A   632    	ld a,	mos_getfil
+044771 5BCF                A   633    	rst.lil	08h			; Get a pointer to the 
+044773 DDF9                A   634    	ld		sp,ix
+044775 DDE1                A   635    	pop		ix
+044777 C9                  A   636    	ret
+                           A   637    
+                           A   638    end
+
+
+Errors: 0
+Warnings: 0
+Lines Assembled: 864
