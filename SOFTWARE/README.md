@@ -60,10 +60,3 @@ For the Agon Quark MOS on the eZ80 chip:
 	1.7) When the download is complete go again to "Main menu --> Debug --> Stop Debugging" (SHIFT + F5)
 	1.8) Disconnect the programmer from the board
 2) If there is MOS 1.02 and you want to update it to a newer version you can still use the method described above but you can also do it from the console on the AgonLight2 board itself without the need of the programmer and IDE
-
-
-
-
-
-
-
