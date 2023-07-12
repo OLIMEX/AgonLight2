@@ -1,2 +1,9 @@
 # Declare files that will always have CRLF line endings on checkout.
 *.bas text eol=crlf
+*.BAS text eol=crlf
+*.bAS text eol=crlf
+*.baS text eol=crlf
+*.Bas text eol=crlf
+*.BAs text eol=crlf
+*.BaS text eol=crlf
+*.bAs text eol=crlf

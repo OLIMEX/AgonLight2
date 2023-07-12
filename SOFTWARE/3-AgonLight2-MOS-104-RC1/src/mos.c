@@ -2,7 +2,7 @@
  * Title:			AGON MOS - MOS code
  * Author:			Dean Belfield
  * Created:			10/07/2022
- * Last Updated:	15/04/2023
+ * Last Updated:	08/07/2023
  * 
  * Modinfo:
  * 11/07/2022:		Added mos_cmdDIR, mos_cmdLOAD, removed mos_cmdBYE
@@ -29,6 +29,8 @@
  * 26/03/2023:		Fixed SET KEYBOARD command
  * 14/04/2023:		Added fat_EOF
  * 15/04/2023:		Added mos_GETFIL, mos_FREAD, mos_FWRITE, mos_FLSEEK, refactored MOS file commands
+ * 30/05/2023:		Fixed bug in mos_parseNumber to detect invalid numeric characters, mos_FGETC now returns EOF flag
+ * 08/07/2023		Added mos_trim function; mos_exec now trims whitespace from input string, various bug fixes
  */
 
 #include <eZ80.h>
@@ -186,6 +188,32 @@ BOOL mos_cmp(const char *p1, const char *p2) {
 	return (const unsigned char*)c1 - (const unsigned char*)c2;
 }
 
+// String trim function
+// Parameters:
+// - s: Pointer to the string to trim
+// Returns:
+// - s: Pointer to the start of the new string
+//
+char * mos_trim(char * s) {
+    char * ptr;
+
+    if(!s) {					// Return NULL if a null string is passed
+        return NULL;
+	}
+    if(!*s) {
+        return s;      			// Handle empty string
+	}
+	while(isspace(*s)) {		// Advance the pointer to the first non-whitespace character in the string
+		s++;
+	}
+	ptr = s + strlen(s) - 1;
+	while(ptr > s && isspace(*ptr)) {
+		ptr--;
+	}
+	ptr[1] = '\0';
+    return s;
+}
+
 // String tokeniser
 // Parameters:
 // - s1: String to tokenise
@@ -253,7 +281,7 @@ BOOL mos_parseNumber(char * ptr, UINT24 * p_Value) {
 		p++;
 	}	
 	value = strtol(p, &e, base);
-	if(p == e) {
+	if(*e != 0) {
 		return 0;
 	}
 	*p_Value = value;
@@ -291,7 +319,8 @@ int mos_exec(char * buffer) {
 	char	path[256];
 	UINT8	mode;
 
-	ptr = mos_strtok(buffer, " ");
+	ptr = mos_trim(buffer);
+	ptr = mos_strtok(ptr, " ");
 	if(ptr != NULL) {
 		func = mos_getCommand(ptr);
 		if(func != 0) {
@@ -747,7 +776,7 @@ UINT24	mos_DIR(char * path) {
 			hr = (fno.ftime & 0xF800) >> 11;	// Bits 15 to 11
 			mi = (fno.ftime & 0x07E0) >>  5;	// Bits 10 to  5
 			
-			printf("%04d/%02d/%02d\t%02d:%02d %c %*d %s\n\r", yr + 1980, mo, da, hr, mi, fno.fattrib & AM_DIR ? 'D' : ' ', 8, fno.fsize, fno.fname);
+			printf("%04d/%02d/%02d\t%02d:%02d %c %*lu %s\n\r", yr + 1980, mo, da, hr, mi, fno.fattrib & AM_DIR ? 'D' : ' ', 8, fno.fsize, fno.fname);
 		}
 	}
 	f_closedir(&dir);
@@ -895,7 +924,7 @@ UINT24 mos_FCLOSE(UINT8 fh) {
 	
 	if(fh > 0 && fh <= MOS_maxOpenFiles) {
 		i = fh - 1;
-		if(&mosFileObjects[i].free > 0) {
+		if(mosFileObjects[i].free > 0) {
 			fr = f_close(&mosFileObjects[i].fileObject);
 			mosFileObjects[i].free = 0;
 		}
@@ -915,9 +944,10 @@ UINT24 mos_FCLOSE(UINT8 fh) {
 // Parameters:
 // - fh: File handle
 // Returns:
-// - Byte read
+// - Byte read in lower 8 bits
+// - EOF in upper 8 bits (1 = EOF)
 //
-UINT8	mos_FGETC(UINT8 fh) {
+UINT24	mos_FGETC(UINT8 fh) {
 	FRESULT fr;
 	FIL	*	fo;
 	UINT	br;
@@ -927,7 +957,7 @@ UINT8	mos_FGETC(UINT8 fh) {
 	if(fo > 0) {
 		fr = f_read(fo, &c, 1, &br); 
 		if(fr == FR_OK) {
-			return	c;
+			return	c | (fat_EOF(fo) << 8);
 		}		
 	}
 	return 0;

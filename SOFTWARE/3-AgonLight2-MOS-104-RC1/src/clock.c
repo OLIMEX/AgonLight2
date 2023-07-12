@@ -2,11 +2,12 @@
  * Title:			AGON MOS - Real Time Clock
  * Author:			Dean Belfield
  * Created:			09/03/2023
- * Last Updated:	21/03/2023
+ * Last Updated:	05/06/2023
  * 
  * Modinfo:
  * 15/03/2023:		Added rtc_getDateString, rtc_update
  * 21/03/2023:		Uses VDP values from defines.h
+ * 05/06/2023:		Added RTC enable flag
  */
 
 #include <ez80.h>
@@ -21,6 +22,7 @@
 #include "clock.h"
 
 extern volatile BYTE vpd_protocol_flags;		// In globals.asm
+extern volatile BYTE rtc_enable;				// In globals.asm
 
 const char * rtc_days[7][2] = {	
 	{ "Sun", "Sunday" },
@@ -50,6 +52,9 @@ const char * rtc_months[12][2] = {
 // Request an update of the RTC from the ESP32
 //
 void rtc_update() {
+	if(!rtc_enable) {
+		return;
+	}
 	vpd_protocol_flags &= 0xDF;	// Reset bit 5
 
 	putch(23);					// Request the time from the ESP32

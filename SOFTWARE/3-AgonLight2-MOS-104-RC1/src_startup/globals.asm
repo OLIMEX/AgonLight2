@@ -2,7 +2,7 @@
 ; Title:	AGON MOS - Globals
 ; Author:	Dean Belfield
 ; Created:	01/08/2022
-; Last Updated:	14/04/2023
+; Last Updated:	05/06/2023
 ;
 ; Modinfo:
 ; 09/08/2022:	Added sysvars structure, cursorX, cursorY
@@ -16,6 +16,8 @@
 ; 23/03/2023:	Added gp
 ; 29/03/2023:	Added serialFlags
 ; 14/04/2023:	Added scratchpad
+; 19/05/2023	Added scrmode
+; 05/06/2023:	Added RTC enable flag
 
 			INCLUDE	"../src/equs.inc"
 			
@@ -43,6 +45,8 @@
 			XDEF	_keydelay 
 			XDEF	_keyrate 
 			XDEF 	_keyled
+			XDEF	_scrmode
+			XDEF	_rtc_enable
 
 			XDEF	_errno
 			XDEF 	_coldBoot
@@ -85,6 +89,8 @@ _rtc:			DS	8		; + 1Ah: Real time clock data
 _keydelay:		DS	2		; + 22h: Keyboard repeat delay
 _keyrate:		DS	2		; + 24h: Keyboard repeat rate
 _keyled:		DS	1		; + 26h: Keyboard LED status
+_scrmode:		DS	1		; + 27h: Screen mode
+_rtc_enable:		DS	1		; + 28h: RTC enable status
 
 _errno:			DS 	3		; extern int _errno
 _coldBoot:		DS	1		; extern char _coldBoot

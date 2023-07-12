@@ -2,7 +2,7 @@
 ; Title:	AGON MOS - VDP serial protocol
 ; Author:	Dean Belfield
 ; Created:	03/08/2022
-; Last Updated:	26/03/2023
+; Last Updated:	19/05/2023
 ;
 ; Modinfo:
 ; 09/08/2022:	Added vdp_protocol_CURSOR
@@ -15,6 +15,7 @@
 ; 15/03/2023:	Added vdp_protocol_RTC
 ; 21/03/2023:	Added vdp_protocol_KEYSTATE
 ; 26/03/2023:	Added vdp_protocol_GP, checks DEL above cursor block for CTRL+ALT+DEL	
+; 19/05/2023:	Extended vdp_protocol_MODE to store scrmode
 
 			INCLUDE	"macros.inc"
 			INCLUDE	"equs.inc"
@@ -43,6 +44,7 @@
 			XREF	_scrrows
 			XREF	_scrcolours
 			XREF	_scrpixelIndex
+			XREF	_scrmode
 			XREF	_rtc
 			XREF	_keydelay 
 			XREF	_keyrate 
@@ -258,6 +260,7 @@ vdp_protocol_AUDIO:	LD		A, (_vdp_protocol_data+0)
 ; Byte: Screen width in characters
 ; Byte: Screen height in characters
 ; Byte: Number of colours
+; Byte: Screen mode
 ;
 ; Sets vpd_protocol_flags to flag receipt to apps
 ;
@@ -275,6 +278,8 @@ vdp_protocol_MODE:	LD		A, (_vdp_protocol_data+0)
 			LD		(_scrrows), A
 			LD		A, (_vdp_protocol_data+6)
 			LD		(_scrcolours), A
+			LD		A, (_vdp_protocol_data+7)
+			LD		(_scrmode), A
 			LD		A, (_vpd_protocol_flags)
 			OR		VDPP_FLAG_MODE
 			LD		(_vpd_protocol_flags), A			

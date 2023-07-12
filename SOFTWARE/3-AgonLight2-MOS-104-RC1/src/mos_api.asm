@@ -2,7 +2,7 @@
 ; Title:	AGON MOS - API code
 ; Author:	Dean Belfield
 ; Created:	24/07/2022
-; Last Updated:	15/04/2023
+; Last Updated:	30/05/2023
 ;
 ; Modinfo:
 ; 03/08/2022:	Added a handful of MOS API calls and stubbed FatFS calls
@@ -20,6 +20,7 @@
 ; 29/03/2023:	Added mos_api_uopen, mos_api_uclose, mos_api_ugetc, mos_api_uputc
 ; 14/04/2023:	Added ffs_api_fopen, ffs_api_fclose, ffs_api_stat, ffs_api_fread, ffs_api_fwrite, ffs_api_feof, ffs_api_flseek
 ; 15/04/2023:	Added mos_api_getfil, mos_api_fread, mos_api_fwrite and mos_api_flseek
+; 30/05/2023:	Fixed mos_api_fgetc to set carry if at end of file
 
 			.ASSUME	ADL = 1
 			
@@ -472,9 +473,10 @@ mos_api_fgetc:		PUSH	BC
 			LD	DE, 0
 			LD	E, C
 			PUSH	DE		; byte	  fh
-			CALL	_mos_FGETC
-			POP	BC
-			OR	A		; TODO: Need to set C if EOF
+			CALL	_mos_FGETC	; Read the character
+			POP	DE
+			LD	A, L 		; A: Character read
+			SRL	H 		; F: C = EOF
 ;
 			POP	IY
 			POP	IX

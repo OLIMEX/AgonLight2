@@ -6,7 +6,7 @@
  * 
  * Modinfo:
  * 03/08/2022:		Enabled UART0 receive interrupt
- * 08/08/2022:		Enabled c CTS port
+ * 08/08/2022:		Enabled UART0 CTS port
  * 22/03/2023:		Moved putch and getch to serial.asm
  * 23/03/2023:		Fixed maths overflow in init_UART0 to work with bigger baud rates
  * 28/03/2023:		Added support for UART1
@@ -37,7 +37,7 @@
 void init_UART0() {
 	PD_DR = PORTD_DRVAL_DEF;
 	PD_DDR = PORTD_DDRVAL_DEF;
-	//	#ifdef _EZ80F91
+//	#ifdef _EZ80F91
 //	PD_ALT0 = PORTD_ALT0VAL_DEF;
 //	#endif
 	PD_ALT1 = PORTD_ALT1VAL_DEF;
