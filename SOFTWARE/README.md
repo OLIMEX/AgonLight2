@@ -23,23 +23,23 @@ The content involves:
 For the Agon Quark VDP on the ESP32 chip you have to install IDE, package and libraries:
 
 1) Arduino IDE
-	1.1) Go to: https://www.arduino.cc/en/software
-	1.2) While this will most likely work with 2.x.x we recommend you to download 1.8.9 which is shown a little bit below in the section "Legacy IDE (1.8.x)"
-	1.3) Download, install and run it
+1.1) Go to: https://www.arduino.cc/en/software
+1.2) While this will most likely work with 2.x.x we recommend you to download 1.8.9 which is shown a little bit below in the section "Legacy IDE (1.8.x)"
+1.3) Download, install and run it
 
-3) Install the ESP32 package
+4) Install the ESP32 package
 	2.1) Go to "Main menu --> Preferences" (CTRL+,)
 	2.2) In the "Additional Boards Manager URLs" add in a new line: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 	2.3) Go to "Main menu --> Tools --> Board --> Boards manager..."
 	2.4) Look for the package "ESP32" (since there are lots of packages you can filter them by typing "ESP32" in the search bar on the top)
 	2.5) Install the package (it is tested with 2.0.9v but later are likely to work)
 
-4) Install the FabGL library
+5) Install the FabGL library
 	3.1) Go to "Main menu --> Sketch --> Include Library --> Manage Libraries..." (CTRL+SHIFT+I)
 	3.2) Look for library FabGL (just like the packages earlier you can filter all the libraries by typing "FabGL" in the search bar)
 	3.3) Install it (it is tested with 1.0.8, newer versions of the library may not work)
 
-5) Compile and Upload the firmware (Agon Quark VDP)
+6) Compile and Upload the firmware (Agon Quark VDP)
 	4.1) Open the sketch AgonLigh2/AgonLight2.ino (the provided one is version 1.03, for the latest one check https://github.com/breakintoprogram/agon-vdp )
 	4.2) Go to "Main menu --> Tools --> Board --> ESP32 Arduino" and select "ESP32 Dev Module"
 	4.3) Plug the USB to the AgonLight2 board
