@@ -38,5 +38,6 @@ Please do not forget to check AgonLight topics in GitHub for many utilities and 
 
 ## Change History
 
-23-04-2023 - Add Resources 
+23-04-2023 - Add Resources
+
 14-12-2022 - Initial upload  of CAD files for first prototypes
