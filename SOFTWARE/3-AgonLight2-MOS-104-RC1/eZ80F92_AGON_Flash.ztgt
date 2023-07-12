@@ -6,8 +6,8 @@
    </Clock>
    <ControlReg>
       <pc>0</pc>
-      <splStackPtr>A0000</splStackPtr>
-      <spsStackPtr>ffff</spsStackPtr>
+      <splStackPtr>C0000</splStackPtr>
+      <spsStackPtr>0</spsStackPtr>
       <useAdlMode>true</useAdlMode>
    </ControlReg>
    <ExtFlash>

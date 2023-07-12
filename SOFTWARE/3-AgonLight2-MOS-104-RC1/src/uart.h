@@ -2,12 +2,13 @@
  * Title:			AGON MOS - UART code
  * Author:			Dean Belfield
  * Created:			06/07/2022
- * Last Updated:	29/03/2023
+ * Last Updated:	16/05/2023
  * 
  * Modinfo:
  * 22/03/2023:		Moved putch and getch to serial.asm
  * 23/03/2023:		Fixed maths overflow in init_UART0 to work with bigger baud rates
  * 29/03/2023:		Added support for UART1
+ * 16/05/2023:		Fixed MASTERCLOCK
  */
 
 #ifndef UART_H
@@ -15,7 +16,7 @@
 
 #include <gpio.h>
 
-#define MASTERCLOCK				20000000	        	//!< The default system clock speed for eZ80F92.
+#define MASTERCLOCK				18432000	        	//!< The default system clock speed for eZ80F92.
 #define CLOCK_DIVISOR_16		16			        	//!< The default clock divisor 
 
 #if !defined(UART0_IVECT) 								//!< If it is not defined 
