@@ -1,2 +1,6 @@
 <b>MAKE SURE TO USE RELEASE 1.03 OR LATER of <a href="https://github.com/breakintoprogram/agon-mos/releases">Quark MOS™</a> and <a href="https://github.com/breakintoprogram/agon-vdp/releases">Quark VDP™</a>.</b><br>
 Load these files and directories to a class-10, FAT32-formatted micro SD card, then insert the card into Agon Light™. The <a href="https://github.com/TheByteAttic/AgonLight/blob/main/Agon%20light%20Quick%20Start%20Guide.pdf">Quick Start Guide</a> assumes that these files are present in the micro SD card in Agon Light™. It also explains what these files are and how to use them.
+
+Some of the examples are copied from:
+
+https://github.com/TheByteAttic/AgonLight/tree/main/uSD%20card%20files
