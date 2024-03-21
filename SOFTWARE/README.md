@@ -40,7 +40,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
     2.4. Look for the package "ESP32" (since there are lots of packages you can filter them by typing "ESP32" in the search bar on the top)
 
-    2.5. Install the package (it is tested with 2.0.9v but later are likely to work)
+    2.5. Install the package (it is tested with v2.0.14, notice that versions 3.x.x are confirmed not working)
 
 3. Install the FabGL library
 
