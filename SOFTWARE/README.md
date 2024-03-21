@@ -22,7 +22,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 4) Agon-CPM2.2 – contains CPM;
 5) mos – contains files suitable for updating mos without programmer.
 
-**To update the Agon Quark VDP on the ESP32 chip with a binary:**
+**Updating the Agon Quark VDP on the ESP32 chip with a binary:**
 
 1. If you don't want to compile the source code you can just upload the binary (if you wish to compile from source check next chapter)
 2.  Download all contents from /2-AgonLight2-VDP-104/binary-flasher - https://github.com/OLIMEX/AgonLight2/tree/main/SOFTWARE/2-AgonLight2-VDP-104/binary-flasher
@@ -75,7 +75,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
     4.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
 
-**For the Agon Quark MOS on the eZ80 chip:**
+**Updating the Agon Quark MOS on the eZ80 chip:**
 
 1. Usually you can update the MOS without the need of programmer (the board needs to have MOS 1.02). Follow the instructions in /1-SD-card-contents/mos/README.txt - https://github.com/OLIMEX/AgonLight2/tree/main/SOFTWARE/1-SD-card-contents/mos
 
