@@ -51,7 +51,9 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
     3.3. Install it (it is tested with 1.0.8, newer versions of the library may not work)
 
 4. VDP update
-    4.1. Compile and Upload the firmware (Agon Quark VDP)
+
+   4.1. Compile and Upload the firmware (Agon Quark VDP)
+   
         4.1.1. Open the sketch AgonLigh2/AgonLight2.ino (the provided one is version 1.03, for the latest one check https://github.com/breakintoprogram/agon-vdp )
 
         4.1.2 Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
@@ -65,6 +67,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
         4.1.6. Go to "Main menu -> Tools -> PSRAM" select Enabled
 
         4.1.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
+   
     4.2 (optional) If you don't want to compile the source code you can just upload the binary
 
 **For the Agon Quark MOS on the eZ80 chip:**
