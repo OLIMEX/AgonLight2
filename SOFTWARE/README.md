@@ -54,7 +54,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
    4.1. Compile and Upload the firmware (Agon Quark VDP)
    
-        4.1.1. Open the sketch AgonLigh2/AgonLight2.ino (the provided one is version 1.03, for the latest one check https://github.com/breakintoprogram/agon-vdp )
+        4.1.1. Open the sketch /2-AgonLight2-VDP-104/Source/Video/video.ino (the provided one is version 1.04, for the latest one check https://github.com/breakintoprogram/agon-vdp )
 
         4.1.2 Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
 
@@ -78,7 +78,7 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
     1.2. Install the IDE and run it
 
-    1.3. Go to "Main menu -> File -> Open Project" and navigate to  "agon-mos-1.03/MOS.zdsproj" (the provided versions is 1.03, for the latest one check https://github.com/breakintoprogram/agon-mos )
+    1.3. Go to "Main menu -> File -> Open Project" and navigate to  "3-AgonLight2-MOS-104/MOS.zdsproj" (the provided versions is 1.04, for the latest one check https://github.com/breakintoprogram/agon-mos )
 
     1.4. Build the project (F7)
 
