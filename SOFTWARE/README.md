@@ -83,13 +83,13 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
  2.2. Install the IDE and run it
 
    2.3. Go to "Main menu -> File -> Open Project" and navigate to  "3-AgonLight2-MOS-104/MOS.zdsproj" (the provided versions is 1.04, for the latest one check https://github.com/breakintoprogram/agon-mos )
-
-    2.4. Build the project (F7)
-
-  2.5. Connect the programmer to the ZDI connector on the AgonLight2 board
+   
+   2.4. Build the project (F7)
+   
+   2.5. Connect the programmer to the ZDI connector on the AgonLight2 board
 
    2.6. Go to "Main menu -> Debug -> Download the code"
-
-    2.7. When the download is complete go again to "Main menu --> Debug --> Stop Debugging" (SHIFT + F5)
+   
+   2.7. When the download is complete go again to "Main menu --> Debug --> Stop Debugging" (SHIFT + F5)
 
    2.8. Disconnect the programmer from the board
