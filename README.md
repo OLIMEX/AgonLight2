@@ -19,7 +19,7 @@ What is new:
 Please do not forget to check AgonLight topics in GitHub for many utilities and code written by AgonLight community: https://github.com/topics/agon-light
 
 ## Useful Agon Resources
-- Bernardo Katrup https://github.com/TheByteAttic/AgonLight
+- Bernardo Kastrup https://github.com/TheByteAttic/AgonLight
 - Dean Belfield Agon VDP, MOS, BBC-BASIC, Agon DOCs, projects https://github.com/breakintoprogram
 - Lennart Benschop FORTH, Nano editor and MOS utilities https://github.com/lennart-benschop
 - Jeroen Venema Agon Flash, HexLoad, Z80 assembler, tools, sokoban game https://github.com/envenomator
