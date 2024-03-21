@@ -2,7 +2,9 @@ A properly operating AgonLight2 system has three software components: Quark™ V
 
 Notice that certain combinations of versions of VDP, MOS, and BBC BASIC might be incompatible. Meaning that you might need to upgrade or downgrade MOS, VDP, BASIC in order to run the board. If in doubt, use the versions we provide.
 
-It is always recommended to get the latest files and instructions from the official VDP, MOS, BASIC locations listed below, however if you enounter problems use the versions we have provided, we have tested them and confirmed them to work.
+We load the versions currently at this GitHub but the board that was not purchased directly from us might arrive with previous version of VDP and MOS.
+
+It is always recommended to get the latest files and instructions from the official VDP, MOS, BASIC locations listed below, however if you enounter problems use the versions we have provided, we have tested them and confirmed them to work. 
 
     • Quark™ BBC BASIC – https://github.com/breakintoprogram/agon-bbc-basic/releases - BBC Basic interpreter
     • Quark™ MOS - https://github.com/breakintoprogram/agon-mos/releases - command line machine operating system, similar to CP/M or DOS
@@ -54,40 +56,40 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
    4.1. Compile and Upload the firmware (Agon Quark VDP)
    
-        4.1.1. Open the sketch /2-AgonLight2-VDP-104/Source/Video/video.ino (the provided one is version 1.04, for the latest one check https://github.com/breakintoprogram/agon-vdp )
+   4.1.1. Open the sketch /2-AgonLight2-VDP-104/Source/Video/video.ino (the provided one is version 1.04, for the latest one check https://github.com/breakintoprogram/agon-vdp )
 
-        4.1.2 Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
+   4.1.2 Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
 
-        4.1.3. Plug the USB to the AgonLight2 board
+   4.1.3. Plug the USB to the AgonLight2 board
 
-        4.1.4. In Device manager you can see the COM# at which our device has connected
+   4.1.4. In Device manager you can see the COM# at which our device has connected
 
-        4.1.5. Go to "Main menu -> Tools -> Port" select the one ESP32 has connected
+   4.1.5. Go to "Main menu -> Tools -> Port" select the one ESP32 has connected
 
-        4.1.6. Go to "Main menu -> Tools -> PSRAM" select Enabled
+   4.1.6. Go to "Main menu -> Tools -> PSRAM" select Enabled
 
-        4.1.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
-   
-    4.2 (optional) If you don't want to compile the source code you can just upload the binary
+   4.1.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
+
+   4.2 (optional) If you don't want to compile the source code you can just upload the binary
 
 **For the Agon Quark MOS on the eZ80 chip:**
 
-1. If there is no MOS at all or it's older than 1.02 you must have "ZILOG eZ80F92" programmer and have to install IDE:
+1. Usually you can update the MOS without the need of programmer (the board needs to have MOS 1.02). Follow the instructions in /1-SD-card-contents/mos/README.txt - https://github.com/OLIMEX/AgonLight2/tree/main/SOFTWARE/1-SD-card-contents/mos
 
-    1.1. Download "ZDS II - eZ80Acclaim!" from here: https://zilog.com/index.php?option=com_zcm&task=view&soft_id=54&Itemid=74 (tested with 5.3.5 but should work with newer versions)
+2. If there is no MOS at all or it's older than 1.02 you must have "ZILOG eZ80F92" programmer and have to install IDE:
 
-    1.2. Install the IDE and run it
+2.1. Download "ZDS II - eZ80Acclaim!" from here: https://zilog.com/index.php?option=com_zcm&task=view&soft_id=54&Itemid=74 (tested with 5.3.5 but should work with newer versions)
 
-    1.3. Go to "Main menu -> File -> Open Project" and navigate to  "3-AgonLight2-MOS-104/MOS.zdsproj" (the provided versions is 1.04, for the latest one check https://github.com/breakintoprogram/agon-mos )
+ 2.2. Install the IDE and run it
 
-    1.4. Build the project (F7)
+   2.3. Go to "Main menu -> File -> Open Project" and navigate to  "3-AgonLight2-MOS-104/MOS.zdsproj" (the provided versions is 1.04, for the latest one check https://github.com/breakintoprogram/agon-mos )
 
-    1.5. Connect the programmer to the ZDI connector on the AgonLight2 board
+    2.4. Build the project (F7)
 
-    1.6. Go to "Main menu -> Debug -> Download the code"
+  2.5. Connect the programmer to the ZDI connector on the AgonLight2 board
 
-    1.7. When the download is complete go again to "Main menu --> Debug --> Stop Debugging" (SHIFT + F5)
+   2.6. Go to "Main menu -> Debug -> Download the code"
 
-    1.8. Disconnect the programmer from the board
+    2.7. When the download is complete go again to "Main menu --> Debug --> Stop Debugging" (SHIFT + F5)
 
-2. If there is MOS 1.02 and you want to update it to a newer version you can still use the method described above but you can also do it from the console on the AgonLight2 board itself without the need of the programmer and IDE
+   2.8. Disconnect the programmer from the board
