@@ -22,55 +22,58 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 4) Agon-CPM2.2 – contains CPM;
 5) mos – contains files suitable for updating mos without programmer.
 
-**For the Agon Quark VDP on the ESP32 chip you have to install IDE, package and libraries:**
+**To update the Agon Quark VDP on the ESP32 chip with a binary:**
+
+1. If you don't want to compile the source code you can just upload the binary (if you wish to compile from source check next chapter)
+2.  Download all contents from /2-AgonLight2-VDP-104/binary-flasher - https://github.com/OLIMEX/AgonLight2/tree/main/SOFTWARE/2-AgonLight2-VDP-104/binary-flasher
+3.  Open terminal or command line to the folder where the contents are
+4.  Execute flash.sh followed by com port number of device assigned by operating system (usually COMx in Windows, TTYx in Linux).
+
+**To compile and update the Agon Quark VDP on the ESP32 chip you have to install IDE, package and libraries:**
 
 1. Arduino IDE
 
-    1.1. Go to: https://www.arduino.cc/en/software
+1.1. Go to: https://www.arduino.cc/en/software
 
-    1.2. While this will most likely work with 2.x.x we recommend you to download 1.8.9 which is shown a little bit below in the section "Legacy IDE (1.8.x)"
+1.2 While this will most likely work with 2.x.x we recommend you to download 1.8.9 which is shown a little bit below in the section "Legacy IDE (1.8.x)"
 
-    1.3. Download, install and run it
+1.3. Download, install and run it
 
 2. Install the ESP32 package
 
-    2.1. Go to "Main menu --> Preferences" (CTRL+,)
+2.1. Go to "Main menu --> Preferences" (CTRL+,)
 
-    2.2. In the "Additional Boards Manager URLs" add in a new line: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+2.2. In the "Additional Boards Manager URLs" add in a new line: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
-    2.3. Go to "Main menu -> Tools -> Board -> Boards manager..."
+2.3. Go to "Main menu -> Tools -> Board -> Boards manager..."
 
-    2.4. Look for the package "ESP32" (since there are lots of packages you can filter them by typing "ESP32" in the search bar on the top)
+2.4. Look for the package "ESP32" (since there are lots of packages you can filter them by typing "ESP32" in the search bar on the top)
 
-    2.5. Install the package (it is tested with v2.0.14, notice that versions 3.x.x are confirmed not working)
+2.5. Install the package (it is tested with v2.0.14, notice that versions 3.x.x are confirmed not working)
 
 3. Install the FabGL library
 
-    3.1. Go to "Main menu -> Sketch -> Include Library -> Manage Libraries..." (CTRL+SHIFT+I)
+3.1. Go to "Main menu -> Sketch -> Include Library -> Manage Libraries..." (CTRL+SHIFT+I)
 
-    3.2. Look for library FabGL (just like the packages earlier you can filter all the libraries by typing "FabGL" in the search bar)
+3.2. Look for library FabGL (just like the packages earlier you can filter all the libraries by typing "FabGL" in the search bar)
 
-    3.3. Install it (it is tested with 1.0.8, newer versions of the library may not work)
+3.3. Install it (it is tested with 1.0.8, newer versions of the library may not work)
 
-4. VDP update
-
-   4.1. Compile and Upload the firmware (Agon Quark VDP)
+4. VDP compile and update
    
-   4.1.1. Open the sketch /2-AgonLight2-VDP-104/Source/Video/video.ino (the provided one is version 1.04, for the latest one check https://github.com/breakintoprogram/agon-vdp )
+4.1. Open the sketch /2-AgonLight2-VDP-104/Source/Video/video.ino (the provided one is version 1.04, for the latest one check https://github.com/breakintoprogram/agon-vdp )
 
-   4.1.2 Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
+4.2. Go to "Main menu -> Tools -> Board -> ESP32 Arduino" and select "ESP32 Dev Module"
 
-   4.1.3. Plug the USB to the AgonLight2 board
+4.3. Plug the USB to the AgonLight2 board
 
-   4.1.4. In Device manager you can see the COM# at which our device has connected
+4.4. In Device manager you can see the COM# at which our device has connected
 
-   4.1.5. Go to "Main menu -> Tools -> Port" select the one ESP32 has connected
+4.5. Go to "Main menu -> Tools -> Port" select the one ESP32 has connected
 
-   4.1.6. Go to "Main menu -> Tools -> PSRAM" select Enabled
+4.6. Go to "Main menu -> Tools -> PSRAM" select Enabled
 
-   4.1.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
-
-   4.2 (optional) If you don't want to compile the source code you can just upload the binary
+4.7. Compile and Upload (every time after opening the project in Arduino the first compilation is VERY slow - be patient)
 
 **For the Agon Quark MOS on the eZ80 chip:**
 
