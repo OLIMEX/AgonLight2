@@ -1,0 +1,1092 @@
+!   x a-addr ---                                                               
+Store cell x at a-addr
+
+!CSP   ---                                                                     
+Store current stack pointer in CSP.
+
+#   ud1 --- ud2                                                                
+Extract the rightmost digit of ud1 and put it into the numerical
+conversion buffer.
+
+#>   ud --- addr u                                                             
+Discard ud and give the address and length of the numerical conversion
+buffer.
+
+#ORDER   --- addr                                                              
+This variable holds the number of word list that are in the search order.
+
+#S   ud --- 0 0                                                                
+Convert ud by repeated use of # until ud is zero.
+
+#SRC   --- addr                                                                
+This variable holds the length of the current input source.
+
+#THREADS   --- a-addr                                                          
+This variable holds the number of threads a word list will have.
+
+#TIB   --- addr                                                                
+This variable holds the number of characters in the terminal input buffer.
+
+'   "ccc" --- xt                                                               
+Find the word with name ccc and return its execution token.
+
+(   "ccc<rparen>" ---                                                          
+Comment till next ).
+
+(+LOOP)   n ---                                                                
+Runtime part of +LOOP    
+
+(.")   ---                                                                     
+Runtime part of ."
+
+(;CODE)   ---                                                                  
+Runtime for DOES>, exit calling definition and make last defined word
+execute the calling definition after (;CODE)
+
+(?DO)   n1 n2 ---                                                              
+Runtime part of ?DO. n2 is initial counter, n1 is limit
+The next cell contains a branch address to skip the
+loop when limit and start are equal.
+
+(ABORT")   f -- -                                                              
+Runtime part of ABORT"
+
+(DO)   n1 n2 ---                                                               
+Runtime part of DO. n2 is initial counter, n1 is limit
+
+(FIND)   c-addr u nfa  --- cfa/word f                                          
+find the string at c-addr, length u in the dictionary starting at nfa.
+Search in a single hash chain. Return the cfa of the found word. If
+If the word is not found, return the string addres instead. Flag values:
+0 for not found, 1 for immediate word, -1 for normal word.   
+
+(LEAVE)   ---                                                                  
+Runtime of LEAVE
+
+(LOOP)   ---                                                                   
+Runtime part of LOOP
+
+(POSTPONE)   ---                                                               
+Runtime for POSTPONE.
+
+(S")   --- c-addr u                                                            
+Runtime part of S"
+
+*   w1 w2 --- w3                                                               
+Multiply single numbers, signed or unsigned give the same result.
+
+*/   n1 n2 n3 --- n4                                                           
+Multiply signed numbers n1 by n2 and divide by n3, giving quotient n4.
+Intermediate result is double.
+
+*/MOD   n1 n2 n3 --- nrem nquot                                                
+Multiply signed numbers n1 by n2 and divide by n3, giving quotient and
+remainder. Intermediate result is double.
+
++   n1 n2 ---n3                                                                
+Add the top two numbers on the stack.
+
++!   w a-addr ---                                                              
+Add w to the contents of the cell at a-addr.
+
++LOOP   x1 x2 ---                                                              
+End a DO +LOOP
+Runtime: ( n ---) Add n to the count and exit if this crosses the
+boundary between limit-1 and limit.
+
+,   x ---                                                                      
+Append cell x to the dictionary at HERE.
+
+-   w1 w2 ---w3                                                                
+Subtract the top two numbers on the stack (w2 from w1).
+
+-ROT   x1 x2 x3 --- x3 x1 x2                                                   
+Rotate the three top items on the stack reverse direction compared to ROT.  
+
+-TRAILING   c-addr1 u1 --- c-addr2 u2                                          
+Adjust the length of the string such that trailing spaces are excluded.
+
+.   n ---                                                                      
+Type the signed number n to the terminal.
+
+."   "ccc<quote>" ---                                                          
+Parse a string delimited by " and compile the following runtime semantics.
+Runtime: type that string.
+
+.(   "ccc<rparen>" ---                                                         
+Print the string up to the next right parenthesis.
+
+.R   n1 n2 ---                                                                 
+Print number n1 right-justified in a field of width n2.
+
+.S   ---                                                                       
+Show the contents of the stack.
+
+/   n1 n2 --- n3                                                               
+n3 is n1 divided by n2.
+
+/MOD   n1 n2 --- nrem nquot                                                    
+Divide signed number n1 by n2, giving quotient and remainder.
+
+0<   n --- f                                                                   
+f is true if and only if n is less than 0.
+
+0<=   n1 --- f                                                                 
+f is true if and only if n1 is less than zero.
+
+0<>   n1 n2 ---f                                                               
+f is true of and only of n1 and n2 are not equal.   
+
+0=   x --- f                                                                   
+f is true if and only if x is 0.
+
+0>   n --- f                                                                   
+f is true if and only if n is greater than 0.
+
+1+   w1 --- w2                                                                 
+Add 1 to the top of the stack.
+
+1-   w1 --- w2                                                                 
+Subtract 1 from the top of the stack.
+
+2!   d a-addr ---                                                              
+Store the double number d at a-addr.
+
+2*   w1 --- w2                                                                 
+Multiply w1 by 2.
+
+2+   w1 --- w2                                                                 
+Add 2 to the top of the stack.
+
+2-   w1 --- w2                                                                 
+Subtract 2 from the top of the stack.
+
+2/   n1 --- n2                                                                 
+Divide signed number n1 by 2.
+
+2@   a-addr --- d                                                              
+Fetch double number d at a-addr. 
+
+2CONSTANT   d ---                                                              
+Create a new definition that has the following runtime behavior.
+Runtime: ( --- d) push the constant double number on the stack.
+
+2DROP   d ---                                                                  
+Discard the top double number on the stack.
+
+2DUP   d --- d d                                                               
+Duplicate the top cell on the stack, but only if it is nonzero.
+
+2OVER   d1 d2 --- d1 d2 d1                                                     
+Take a copy of the second double number of the stack and push it on the 
+stack.
+
+2SWAP   d1 d2 --- d2 d1                                                        
+Swap the top two double numbers on the stack.
+
+:   "ccc" ---                                                                  
+Start a new definition, enter compilation mode.
+
+;   ---                                                                        
+Finish the current definition by adding a return to it, make it
+visible and leave compilation mode.
+
+<   n1 n2 --- f                                                                
+f is true if and only if signed number n1 is less than n2. 
+
+<#   ---                                                                       
+Reset the numerical conversion buffer.
+
+<=   n1 n2 --- f                                                               
+f is true if and only if n1 is less than or equal to n2.
+
+<>   x1 x2 --- f                                                               
+f is true if and only if x1 is not equal to x2.
+
+=   x1 x2 --- f                                                                
+f is true if and only if x1 is equal to x2.
+
+>   n1 n2 --- f                                                                
+f is true if and only if the signed number n1 is less than n2.
+
+>=   n1 n2 ---f                                                                
+f is true if and only if n1 is greater than or equal to n2.    
+
+>ASCIIZ   c-addr1 u1 c-addr2 ---                                               
+Store the string defined by c-addr1 and u1 as null terminated string at
+c-addr2
+
+>BODY   xt --- a-addr                                                          
+Convert execution token to parameter field address.
+
+>IN   --- addr                                                                 
+This variable holds an index in the current input source where the next word
+will be parsed.
+
+>NAME   addr1 --- addr2                                                        
+Convert execution token addr1 (address of code) to address of name.
+
+>NUMBER   ud1 c-addr1 u1 --- ud2 c-addr2 u2                                    
+Convert the string at c-addr with length u1 to binary, multiplying ud1
+by the number in BASE and adding the digit value to it for each digit.
+c-addr2 u2 is the remainder of the string starting at the first character
+that is no digit.
+
+>R   x ---                                                                     
+Push x on the return stack. 
+
+?BRANCH   f ---                                                                
+High-level conditonal jump, jumps only if TOS=0    
+
+?CSP   ---                                                                     
+Check that stack pointer is equal to value contained in CSP.
+
+?DO   --- x1 x2                                                                
+Start a ?DO LOOP.
+Runtime: ( n1 n2 --- ) start a loop with initial count n2 and
+limit n1. Exit immediately if n1 = n2.    
+
+?DUP   n --- 0 | n n                                                           
+Duplicate the top cell on the stack, but only if it is nonzero.
+
+?STACK   ---                                                                   
+Check for stack over/underflow and abort with an error if needed.
+
+?TERMINAL   ---f                                                               
+Test whether the ESC key is pressed, return a flag.     
+
+?THROW   f n ---                                                               
+Perform n THROW if f is nonzero.
+
+@   a-addr --- x                                                               
+Fetch cell x at a-addr.
+
+ABORT   ---                                                                    
+Abort unconditionally without a message.
+
+ABORT"   "ccc<quote>" ---                                                      
+Parse a string delimited by " and compile the following runtime semantics.
+Runtime: ( f --- ) if f is nonzero, print the string and abort program.
+
+ABS   n --- u                                                                  
+u is the absolute value of n.
+
+ACCEPT   c-addr n1 --- n2                                                      
+Read a line from the terminal to a buffer starting at c-addr with
+length n1. n2 is the number of characters read,
+
+AGAIN   x ---                                                                  
+Terminate a loop forever BEGIN..AGAIN loop.    
+
+ALIGN   ---                                                                    
+Add as many bytes to the dictionary as needed to align dictionary pointer.
+
+ALIGNED   c-addr --- a-addr                                                    
+a-addr is the first aligned address after c-addr.
+
+ALLOT   n ---                                                                  
+Allot n extra bytes of memory, starting at HERE to the dictionary.
+
+ALSO   ---                                                                     
+Duplicate the last wordlist in the search order.
+
+AND   x1 x2 ---x3                                                              
+Bitwise and of the top two cells on the stack. 
+
+ASCIIZ>   c-addr1 --- c-addr1 u                                                
+Return the address and length of a null terminated string..
+
+ASSEMBLE   ---                                                                 
+Start assembling.
+
+ASSEMBLER   ---                                                                
+Vocabulary containing the ASSEMBLER words.
+
+AT-XY   x y --                                                                 
+Set print position to column x and row y.    
+
+BACKSPACE   ---                                                                
+Move the print position one character back.    
+
+BASE   --- a-addr                                                              
+Variable that contains the numerical conversion base.
+
+BEGIN   --- x                                                                  
+Start a BEGIN UNTIL or BEGIN WHILE REPEAT loop.
+
+BIN   mode1 --- mode2                                                          
+Modify the R/O W/O or R/W mode so that it applies to binary files. 
+
+BL   --- 32                                                                    
+Constant 32, the blank character
+
+BLANK   c-addr u ----                                                          
+Fill the memory region of u bytes starting at c-addr with spaces.    
+
+BLOAD   addr len "ccc" ---                                                     
+Load a file in memory at address addr, filename is the next word parsed.    
+
+BOUNDS   addr1 n --- addr2 addr1                                               
+Convert address and length to two bounds addresses for DO LOOP
+
+BRANCH   ---                                                                   
+High-level unconditional jump, loads IP from next cell in instruction
+thread
+
+BSAVE   addr len "ccc" ---                                                     
+Save memory at address addr, length len bytes to a file
+filename is the next word parsed.       
+
+BYE   ---                                                                      
+Exit Forth and return to the calling program.
+
+C!   c c-addr ---                                                              
+Store character c at c-addr
+
+C,   n ---                                                                     
+Append character c to the dictionary at HERE.
+
+C@   c-addr --- c                                                              
+Fetch character c at c-addr.
+
+CALL,   ---                                                                    
+Add a CALL opcode to the dictionary.
+
+CAPS   --- a-addr                                                              
+This variable contains a nonzero number if input is case insensitive.
+
+CASE   ---                                                                     
+Start a CASE..ENDCASE construct. Inside are one or more OF..ENDOF blocks.
+runtime the CASE blocks takes one value from the stack and uses it to
+select one OF..ENDOF block.    
+
+CATCH   xt --- n                                                               
+Execute the word with execution token xt. If it returns normally, return
+0. If it executes a THROW, return the throw parameter.
+
+CD   "ccc"  --                                                                 
+Go to the specified directory.    
+
+CELL+   a-addr1 --- a-addr2                                                    
+a-addr2 is the address of the next cell after a-addr2.
+
+CELL-   a-addr1 --- a-addr2                                                    
+a-addr2 is the address of the previous cell before a-addr1.
+
+CELLS   n2 --- n1                                                              
+n2 is the number of address units occupied by n1 cells.
+
+CELLS-T                                                                        
+This array holds pointers to the last definition of each thread in the Forth
+word list.
+
+CHAR   "ccc" --- c                                                             
+Return the first character of "ccc".
+
+CHAR+   c-addr1 --- c-addr2                                                    
+c-addr2 is the next character address after c-addr1.
+
+CHAR-   c-addr1 --- c-addr2                                                    
+c-addr2 is the previous character address before c-addr1.
+
+CHARS   n1 --- n2                                                              
+n2 is the number of address units occupied by n1 characters.
+
+CLOSE-FILE   fid --- ior                                                       
+Close the open file described by fid.
+
+CMOVE   c-addr1 c-addr2 u ---                                                  
+Copy u bytes starting at c-addr1 to c-addr2, proceeding in ascending
+order.
+
+CMOVE>   c-addr1 c-addr2 u ---                                                 
+Copy a block of u bytes starting at c-addr1 to c-addr2, proceeding in
+descending order.
+
+CODE   "ccc" ---                                                               
+Defining word to create a code definition.
+
+COMPARE   addr1 u1 addr2 u2 --- diff                                           
+Compare two strings. diff is negative if addr1 u1 is smaller, 0 if it
+is equal and positive if it is greater than addr2 u2.
+
+COMPILE,   xt ---                                                              
+Add the execution semantics of the definition xt to the current definition.
+
+CONSTANT   x "ccc" ---                                                         
+Create a definition that returns x when executed.
+
+CONTEXT                                                                        
+This variable holds the addresses of up to 8 word lists that are
+in the search order.
+
+CONVERT   ud1 c-addr1 --- ud2 c-addr2                                          
+Convert the string starting at c-addr1 + 1 to binary. c-addr2 is the
+address of the first non-digit. Digits are added into ud1 as in >NUMBER
+
+COUNT   c-addr1 --- c-addr2 c                                                  
+c-addr2 is the next address after c-addr1 and c is the character
+stored at c-addr1.
+This word is intended to be used with 'counted strings' where the
+first character indicates the length of the string.
+
+CR   ---                                                                       
+Start printing at the start of the next new line.    
+
+CREATE   "ccc" ---                                                             
+Create a definition that returns its parameter field address when
+executed. Storage can be added to it with ALLOT.
+
+CREATE-FILE   c-addr u mode --- fid ior                                        
+Create a new file with the name starting at c-addr with length u. 
+Return the file-ID and the IO result. (ior=0 if success)
+
+CSP   --- a-addr                                                               
+This variable is used for stack checking between : and ;
+
+CURFILEADDR                                                                    
+Buffer containing the current file name
+
+CURRENT   --- addr                                                             
+This variable holds the address of the word list to which new definitions
+are added.
+
+D+   d1 d2 --- d3                                                              
+Add the double numbers d1 and d2.
+
+D-   d1 d2 --- d3                                                              
+subtract double numbers d2 from d1.    
+
+D.   d ---                                                                     
+Type the double number d to the terminal.
+
+D.R   d n ---                                                                  
+Print double number d right-justified in a field of width n.
+
+D0=   d ---f                                                                   
+f is true if and only if d is equal to zero.    
+
+D=   d1 d1  --- f                                                              
+f is true if and only if d1 and d2 are equal.
+
+DABS   d --- ud                                                                
+ud is the absolute value of d.
+
+DECIMAL   ---                                                                  
+Set numerical conversion to decimal.
+
+DEFER   "ccc" ---                                                              
+Defining word to cretate a word that can be made to execute an arbitrary
+Forth word.    
+
+DEFINITIONS   ---                                                              
+Set the definitions wordlist to the last wordlist in the search order.
+
+DELETE   "ccc"  --                                                             
+Delete the specified file.    
+
+DEPTH   --- n                                                                  
+n is the number of cells on the stack (before DEPTH was executed).
+
+DIGIT?   c -- 0| c--- n -1                                                     
+Convert character c to its digit value n and return true if c is a
+digit in the current base. Otherwise return false.
+
+DL   addr1 --- addr2                                                           
+hex/ascii dump in one line of 16 bytes at addr1 addr2 is addr1+16
+
+DNEGATE   d1 --- d2                                                            
+Negate the top double number on the stack.
+
+DO   --- x1 x2                                                                 
+Start a DO LOOP.
+Runtime: ( n1 n2 --- ) start a loop with initial count n2 and
+limit n1.
+
+DOES>   ---                                                                    
+Word that contains DOES> will change the behavior of the last created
+word such that it pushes its parameter field address onto the stack
+and then executes whatever comes after DOES>
+
+DP   --- a-addr                                                                
+Variable that contains the dictionary pointer. New space is allocated
+from the address in DP
+
+DPL   --- a-addr                                                               
+Variable that holds the decimal point location for numerical conversion.
+
+DROP   x ---                                                                   
+Discard the top item on the stack.        
+
+DUMP   addr len ---                                                            
+Show a hex/ascii dump of the memory block of len bytes at addr
+
+DUP   x --- x x                                                                
+Duplicate the top cell on the stack.    
+
+ED   ---                                                                       
+Invoke the editor on the current file (selected with OPEN)   
+
+EDIT-FILE   c-addr u lineno ---                                                
+Invoke the system editor on the file whose name is specified by c-addr u
+at the specified line number.    
+
+ELSE   x1 --- x2                                                               
+part of IF ELSE THEN construction.
+
+EMIT   c ---                                                                   
+Print character c on the screen.     
+
+END-CODE   ---                                                                 
+Terminate a code definition
+
+ENDCASE   variable# ---                                                        
+Terminate a CASE..ENDCASE construct.     
+
+ENDOF   x1 --- x2                                                              
+Terminate an OF..ENDOF block.    
+
+ERASE   c-addr u                                                               
+Fill memory region of u bytes starting at c-addr with zero.    
+
+ERROR$   --- a-addr                                                            
+Variable containing string address of ABORT" message.
+
+ERROR-SOURCE   ---                                                             
+Print location of error source.
+
+ERRORS   --- a-addr                                                            
+This variable contains the head of a linked list of error messages.
+
+EVALUATE   c-addr u ---                                                        
+Evaluate the string c-addr u as if it were typed on the terminal.
+
+EXECUTE   xt ---                                                               
+Execute the word with execution token xt. 
+
+EXIT   ---                                                                     
+Return from colon definition.    
+
+EXPECT   c-addr u ---                                                          
+Read a line from the terminal to a buffer at c-addr with length u.
+Store the length of the line in SPAN.
+
+F-STARTUP                                                                      
+This is the first colon definition called after a (cold) startup.    
+
+FALSE   --- 0                                                                  
+Constant 0, indicates FALSE
+
+FENCE   --- a-addr                                                             
+Address below which we are not allowed to forget.
+
+FEOF   fid --- f                                                               
+Check end-of-file.
+
+FILL   c-addr u c ---                                                          
+Fill a block of u bytes starting at c-addr with character c.
+
+FIND   c-addr --- c-addr 0| xt 1|xt -1                                         
+Search all word lists in the search order for the name in the
+counted string at c-addr. If not found return the name address and 0.
+If found return the execution token xt and -1 if the word is non-immediate
+and 1 if the word is immediate.
+
+FM/MOD   d n1 --- nrem nquot                                                   
+Divide signed double number d by single number n1, giving quotient and
+remainder. Round always down (floored division),
+remainder has same sign as divisor.
+
+FORGET   "ccc" ---                                                             
+Remove word "ccc" from the dictionary, and anything defined later.
+
+FORTH   ---                                                                    
+REplace the last wordlist in the search order with FORTH-WORDLIST
+
+FPUTC   c fid ---                                                              
+Put a single character into a file.
+
+GET-ORDER   --- w1 w2 ... wn n                                                 
+Return all wordlists in the search order, followed by the count.
+
+HANDLER   --- a-addr                                                           
+Variable containing return stack address where THROW should return.
+
+HASH   c-addr u #threads --- n                                                 
+Compute the hash function for the name c-addr u with the indicated number
+of threads.
+
+HEADER   ---                                                                   
+Create a header for a new definition without a code field.
+
+HERE   --- c-addr                                                              
+The address of the dictionary pointer. New space is allocated here.
+
+HEX   ---                                                                      
+Set numerical conversion to hexadecimal.
+
+HLD   --- a-addr                                                               
+Variable that holds the address of the numerical output conversion
+character.
+
+HOLD   c ---                                                                   
+Insert character c into the numerical conversion buffer.
+
+I   --- n                                                                      
+Get loop variable of innermost loop.
+
+I'   ---n                                                                      
+Get limit variable of innermost loop.    
+
+ID.   nfa ---                                                                  
+Show the name of the word with name field address nfa.
+
+IF   --- x                                                                     
+Start an IF THEN or IF ELSE THEN construction.
+Runtime: At IF a flag is taken from
+the stack and if it is true the part between IF and ELSE is executed,
+otherwise the part between ELSE and THEN. If there is no ELSE, the part
+between IF and THEN is executed only if flag is true.
+
+IMMEDIATE   ---                                                                
+Make last definition immediate, so that it will be executed even in
+compilation mode.
+
+INCLUDE-BUFFER   --- a-addr                                                    
+This is the buffer where the lines of included files are stored.
+
+INCLUDE-FILE   fid ---                                                         
+Read lines from the file identified by fid and interpret them.
+INCLUDE and EVALUATE nest in arbitrary order.
+
+INCLUDE-POINTER   --- a-addr                                                   
+This variable holds the address where the included line is stored.
+
+INCLUDED   c-addr u ----                                                       
+Open the file with name c-addr u and interpret all lines contained in it.
+
+INTERPRET   ---                                                                
+Interpret words from the current source until the input source is exhausted.
+
+INVERT   x1 --- x2                                                             
+Invert all the bits of x1 (one's complement)
+
+IS   xt "ccc" ---                                                              
+Set the word to be executed by the deferred word.    
+
+J   ---n                                                                       
+Get loop variable of next outer loop.    
+
+KEY   --- c                                                                    
+Wait until a key is pressed and return the ASCII code
+
+KEY?   --- f                                                                   
+Check if a key is pressed. Return a flag    
+
+LAST   --- addr                                                                
+This variable holds a pointer to the last definition created.
+
+LEAVE   ---                                                                    
+Runtime: leave the matching DO LOOP immediately.
+
+LIT   --- n                                                                    
+Run-time part of LITERAL. Pushes next cell in instruction thread to stack.
+
+LITERAL   n ---                                                                
+Add a literal to the current definition.
+
+LOADLINE   --- addr                                                            
+This variable holds the line number in the file being included.
+
+LOOP   x1 x2 ---                                                               
+End a DO LOOP.
+Runtime: Add 1 to the count and if it is equal to the limit leave the loop.
+
+LSHIFT   x1 u --- x2                                                           
+Shift x1 left by u bits, zeros are added to the right.
+
+M*   n1 n2 --- d                                                               
+Multiply the signed numbers n1 and n2, giving the signed double number d.
+
+MAX   n1 n2 --- n3                                                             
+n3 is the maximum of n1 and n2.
+
+MESS"   n "cccq" ---                                                           
+Create an error message for throw code n.
+
+MIN   n1 n2 --- n3                                                             
+n3 is the minimum of n1 and n2.
+
+MOD   n1 n2 --- n3                                                             
+n3 is the remainder of n1 and n2.
+
+MOVE   c-addr1 c-addr2 u ---                                                   
+Copy a block of u bytes starting at c-addr1 to c-addr2. Order is such
+that partially overlapping blocks are copied intact.
+
+MS   n ---                                                                     
+Delay for n milliseconds.
+
+MU/MOD   ud u --- urem udquot                                                  
+Divide unsigned double number ud by u and return a double quotient and
+a single remainder.
+
+NAME>   addr1 --- addr2                                                        
+Convert address of name to address of code.
+
+NEGATE   n1 --- -n1                                                            
+Negate top number on the stack.    
+
+NIP   x1 x2 --- x2                                                             
+Discard the second item on the stack.
+
+NOOP   ---                                                                     
+No operation    
+
+NUMBER?   c-addr ---- d f                                                      
+Convert the counted string at c-addr to a double binary number.
+f is true if and only if the conversion was successful. DPL contains
+-1 if there was no point in the number, else the position of the point
+from the right. Special prefixes: # means decimal, $ means hex.
+
+OF   --- x                                                                     
+Start an OF..ENDOF block. At runtime it pops a value from the stack and
+executes the block if this value is equal to the CASE value.    
+
+OFF   a-addr ---                                                               
+Store FALSE at a-addr.
+
+ON   a-addr ---                                                                
+Store TRUE at a-addr.
+
+ONLY   ---                                                                     
+Set the search order to the minimal wordlist.
+
+OPEN   ---                                                                     
+Load a file into the source file buffer.    
+
+OPEN-FILE   c-addr u mode --- fid ior                                          
+Open the file with the name starting at c-addr and with length u.
+File must already exist unless open mode is write only.
+Return the file-ID and the IO result. (ior=0 if success)
+
+OR   x1 x2 ---x3                                                               
+Bitwise or of the top two cells on the stack. 
+
+OSCALL   HL DE BC func --- res                                                 
+Call the MOS API via RST 8 with the desired parameters in HL, DE and BC.
+Return the return code as in the A register.
+
+OSSTRING   --- addr                                                            
+Buffer to store file names, command lines, zero terminated for OS calls.
+
+OVER   x1 x2 --- x1 x2 x1                                                      
+Copy the second cell of the stack. 
+
+P!   c p-addr ---                                                              
+Write a byte to an I/O port
+
+P@   p-addr --- c                                                              
+Read a byte from an I/O port
+
+PAD   --- c-addr                                                               
+The address of a scratch pad area. Right below this address there is
+the numerical conversion buffer.
+
+PAGE   ---                                                                     
+Clear the screen and move print position to top left.
+
+PARSE   c --- addr len                                                         
+Find a character sequence in the current source that is delimited by
+character c. Adjust >IN to 1 past the end delimiter character.
+
+PICK   u --- x                                                                 
+place a copy of stack cell number u on the stack. 0 PICK is DUP, 1 PICK
+is OVER etc.
+
+PLACE   addr len c-addr ---                                                    
+Place the string starting at addr with length len at c-addr as
+a counted string.
+
+POCKET   --- a-addr                                                            
+Buffer for S" strings that are interpreted.
+
+POSTPONE   "ccc" ---                                                           
+Parse the next word delimited by spaces and compile the following runtime.
+Runtime: depending on immediateness EXECUTE or compile the execution
+semantics of the parsed word.
+
+PREVIOUS   ---                                                                 
+Remove the last wordlist from search order.
+
+QUERY   ---                                                                    
+Read a line from the terminal into the terminal input buffer.
+
+QUIT   ---                                                                     
+This word resets the return stack, resets the compiler state, the include
+buffer and then it reads and interprets terminal input.
+
+R/O   --- mode                                                                 
+Read only file access mode.
+
+R/W   --- mode                                                                 
+Read write file access mode.
+
+R0   --- a-addr                                                                
+Variable that holds the bottom address of the return stack.
+
+R>   --- x                                                                     
+Pop the top of the return stack and place it on the stack.
+
+R@   --- x                                                                     
+x is a copy of the top of the return stack.
+
+READ-LINE   c-addr u1 fid --- u2 flag ior                                      
+Read a line from the file described by fid to a buffer at c-addr that
+is u1+2 characters long. The line is at most u1 characters long.
+flag is 0 at the end of file (no line could be read) TRUE otherwise.
+(ior is 0 in this case.)
+n2 is the length of the line read,
+
+RECURSE   ---                                                                  
+Compile a call to the current (not yet finished) definition.
+
+REFILL   --- f                                                                 
+Refill the current input source when it is exhausted. f is
+true if it was successfully refilled.
+
+REPEAT   x1 x2 ---                                                             
+part of BEGIN WHILE REPEAT construction.
+
+RESOLVE-LEAVE                                                                  
+Resolve the references to the leave addresses of the loop.
+
+REVEAL   ---                                                                   
+Add the last created definition to the CURRENT wordlist.
+
+ROLL   u ---                                                                   
+ Move stack cell number u to the top. 1 ROLL is SWAP, 2 ROLL is ROT etc.
+
+ROOT-WORDLIST   --- wid                                                        
+Minimal wordlist for ONLY
+
+ROT   x1 x2 x3 --- x2 x3 x1                                                    
+Rotate the three top items on the stack.  
+
+RP!   a-addr ---                                                               
+Set the return stack pointer to a-addr.
+
+RP@   --- a-addr                                                               
+Return the address of the return stack pointer.
+
+RSHIFT   x1 u --- x2                                                           
+Shift x1 right by u bits, zeros are added to the left.
+
+S"   "ccc<quote>" ---                                                          
+Parse a string delimited by " and compile the following runtime semantics.
+Runtime: ( --- c-addr u) Return start address and length of that string.
+
+S0   --- a-addr                                                                
+Variable that holds the bottom address of the stack.
+
+S>D   n --- d                                                                  
+Convert single number to double number.
+
+SAVE-SYSTEM   "ccc"  ---                                                       
+Save the current FORTH system to the specifed file.    
+
+SCAN   c-addr1 u11 c --- c-addr2 u2                                            
+Find the first occurrence of character c in the string c-addr1 u1
+c-addr2 u2 is the remaining part of the string starting with that char.
+It is a zero-length string if c was not found.
+
+SEARCH-WORDLIST   c-addr u wid --- 0 | xt 1 | xt -1                            
+Search the wordlist with address wid for the name c-addr u.
+Return 0 if not found, the execution token xt and -1 for non-immediate
+words and xt and 1 for immediate words.
+
+SET-ORDER   w1 w2 ... wn n ---                                                 
+Set the search order to the n wordlists given on the stack.
+
+SID   --- addr                                                                 
+This variable holds the source i.d. returned by SOURCE-ID.
+
+SIGN   n ---                                                                   
+Insert a - sign in the numerical conversion buffer if n is negative.
+
+SKIP   c-addr1 u1 c --- c-addr2 u2                                             
+Find the first character not equal to c in the string c-addr1 u1
+c-addr2 u2 is the remaining part of the string starting with the
+nonmatching char. It is a zero-length string if no other chars found.
+
+SM/REM   d n1 --- nrem nquot                                                   
+Divide signed double number d by single number n1, giving quotient and
+remainder. Round towards zero, remainder has same sign as dividend.
+
+SOURCE   --- addr len                                                          
+Return the address and length of the current input source.
+
+SOURCE-ID   --- sid                                                            
+Return the i.d. of the current source i.d., 0 for terminal, -1
+for EVALUATE and positive number for INCLUDE file.
+
+SP!   a-addr ---                                                               
+Set the stack pointer to a-addr.
+
+SP@   --- a-addr                                                               
+Return the address of the stack pointer (before SP@ was executed).
+Note: TOS is in a register, hence stack pointer points to next cell.
+
+SPACE   ---                                                                    
+Output a space to the terminal.
+
+SPACES   u ---                                                                 
+Output u spaces to the terminal.
+
+SPAN   --- addr                                                                
+This variable holds the number of characters read by EXPECT.
+
+SRC   --- addr                                                                 
+This variable holds the address of the current input source.
+
+STATE   --- a-addr                                                             
+Variable that holds the compiler state, 0 is interpreting 1 is compiling.
+
+SWAP   n1 n2 --- n2 n1                                                         
+Swap the two top items on the stack.
+
+SYSTEM   c-addr u ---                                                          
+Execute the specified system command.    
+
+SYSVARS   --- d-addr                                                           
+Obtain the address of the system variables.
+
+THEN   x ---                                                                   
+End an IF THEN or IF ELSE THEN construction.
+
+THROW   n ---                                                                  
+If n is nonzero, cause the corresponding CATCH to return with n.
+
+TIB   --- addr                                                                 
+is the standard terminal input buffer.
+
+TO   n "ccc" ---                                                               
+Change the value of the following VALUE type word.    
+
+TRUE   --- -1                                                                  
+Constant -1, indicates TRUE
+
+TUCK   x1 x2 --- x2 x1 x2                                                      
+Copy the top of stack to a position under the second item.  
+
+TYPE   c-addr1 u ---                                                           
+Output the string starting at c-addr and length u to the terminal.
+
+U.   u ---                                                                     
+Type the unsigned number u to the terminal.
+
+U.R   u n ---                                                                  
+Print unsigned number u right-justified in a field of width n.
+
+U<   u1 u2 --- f                                                               
+f is true if and only if unsigned number u1 is less than u2.   
+
+U>   u1 u2 --- f                                                               
+f is true if and only if the unsigned number u1 is greater than u2.
+
+UM*   u1 u2 --- ud                                                             
+Multiply two unsigned numbers, giving double result. 
+
+UM/MOD   ud u1 --- urem uquot                                                  
+Divide the unsigned double number ud by u1, giving unsigned quotient
+and remainder.        
+
+UNLOOP   ---                                                                   
+Undo return stack effect of loop, can be followed by EXIT    
+
+UNNEST   ---                                                                   
+Synonym for EXIT, used by compiler, so decompiler can use this as end of
+colon definition.   
+
+UNTIL   x ---                                                                  
+Form a loop with matching BEGIN.
+Runtime: A flag is take from the stack
+each time UNTIL is encountered and the loop iterates until it is nonzero.
+
+UPPERCASE?   ---                                                               
+Convert the parsed word to uppercase is CAPS is true.
+
+VALUE   n ---                                                                  
+Create a variable that returns its value when executed, prefix it with TO
+to change its value.    
+
+VARIABLE   "ccc" ---                                                           
+Create a variable where 1 cell can be stored. When executed it
+returns the address.
+
+VOC-LINK                                                                       
+Variable that links all vocabularies together, so we can link.
+
+VOCABULARY   ---                                                               
+Make a definition that will replace the last word in the search order
+by its wordlist.
+
+W/O   --- mode                                                                 
+Write only file access mode.
+
+WARM   ---                                                                     
+This word is called when an error occurs. Clears the stacks, sets
+BASE to decimal, closes the files and resets the search order.
+
+WHILE   x1 --- x2 x1                                                           
+part of BEGIN WHILE REPEAT construction.
+Runtime: At WHILE a flag is taken from the stack. If it is false,
+ the program jumps out of the loop, otherwise the part between WHILE
+ and REPEAT is executed and the loop iterates to BEGIN.
+
+WITHIN   u1 u2  u3 --- f                                                       
+f is true if u1 is greater or equal to u2 and less than u3
+
+WORD   c --- addr                                                              
+Parse a character sequence delimited by character c and return the
+address of a counted string that is a copy of it. The counted
+string is actually placed at HERE. The character after the counted
+string is set to a space.
+
+WORDLIST   --- wid                                                             
+Make a new wordlist and give its address.
+
+WORDS   ---                                                                    
+Show all words in the last wordlist of the search order.
+
+WRITE-LINE   c-addr u fid --- ior                                              
+Write the string at addr c-addr with length u to the file described by
+fid. Append the end of line character to it.
+
+XC!   c d-addr ---                                                             
+Store a byte value into an extended address.    
+
+XC@   d-addr --- c                                                             
+Read a byte value from an extended address.
+
+XOR   x1 x2 ---x3                                                              
+Bitwise exclusive or of the top two cells on the stack.
+
+[   ---                                                                        
+Leave compilation mode.
+
+[']   "ccc" ---                                                                
+Copile the execution token of the word with name ccc as a literal.
+
+[CHAR]   "ccc" ---                                                             
+Compile the first character of "ccc" as a literal.
+
+\                                                                              
+Comment till end of line.
+
+\G                                                                             
+comment till end of line for inclusion in glossary.
+
+]   ---                                                                        
+Start compilation mode.
+

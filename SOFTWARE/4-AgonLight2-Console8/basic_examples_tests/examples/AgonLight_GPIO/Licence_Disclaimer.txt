@@ -1,0 +1,3 @@
+Project was not created by Olimex.
+Project made by: Kayto
+GitHub link: https://github.com/Kayto/AgonLight_GPIO

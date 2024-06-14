@@ -1,0 +1,3 @@
+SET KEYBOARD 1
+LOAD bbcbasic.bin
+RUN
