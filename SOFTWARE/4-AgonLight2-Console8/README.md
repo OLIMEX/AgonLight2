@@ -6,7 +6,7 @@ Make sure to format your SD card in FAT32, if you have doubt there is something 
 
 Download all files from GitHub (better download the whole repo) and copy the contents of "4-AgonLight2-Console8" folder and place them in the root folder of an SD card (keep same sub-folders). Insert the SD card into AgonLight2 and power, when possible type:
 
->*flash all
+\>*flash all
 
 You will be prompted to agree to flash the firmware. Press "Y" to agree. Wait until upgrade suceeeds.
 
