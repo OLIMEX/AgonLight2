@@ -1,4 +1,4 @@
-The procedure below would upgrade AgonLight2's MOS and VDP to Console8 MOS 2.2.3 and Console8 VPD v2.9.0.
+The procedure below would upgrade AgonLight2's MOS and VDP to Console8 MOS 2.2.3 and Console8 VPD v2.9.0 and BBC basic 3.00.
 
 You need microSD card, micro SD card writer tool, USB keyboard (not all USB keyboards would work with AgonLight2, only those with PS/2 compatiblity) and all files from this GitHub repo.
 
