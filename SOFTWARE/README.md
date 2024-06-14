@@ -11,8 +11,12 @@ It is always recommended to get the latest files and instructions from the offic
     • Quark™ VDP - https://github.com/breakintoprogram/agon-vdp/releases - the VDP is a serial graphics terminal that takes a BBC basic text output stream as input. The output is via the VGA connector on the Agon.
 
 The "1-SD-card-contents" folder contains sub-folders with files for the SD card, also mos files that can be flashed via bootloader without programmer (if possible);
+
 The "2-AgonLight2-VDP-XXX" folder contains VDP;
-The "3-AgonLight2-MOS-XXX" folder contains MOS that can be flashed via programmer.
+
+The "3-AgonLight2-MOS-XXX" folder contains MOS that can be flashed via programmer;
+
+The "4-AgonLight2-Console8" folder contains Console8 versions of VDP, MOS, BBC basic that can be used to upgrade the system via SD card. Refer to the README.md file in the folder for details on how to switch to Console8 VPD, MOS, BBC basic.
 
 Copy the contents in from the "SD Card Content" into the root directory of the card. The contents are:
 
