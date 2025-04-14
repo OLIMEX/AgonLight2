@@ -59,9 +59,9 @@ Copy the contents in from the "SD Card Content" into the root directory of the c
 
     3.1. Go to "Main menu -> Sketch -> Include Library -> Manage Libraries..." (CTRL+SHIFT+I)
 
-    3.2. Look for library FabGL (just like the packages earlier you can filter all the libraries by typing "FabGL" in the search bar)
+    3.2. Look for library FabGL (just like the packages earlier you can filter all the libraries by typing "FabGL" in the search bar).
 
-    3.3. Install it (it is tested with 1.0.8, newer versions of the library may not work)
+    3.3. There are two results, select the vdp-gl version by Igor Cananena. Install it. Notice: If you have trouble in the next step (errors during compilation) maybe deinstall vdp-gl and try the with FabGL instead, version 1.0.8, newer versions of the library may not work. 
 
 4. VDP compile and update
    
